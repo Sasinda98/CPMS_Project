@@ -3,4 +3,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_in_heading">Sign In</string>
+    <string name="construction_project_management_SubHeading">Construction Project Management</string>
+    <string name="email_textBox_Placeholder">Email</string>
+    <string name="password_textBox_Placeholder">Password</string>
+    <string name="forgot_password_signIn_form">Forgot Password</string>
+    <string name="sign_in_btn_value">Sign In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t Have An Account? Sign Up</string>
 </resources>

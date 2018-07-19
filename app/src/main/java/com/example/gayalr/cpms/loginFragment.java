@@ -2,11 +2,13 @@ package com.example.gayalr.cpms;
 
 
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 // instead of this import android.app.Fragment;
 //use this
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 
@@ -23,14 +25,16 @@ public class loginFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         //getting references to respective textfiels on xml(UI)
-        final TextView signUpHeaderTV = (TextView) view.findViewById(R.id.signUpHeader);
-        final TextView signUpSubHeaderTV = (TextView) view.findViewById(R.id.signUpSubHeader);
+        final TextView signUpHeaderTV = view.findViewById(R.id.signUpHeader);
+        final TextView signUpSubHeaderTV = view.findViewById(R.id.signUpSubHeader);
 
+        final TextView forgotPasswordTV = view.findViewById(R.id.forgotPassword);
+        final TextView dontHaveAccountTV = view.findViewById(R.id.dontHaveAccount);
 
 
         //Refered to the following links to see how to add custom fonts -:
@@ -40,6 +44,11 @@ public class loginFragment extends Fragment {
 
          signUpHeaderTV.setTypeface(robotoLightFont);
          signUpSubHeaderTV.setTypeface(robotoLightFont);
+         forgotPasswordTV.setTypeface(robotoLightFont);
+         dontHaveAccountTV.setTypeface(robotoLightFont);
+
+
+
 
         return view;
     }
