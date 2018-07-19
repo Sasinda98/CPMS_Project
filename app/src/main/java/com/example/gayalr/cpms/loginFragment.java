@@ -1,18 +1,22 @@
 package com.example.gayalr.cpms;
 
 
-import android.content.Context;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 // instead of this import android.app.Fragment;
 //use this
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import android.support.design.widget.TextInputLayout;
 
 
 public class loginFragment extends Fragment {
