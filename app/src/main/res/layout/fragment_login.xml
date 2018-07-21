@@ -25,12 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="80dp"
-                android:padding="5dp"
-                android:shadowColor="#000"
-                android:shadowDx="5"
 
-                android:shadowDy="5"
-                android:shadowRadius="15"
+
                 android:text="@string/sign_in_heading"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="72sp" />
@@ -68,8 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_email"
-                    tools:ignore="RtlHardcoded"
-                    />
+                    tools:ignore="RtlHardcoded" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -97,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/password_inputLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="40dp"
 
                 android:padding="5dp"
                 android:shadowColor="#000"
@@ -107,7 +102,7 @@
 
                 android:text="@string/forgot_password_signIn_form"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/dontHaveAccount"
@@ -115,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forgotPassword"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:padding="5dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
@@ -124,7 +119,7 @@
                 android:shadowRadius="30"
                 android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/signInButton"
@@ -133,8 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dontHaveAccount"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:text="@string/sign_in_btn_value" />
+                android:layout_marginTop="30dp"
+                android:text="@string/sign_in_btn_value"
+                />
 
         </RelativeLayout>
 
