@@ -10,4 +10,9 @@
     <string name="forgot_password_signIn_form">Forgot Password</string>
     <string name="sign_in_btn_value">Sign In</string>
     <string name="don_t_have_an_account_sign_up">Don\'t Have An Account? Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="continue1">Continue</string>
 </resources>
