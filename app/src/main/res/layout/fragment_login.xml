@@ -6,12 +6,14 @@
     android:background="@drawable/background_sign_up_in"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:context=".loginFragment">
+    tools:context=".userManagement.loginFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         tools:ignore="UselessParent">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,10 +25,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="80dp"
+                android:padding="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+
+                android:shadowDy="5"
+                android:shadowRadius="15"
                 android:text="@string/sign_in_heading"
-                android:textColor="@android:color/background_light"
-                android:textSize="72sp"
-                />
+                android:textColor="@color/primaryTextColor"
+                android:textSize="72sp" />
 
             <TextView
                 android:id="@+id/signUpSubHeader"
@@ -35,10 +42,15 @@
                 android:layout_below="@id/signUpHeader"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-3dp"
+                android:padding="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+
+                android:shadowDy="5"
+                android:shadowRadius="30"
                 android:text="@string/construction_project_management_SubHeading"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp"
-                />
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/email_inputLayout"
@@ -47,14 +59,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signUpSubHeader"
                 android:layout_marginTop="90dp"
-                android:hint="@string/email_textBox_Placeholder">
+                android:hint="@string/email_textBox_Placeholder"
+
+                >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/email_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_email"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -86,12 +101,12 @@
 
                 android:padding="5dp"
                 android:shadowColor="#000"
-                android:shadowDx="12"
-
-                android:shadowDy="12"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:shadowRadius="30"
+
                 android:text="@string/forgot_password_signIn_form"
-                android:textColor="#e0e0e0"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="18sp" />
 
             <TextView
@@ -103,12 +118,12 @@
                 android:layout_marginTop="20dp"
                 android:padding="5dp"
                 android:shadowColor="#000"
-                android:shadowDx="12"
+                android:shadowDx="5"
 
-                android:shadowDy="12"
+                android:shadowDy="5"
                 android:shadowRadius="30"
                 android:text="@string/don_t_have_an_account_sign_up"
-                android:textColor="#e0e0e0"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="18sp" />
 
             <android.support.design.button.MaterialButton

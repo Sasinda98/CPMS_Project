@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_sign_up_in"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".userManagement.signupFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        tools:ignore="UselessParent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/signUpHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:padding="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+
+                android:shadowDy="5"
+                android:shadowRadius="15"
+                android:text="@string/sign_up"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="72sp" />
+
+            <TextView
+                android:id="@+id/signUpSubHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/signUpHeader"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-3dp"
+                android:padding="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+
+                android:shadowDy="5"
+                android:shadowRadius="30"
+                android:text="@string/construction_project_management_SubHeading"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp" />
+
+            <!--First Name Entry-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fname_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/signUpSubHeader"
+                android:layout_marginTop="40dp"
+                android:hint="@string/first_name">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/fname_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email"
+                    tools:ignore="RtlHardcoded" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Last Name Entry-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lname_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fname_inputLayout"
+                android:layout_marginTop="5dp"
+                android:hint="@string/last_name">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/lname_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email"
+                    tools:ignore="RtlHardcoded" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Mobile Number Entry-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/mobile_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lname_inputLayout"
+                android:layout_marginTop="5dp"
+                android:hint="@string/last_name">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/mobile_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_phone_24px"
+                    tools:ignore="RtlHardcoded" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Email Entry-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mobile_inputLayout"
+                android:layout_marginTop="10dp"
+                android:hint="@string/password_textBox_Placeholder">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/email_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_editText"
+                    android:drawableLeft="@drawable/ic_alt_email"
+                    tools:ignore="RtlHardcoded" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Password Entry-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email_inputLayout"
+                android:layout_marginTop="10dp"
+                android:hint="@string/password_textBox_Placeholder">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/password_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_editText"
+                    android:drawableLeft="@drawable/ic_password_solid"
+                    tools:ignore="RtlHardcoded" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Confirm Password Entry-->
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/confPassword_inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/password_inputLayout"
+                android:layout_marginTop="10dp"
+                android:hint="@string/confirm_password">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/confPassword_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_editText"
+                    android:drawableLeft="@drawable/ic_password_solid"
+                    tools:ignore="RtlHardcoded" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/signInButton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confPassword_inputLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="@string/continue1" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</FrameLayout>

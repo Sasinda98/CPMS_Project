@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms;
+package com.example.gayalr.cpms.userManagement;
 
 
 
@@ -9,16 +9,19 @@ import android.os.Bundle;
 // instead of this import android.app.Fragment;
 //use this
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+
 import android.widget.TextView;
 
-import android.support.design.widget.TextInputLayout;
+import com.example.gayalr.cpms.Navigation;
+import com.example.gayalr.cpms.R;
 
 
 public class loginFragment extends Fragment {
@@ -46,6 +49,26 @@ public class loginFragment extends Fragment {
          signUpSubHeaderTV.setTypeface(robotoLightFont);
          forgotPasswordTV.setTypeface(robotoLightFont);
          dontHaveAccountTV.setTypeface(robotoLightFont);
+
+         //Setting onclick listeners to relevant elements on sign in page.
+        //Refered to -: https://codelabs.developers.google.com/codelabs/mdc-101-java/#2 (all the pages in this tutorial)
+
+        dontHaveAccountTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //navigate to sign up fragment.
+                ((Navigation)getActivity()).naviagateTo(new signupFragment(), true);
+            }
+        });
+
+         forgotPasswordTV.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 //navigate to forgot password fragment.
+             }
+         });
+
+
 
 
 
