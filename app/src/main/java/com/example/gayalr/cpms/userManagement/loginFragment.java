@@ -33,8 +33,8 @@ public class loginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         //getting references to respective textfiels on xml(UI)
-        final TextView signUpHeaderTV = view.findViewById(R.id.signUpHeader);
-        final TextView signUpSubHeaderTV = view.findViewById(R.id.signUpSubHeader);
+        final TextView signUpHeaderTV = view.findViewById(R.id.signInHeader);
+        final TextView signUpSubHeaderTV = view.findViewById(R.id.signInSubHeader);
 
         final TextView forgotPasswordTV = view.findViewById(R.id.forgotPassword);
         final TextView dontHaveAccountTV = view.findViewById(R.id.dontHaveAccount);
@@ -65,13 +65,10 @@ public class loginFragment extends Fragment {
              @Override
              public void onClick(View view) {
                  //navigate to forgot password fragment.
+                 ((Navigation)getActivity()).naviagateTo(new forgotPasswordFragment(), true);
+
              }
          });
-
-
-
-
-
 
         return view;
     }

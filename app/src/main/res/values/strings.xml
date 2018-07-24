@@ -15,4 +15,11 @@
     <string name="last_name">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="continue1">Continue</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="fill_the_form_to_reset_your_password">Fill The Form To Reset Your Password</string>
+    <string name="email_address">Email Address</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="mobile_number">Mobile Number</string>
 </resources>
