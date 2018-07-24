@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_sign_up_in"
+
+    android:background="@drawable/background_1"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     tools:context=".userManagement.loginFragment">
@@ -26,6 +27,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="80dp"
 
+                android:padding="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="30"
 
                 android:text="@string/sign_in_heading"
                 android:textColor="@color/primaryTextColor"
@@ -38,19 +44,20 @@
                 android:layout_below="@id/signUpHeader"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-3dp"
+
                 android:padding="5dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
-
                 android:shadowDy="5"
                 android:shadowRadius="30"
+
                 android:text="@string/construction_project_management_SubHeading"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="14sp" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/email_inputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signUpSubHeader"
@@ -69,7 +76,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/password_inputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/email_inputLayout"
@@ -111,12 +118,13 @@
                 android:layout_below="@id/forgotPassword"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
+
                 android:padding="5dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
-
                 android:shadowDy="5"
                 android:shadowRadius="30"
+
                 android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="16sp" />
@@ -129,8 +137,7 @@
                 android:layout_below="@id/dontHaveAccount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:text="@string/sign_in_btn_value"
-                />
+                android:text="@string/sign_in_btn_value" />
 
         </RelativeLayout>
 
