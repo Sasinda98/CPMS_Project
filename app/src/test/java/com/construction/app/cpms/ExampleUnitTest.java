@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms;
+package com.construction.app.cpms;
 
 import org.junit.Test;
 

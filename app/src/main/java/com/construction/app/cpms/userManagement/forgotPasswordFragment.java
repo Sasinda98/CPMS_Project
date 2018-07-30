@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms.userManagement;
+package com.construction.app.cpms.userManagement;
 
 
 import android.graphics.Typeface;
@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.gayalr.cpms.Navigation;
-import com.example.gayalr.cpms.R;
+import com.construction.app.cpms.Navigation;
+import com.construction.app.cpms.R;
 
 import android.support.v4.app.Fragment;
 import android.widget.Button;

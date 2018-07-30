@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms.userManagement;
+package com.construction.app.cpms.userManagement;
 
 
 import android.graphics.Typeface;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.gayalr.cpms.R;
+import com.construction.app.cpms.R;
 
 
 /**

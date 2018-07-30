@@ -172,7 +172,7 @@
             <android.support.design.button.MaterialButton
                 android:id="@+id/ContinueBtn"
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="115dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/confPassword_inputLayout"
                 android:layout_centerHorizontal="true"

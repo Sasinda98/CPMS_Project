@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms;
+package com.construction.app.cpms;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.gayalr.cpms.userManagement.loginFragment;
-import com.example.gayalr.cpms.userManagement.signupFragment;
+import com.construction.app.cpms.userManagement.loginFragment;
+import com.construction.app.cpms.userManagement.signupFragment;
 
 public class mainActivity extends AppCompatActivity implements Navigation {
 

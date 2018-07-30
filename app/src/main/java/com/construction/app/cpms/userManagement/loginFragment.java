@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms.userManagement;
+package com.construction.app.cpms.userManagement;
 
 
 
@@ -20,8 +20,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.example.gayalr.cpms.Navigation;
-import com.example.gayalr.cpms.R;
+import com.construction.app.cpms.Navigation;
+import com.construction.app.cpms.R;
 
 
 public class loginFragment extends Fragment {

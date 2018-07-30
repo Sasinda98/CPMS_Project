@@ -1,4 +1,4 @@
-package com.example.gayalr.cpms;
+package com.construction.app.cpms;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

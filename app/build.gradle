@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.gayalr.cpms"
+        applicationId "com.construction.app.cpms"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    api 'com.android.support:design:28.0.0-alpha3'
-    implementation 'com.android.support:support-v4:28.0.0-alpha3'
+    api 'com.android.support:design:28.0.0-beta01'
+    implementation 'com.android.support:support-v4:28.0.0-beta01'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

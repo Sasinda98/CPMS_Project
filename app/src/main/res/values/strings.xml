@@ -20,6 +20,6 @@
     <string name="email_address">Email Address</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
-    <string name="change_password">Change Password</string>
+    <string name="change">Change</string>
     <string name="mobile_number">Mobile Number</string>
 </resources>
