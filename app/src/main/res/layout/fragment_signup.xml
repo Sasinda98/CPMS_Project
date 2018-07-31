@@ -48,7 +48,7 @@
                 android:shadowDx="5"
 
                 android:shadowDy="5"
-                android:shadowRadius="30"
+                android:shadowRadius="24"
                 android:text="@string/construction_project_management_SubHeading"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="14sp" />

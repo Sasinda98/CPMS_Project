@@ -33,7 +33,7 @@
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="30"
+                android:shadowRadius="24"
 
                 android:text="@string/sign_in_heading"
                 android:textColor="@color/primaryTextColor"
@@ -51,7 +51,7 @@
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="30"
+                android:shadowRadius="24"
 
                 android:text="@string/construction_project_management_SubHeading"
                 android:textColor="@color/primaryTextColor"
@@ -110,7 +110,7 @@
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="30"
+                android:shadowRadius="24"
 
                 android:text="@string/forgot_password_signIn_form"
                 android:textColor="@color/primaryTextColor"
@@ -128,7 +128,7 @@
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="30"
+                android:shadowRadius="24"
 
                 android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/primaryTextColor"

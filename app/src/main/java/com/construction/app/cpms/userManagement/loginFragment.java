@@ -26,7 +26,6 @@ import com.construction.app.cpms.R;
 
 public class loginFragment extends Fragment {
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
