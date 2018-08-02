@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:background="@drawable/background_1"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    android:background="@drawable/material_dark"
 
     tools:context=".userManagement.loginFragment">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        tools:ignore="UselessParent">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:layout_marginTop="@dimen/um_top_spacing"
+            >
 
             <TextView
                 android:id="@+id/signInHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="80dp"
 
                 android:padding="5dp"
                 android:shadowColor="#000"
@@ -104,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/password_inputLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
 
                 android:padding="5dp"
                 android:shadowColor="#000"
@@ -141,12 +135,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dontHaveAccount"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/sign_in_btn_value"
                 app:rippleColor="@color/primaryColor" />
 
         </RelativeLayout>
 
-    </ScrollView>
 
-</FrameLayout>
+</ScrollView>
