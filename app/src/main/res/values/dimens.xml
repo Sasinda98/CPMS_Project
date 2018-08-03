@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!--main layout spacings-->
     <dimen name="um_top_spacing">60dp</dimen>
     <dimen name="um_bottom_spacing">20dp</dimen>
@@ -22,7 +22,7 @@
     <!--Text Sizes-->
     <dimen name="um_fp_heading_text_size">42sp</dimen>
     <dimen name="um_subheading_text_size">14sp</dimen>
-    <dimen name="um_fp_login_heading_text_size">72sp</dimen>
+    <dimen name="um_fp_main_heading_text_size">72sp</dimen>
     <dimen name="um_login_option_text_size">16sp</dimen>
 
 </resources>
