@@ -22,15 +22,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
 
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="24"
 
                 android:text="@string/sign_in_heading"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="72sp" />
+                android:textSize="@dimen/um_fp_login_heading_text_size" />
 
             <TextView
                 android:id="@+id/signInSubHeader"
@@ -38,17 +38,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signInHeader"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="-3dp"
+                android:layout_marginTop="@dimen/um_subheading_spacing_top"
 
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="24"
 
                 android:text="@string/construction_project_management_SubHeading"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="14sp" />
+                android:textSize="@dimen/um_subheading_text_size" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/email_inputLayout"
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signInSubHeader"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="@dimen/um_login_heading_spacing"
                 android:hint="@string/email_textBox_Placeholder"
 
                 >
@@ -97,17 +97,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/password_inputLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/um_login_options_form_spacing"
 
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="24"
 
                 android:text="@string/forgot_password_signIn_form"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="16sp" />
+                android:textSize="@dimen/um_login_option_text_size" />
 
             <TextView
                 android:id="@+id/dontHaveAccount"
@@ -115,17 +115,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forgotPassword"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/um_login_options_spacing_btwn"
 
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="24"
 
                 android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="16sp" />
+                android:textSize="@dimen/um_login_option_text_size" />
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/signInButton"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dontHaveAccount"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/um_signin_btn_topspacing"
                 android:text="@string/sign_in_btn_value"
                 app:rippleColor="@color/primaryColor" />
 

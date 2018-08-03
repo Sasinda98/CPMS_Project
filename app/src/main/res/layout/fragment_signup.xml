@@ -22,8 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
 
                 android:shadowDy="5"
@@ -38,16 +38,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signUpHeader"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="-3dp"
-                android:padding="5dp"
-                android:shadowColor="#000"
+                android:layout_marginTop="@dimen/um_subheading_spacing_top"
+                android:padding="@dimen/um_padding_shadow"
+                android:shadowColor="@color/um_shadow_color"
                 android:shadowDx="5"
 
                 android:shadowDy="5"
                 android:shadowRadius="24"
                 android:text="@string/construction_project_management_SubHeading"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="14sp" />
+                android:textSize="@dimen/um_subheading_text_size" />
 
             <!--First Name Entry-->
             <android.support.design.widget.TextInputLayout
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signUpSubHeader"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/um_signup_heading_spacing"
                 android:hint="@string/first_name">
 
                 <android.support.design.widget.TextInputEditText
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/confPassword_inputLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/um_btn_top_spacing"
                 android:text="@string/continue1"
                 app:rippleColor="@color/primaryColor"
                 />

@@ -10,4 +10,5 @@
   <color name="secondaryTextColor">#ffffff</color>
   <color name="backgroundLight">#F5F5F6</color>
   <color name="backgroundDark">#e1e2e1</color>
+    <color name="um_shadow_color">#000</color>
 </resources>

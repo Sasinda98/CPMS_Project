@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!--main layout spacings-->
     <dimen name="um_top_spacing">60dp</dimen>
     <dimen name="um_bottom_spacing">20dp</dimen>
     <dimen name="um_side_spacing">16dp</dimen>
+
+    <!--common-->
+    <dimen name="um_subheading_spacing_top">-3dp</dimen>
+    <dimen name="um_padding_shadow">5dp</dimen>
+
+    <!--UI specific-->
+    <dimen name="um_btn_top_spacing">30dp</dimen>
+    <dimen name="um_signin_btn_topspacing">20dp</dimen>
+    <dimen name="um_fp_form_heading_spacing">110dp</dimen>
+    <dimen name="um_login_heading_spacing">90dp</dimen>
+    <dimen name="um_signup_heading_spacing">40dp</dimen>
+    <dimen name="um_login_options_form_spacing">30dp</dimen>
+    <dimen name="um_login_options_spacing_btwn">15dp</dimen>
+
+    <!--Text Sizes-->
+    <dimen name="um_fp_heading_text_size">42sp</dimen>
+    <dimen name="um_subheading_text_size">14sp</dimen>
+    <dimen name="um_fp_login_heading_text_size">72sp</dimen>
+    <dimen name="um_login_option_text_size">16sp</dimen>
+
 </resources>
