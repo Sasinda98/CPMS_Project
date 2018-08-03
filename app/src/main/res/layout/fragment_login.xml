@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/material_dark"
     tools:context=".userManagement.loginFragment">
 
     <RelativeLayout
@@ -84,9 +83,7 @@
                 android:layout_below="@id/email_editText"
                 android:drawableLeft="@drawable/ic_password_solid"
                 android:inputType="textPassword"
-                tools:ignore="RtlHardcoded"
-
-                />
+                tools:ignore="RtlHardcoded" />
 
         </android.support.design.widget.TextInputLayout>
 
