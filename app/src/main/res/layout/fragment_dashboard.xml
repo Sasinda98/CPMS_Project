@@ -46,7 +46,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -80,7 +80,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -114,7 +114,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -148,7 +148,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -182,7 +182,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -216,7 +216,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -250,7 +250,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
@@ -284,7 +284,7 @@
             android:layout_height="0dp"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:cardBackgroundColor="#FF5252"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardElevation="4dp"
             app:cardCornerRadius="4dp"
             >
