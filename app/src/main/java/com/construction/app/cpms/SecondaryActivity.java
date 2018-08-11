@@ -28,7 +28,7 @@ public class SecondaryActivity extends AppCompatActivity{
 
     }
 
-    @Override
+    @Override   //Disable back button (to go back to sign in page) once you are signed in.
     public void onBackPressed() {
         moveTaskToBack(false);
     }
