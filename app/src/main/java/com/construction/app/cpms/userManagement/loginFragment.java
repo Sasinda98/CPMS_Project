@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.construction.app.cpms.Navigation;
@@ -34,6 +35,8 @@ public class loginFragment extends Fragment {
         //getting references to respective textfiels on xml(UI)
         final TextView signUpHeaderTV = view.findViewById(R.id.signInHeader);
         final TextView signUpSubHeaderTV = view.findViewById(R.id.signInSubHeader);
+
+        final Button signInBtn = view.findViewById(R.id.signInButton);
 
         final TextView forgotPasswordTV = view.findViewById(R.id.forgotPassword);
         final TextView dontHaveAccountTV = view.findViewById(R.id.dontHaveAccount);
@@ -68,6 +71,17 @@ public class loginFragment extends Fragment {
 
              }
          });
+
+         signInBtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 //navigate to forgot password fragment.
+                 ((Navigation)getActivity()).naviagateTo(new dashboardFragment(), true);
+             }
+         });
+
+
+
 
         return view;
     }
