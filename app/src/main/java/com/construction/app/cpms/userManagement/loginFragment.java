@@ -2,7 +2,7 @@ package com.construction.app.cpms.userManagement;
 
 
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -11,9 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +20,7 @@ import android.widget.TextView;
 
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.SecondaryActivity;
 
 
 public class loginFragment extends Fragment {
@@ -76,12 +74,13 @@ public class loginFragment extends Fragment {
              @Override
              public void onClick(View view) {
                  //navigate to forgot password fragment.
-                 ((Navigation)getActivity()).naviagateTo(new dashboardFragment(), true);
+               //  ((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
+
+               Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+               startActivity(i,null);
+
              }
          });
-
-
-
 
         return view;
     }

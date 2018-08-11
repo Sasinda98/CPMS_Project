@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.construction.app.cpms.userManagement.loginFragment;
 import com.construction.app.cpms.userManagement.signupFragment;
 
-public class mainActivity extends AppCompatActivity implements Navigation {
+public class MainActivity extends AppCompatActivity implements Navigation {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

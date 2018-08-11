@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".userManagement.dashboardFragment"
+    tools:context=".miscellaneous.DashboardFragment"
     android:background="@color/backgroundDark"
     android:orientation="vertical"
+
+
+    android:paddingTop="?attr/actionBarSize"
+
     >
 
-    <android.support.design.widget.AppBarLayout
+<!--    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
@@ -20,14 +24,14 @@
             app:title="@string/dashboard"
             >
         </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
 
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundDark"
-
+        android:scrollbars="vertical"
         android:padding="16dp"
 
         app:columnCount="2"
