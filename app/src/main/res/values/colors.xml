@@ -10,7 +10,8 @@
   <color name="secondaryTextColor">#ffffff</color>
   <color name="backgroundLight">#F5F5F6</color>
   <color name="backgroundDark">#e1e2e1</color>
-    <color name="um_shadow_color">#000</color>
+  <color name="um_shadow_color">#000</color>
 
   <color name="cardBackground">#212121</color>
+  <color name="btm_navbar_item_notchecked">#f8bbd0</color>
 </resources>
