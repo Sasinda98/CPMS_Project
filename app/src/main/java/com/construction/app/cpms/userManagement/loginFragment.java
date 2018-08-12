@@ -77,11 +77,11 @@ public class loginFragment extends Fragment {
                  //navigate to forgot password fragment.
                  //((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
 
-                 ((Navigation)getActivity()).naviagateTo(new testing(), true);
+                // ((Navigation)getActivity()).naviagateTo(new testing(), true);
 
-
-                 // Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-              // startActivity(i,null);
+                 //once logged in, start secondary activity
+                 Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                 startActivity(i,null);
 
              }
          });
