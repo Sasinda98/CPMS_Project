@@ -18,11 +18,14 @@
             app:titleTextColor="@color/primaryTextColor"
             app:title="@string/dashboard"
             android:elevation="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             >
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <!---->
+    <!-- Frame layout with spacings set aside for appbars
+     using margin top and bottom
+     -->
 
     <FrameLayout
         android:id="@+id/secondaryContainer"

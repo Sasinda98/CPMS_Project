@@ -10,6 +10,8 @@
 
         <item name="colorControlActivated">@color/secondaryDarkColor</item>
 
+        <!--fix for render problem for coordinator layout-->
+        <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
     </style>
 
 

@@ -24,11 +24,15 @@
     <!--Refered to https://stackoverflow.com/questions/10610943/gridlayout-scrollview
         to get the scrolling to work with gridlayout. Out take-: hardcode gridlayout height
     -->
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/backgroundDark"
+
         >
 
 

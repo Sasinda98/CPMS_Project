@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.miscellaneous.DashboardFragment;
+import com.construction.app.cpms.miscellaneous.*;
 import com.construction.app.cpms.SecondaryActivity;
 
 
@@ -77,8 +77,11 @@ public class loginFragment extends Fragment {
                  //navigate to forgot password fragment.
                  //((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
 
-               Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-               startActivity(i,null);
+                 ((Navigation)getActivity()).naviagateTo(new testing(), true);
+
+
+                 // Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+              // startActivity(i,null);
 
              }
          });
