@@ -17,18 +17,24 @@
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
             app:title="@string/dashboard"
+            android:elevation="8dp"
             >
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <!---->
+
     <FrameLayout
         android:id="@+id/secondaryContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
         >
 
     </FrameLayout>
+
+
 
 
     <android.support.design.widget.BottomNavigationView
@@ -44,7 +50,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation"
-        android:elevation="5dp"
+        android:elevation="8dp"
         />
 
 </android.support.constraint.ConstraintLayout>

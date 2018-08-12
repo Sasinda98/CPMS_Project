@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.DashboardFragment;
 import com.construction.app.cpms.SecondaryActivity;
 
 
@@ -74,7 +75,7 @@ public class loginFragment extends Fragment {
              @Override
              public void onClick(View view) {
                  //navigate to forgot password fragment.
-               //  ((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
+                 //((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
 
                Intent i =  new Intent(getActivity(), SecondaryActivity.class);
                startActivity(i,null);

@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".miscellaneous.NotificationsFragment"
 
-    android:paddingTop="?attr/actionBarSize"
-
     >
 
     <!-- TODO: Update blank fragment layout -->
