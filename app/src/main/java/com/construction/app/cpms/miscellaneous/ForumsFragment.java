@@ -1,7 +1,6 @@
 package com.construction.app.cpms.miscellaneous;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,10 +15,10 @@ import com.construction.app.cpms.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessagesFragment extends Fragment {
+public class ForumsFragment extends Fragment {
 
 
-    public MessagesFragment() {
+    public ForumsFragment() {
         // Required empty public constructor
     }
 
@@ -28,16 +27,14 @@ public class MessagesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_messages, null, false);
+        View view = inflater.inflate(R.layout.fragment_forums, container, false);
 
         setUpTopBar(view);
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         return view;
     }
 
-    //Used mdc codelabs as reference, helper method
+    //Used mdc codelabs as reference
     private void setUpTopBar(View view){
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();

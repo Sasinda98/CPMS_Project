@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -13,10 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
-            app:title="@string/Messages"
+            app:title="@string/Forums"
             android:elevation="8dp"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            >
+            app:navigationIcon="@drawable/ic_back"
+            tools:ignore="UnusedAttribute">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -37,7 +40,7 @@
 
             <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="1800dp"
+                android:layout_height="1400dp"
                 android:background="@color/backgroundDark"
                 android:scrollbars="vertical"
                 android:padding="8dp"
@@ -49,6 +52,7 @@
                 app:alignmentMode="alignMargins"
 
                 >
+
                 <!-- row1-->
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
@@ -62,81 +66,100 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="16dp"
+                        android:layout_margin="8dp"
                         android:orientation="horizontal"
                         >
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/sender_pic_imgView1"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/gayal"
-                            android:elevation="4dp"
-
-                            app:civ_border_color="#BDBDBD"
-                            app:civ_border_width="1dp"
-
-                            />
 
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            >
+                            tools:ignore="UselessParent">
+
+                            <!--Title-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:textSize="23sp"
+                                android:text="Forum Post Test Title 1"
+                                android:textColor="#212121"
+                                android:textAlignment="center" />
+                            <!--Post tag-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:textSize="12sp"
+                                android:text="Posted by : Gayal Sasinda"
+                                android:textColor="#616161"
+                                android:textAlignment="center" />
+
+                            <!--Body-->
+                            <TextView
+                                android:layout_marginTop="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:text="Apparently we had reached a great height in the atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was dished out, and the car seemed to float in the middle of an immense dark sphere, whose upper half was strewn with silver. Looking down into the dark gulf below..."
+                                android:textColor="#424242"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginBottom="8dp"
+                                 />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        >
+
+                        <!--Track btn-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+
                             android:layout_marginLeft="16dp"
-                            android:textSize="25sp"
-                            android:text="Gayal Sasinda"
-                            android:textColor="#212121"
-                            android:textAlignment="center" />
+                            android:textSize="16sp"
+                            android:text="Track"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="12sp"
-                                android:text="Project Manager"
-                                android:textColor="#616161"
-                                android:textAlignment="center" />
+                            />
 
-                            <TextView
-                                android:layout_marginTop="12dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="14sp"
-                                android:text="You : Okay we'll get that sorted as s...."
-                                android:textColor="#424242"
-                                android:textAlignment="center" />
+                        <!--view more btn-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"
+                            android:text="View More"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
 
-                        </LinearLayout>
-
+                            />
 
                     </LinearLayout>
+
 
                     <!--Time stamp-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="12:30pm"
-                        android:textColor="#757575"
-                        android:layout_gravity="right|top"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        />
-
-                    <!--deliver status stamp-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Delivered"
+                        android:text="00/00/00 12:30pm"
                         android:textColor="#757575"
                         android:layout_gravity="right|bottom"
                         android:layout_marginRight="8dp"
@@ -144,9 +167,10 @@
                         />
 
 
+
                 </android.support.v7.widget.CardView>
 
-                <!-- row2-->
+                <!-- row1-->
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -159,22 +183,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="16dp"
+                        android:layout_margin="8dp"
                         android:orientation="horizontal"
                         >
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/sender_pic_imgView3"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ayyoob"
-                            android:elevation="4dp"
-
-                            app:civ_border_color="#BDBDBD"
-                            app:civ_border_width="1dp"
-
-                            />
 
 
                         <LinearLayout
@@ -182,33 +193,38 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             >
+
+                            <!--Title-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="25sp"
-                                android:text="Ayyoob Rifdhi"
+                                android:layout_marginLeft="8dp"
+                                android:textSize="23sp"
+                                android:text="Forum Post Test Title 2"
                                 android:textColor="#212121"
                                 android:textAlignment="center" />
-
+                            <!--Post tag-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
+                                android:layout_marginLeft="8dp"
                                 android:textSize="12sp"
-                                android:text="Finances Manager"
+                                android:text="Posted by : Theeban Rajendra"
                                 android:textColor="#616161"
                                 android:textAlignment="center" />
 
+                            <!--Body-->
                             <TextView
                                 android:layout_marginTop="12dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="14sp"
-                                android:text="How are things looking for the..."
+                                android:textSize="15sp"
+                                android:text="Apparently we had reached a great height in the atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was dished out, and the car seemed to float in the middle of an immense dark sphere, whose upper half was strewn with silver. Looking down into the dark gulf below..."
                                 android:textColor="#424242"
-                                android:textAlignment="center" />
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginBottom="8dp"
+                                />
 
 
                         </LinearLayout>
@@ -216,33 +232,62 @@
 
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        >
+
+                        <!--Track btn-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"
+                            android:text="Track"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
+
+                            />
+
+                        <!--view more btn-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"
+                            android:text="View More"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
+
+                            />
+
+                    </LinearLayout>
+
+
                     <!--Time stamp-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="10:35am"
-                        android:textColor="#757575"
-                        android:layout_gravity="right|top"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        />
-
-                    <!--deliver status stamp-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Sent"
+                        android:text="00/00/00 12:30pm"
                         android:textColor="#757575"
                         android:layout_gravity="right|bottom"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
                         />
 
+
+
                 </android.support.v7.widget.CardView>
 
-                <!-- row3-->
+                <!-- row1-->
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -255,21 +300,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="16dp"
+                        android:layout_margin="8dp"
                         android:orientation="horizontal"
                         >
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/sender_pic_imgView2"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/chandula"
-                            android:elevation="4dp"
-                            app:civ_border_color="#BDBDBD"
-                            app:civ_border_width="1dp"
-
-                            />
 
 
                         <LinearLayout
@@ -277,33 +310,38 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             >
+
+                            <!--Title-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="25sp"
-                                android:text="Chandula Harasgama"
+                                android:layout_marginLeft="8dp"
+                                android:textSize="23sp"
+                                android:text="Forum Post Test Title 3"
                                 android:textColor="#212121"
                                 android:textAlignment="center" />
-
+                            <!--Post tag-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
+                                android:layout_marginLeft="8dp"
                                 android:textSize="12sp"
-                                android:text="Inventory Manager"
+                                android:text="Posted by : Gayal Sasinda"
                                 android:textColor="#616161"
                                 android:textAlignment="center" />
 
+                            <!--Body-->
                             <TextView
                                 android:layout_marginTop="12dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:textSize="14sp"
-                                android:text="Shipment will be delayed."
+                                android:textSize="15sp"
+                                android:text="Apparently we had reached a great height in the atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was dished out, and the car seemed to float in the middle of an immense dark sphere, whose upper half was strewn with silver. Looking down into the dark gulf below..."
                                 android:textColor="#424242"
-                                android:textAlignment="center" />
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginBottom="8dp"
+                                />
 
 
                         </LinearLayout>
@@ -311,29 +349,58 @@
 
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        >
+
+                        <!--Track btn-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"
+                            android:text="Track"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
+
+                            />
+
+                        <!--view more btn-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"
+                            android:text="View More"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor"
+
+                            />
+
+                    </LinearLayout>
+
+
                     <!--Time stamp-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="01:23pm"
-                        android:textColor="#757575"
-                        android:layout_gravity="right|top"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        />
-
-                    <!--deliver status stamp-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Seen"
+                        android:text="00/00/00 12:30pm"
                         android:textColor="#757575"
                         android:layout_gravity="right|bottom"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
                         />
+
+
 
                 </android.support.v7.widget.CardView>
 
@@ -529,242 +596,8 @@
 
                 </android.support.v7.widget.CardView>
 
-                <!--col2 row3-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
 
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
 
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <!--col1 row4-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <!--col2 row4-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <!--col1 row5-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <!--col2 row5-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <!--col1 row6-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <!--col2 row6-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    app:cardBackgroundColor="@color/cardBackground"
-                    app:cardElevation="4dp"
-                    app:cardCornerRadius="4dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/db_card_title"
-                            android:text="Sample"
-                            android:textColor="@color/primaryTextColor"
-                            android:textAlignment="center" />
-
-                        <ImageView
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
 
 
             </android.support.v7.widget.GridLayout>
@@ -774,4 +607,5 @@
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
+
 

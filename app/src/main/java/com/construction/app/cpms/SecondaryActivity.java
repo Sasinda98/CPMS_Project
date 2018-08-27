@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.DashboardFragment;
+import com.construction.app.cpms.miscellaneous.ForumsFragment;
 import com.construction.app.cpms.miscellaneous.MessagesFragment;
 import com.construction.app.cpms.miscellaneous.NotificationsFragment;
 
@@ -48,12 +49,14 @@ public class SecondaryActivity extends AppCompatActivity{
             switch (item.getItemId()) {                 //Setting the fragment object to correct fragment according to user input using a switch..
                 case R.id.navigation_dashboard:         //code to execute when dashboard is clicked.
                      fragment = new DashboardFragment();
+
                     break;
                 case R.id.navigation_message:           //code to execute when messages is clicked.
                     fragment = new MessagesFragment();
                     break;
                 case R.id.navigation_notifications:     //code to execute when notifications is clicked.
-                    fragment = new NotificationsFragment();
+                   // fragment = new NotificationsFragment();
+                    fragment = new ForumsFragment();
                     break;
             }
             Boolean result = goToFragment(fragment);

@@ -24,7 +24,7 @@
     <dimen name="um_subheading_text_size">14sp</dimen>
     <dimen name="um_fp_main_heading_text_size">72sp</dimen>
     <dimen name="um_login_option_text_size">16sp</dimen>
-    <dimen name="db_card_title">30sp</dimen>
+    <dimen name="db_card_title">22dp</dimen>
 
 
     <!--dashboard test screen-->

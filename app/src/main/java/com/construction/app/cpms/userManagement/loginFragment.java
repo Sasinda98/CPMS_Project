@@ -81,6 +81,7 @@ public class loginFragment extends Fragment {
 
                  //once logged in, start secondary activity
                  Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                 
                  startActivity(i,null);
 
              }
