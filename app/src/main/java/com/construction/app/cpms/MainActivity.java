@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity implements Navigation {
             getSupportFragmentManager().beginTransaction().add(R.id.container, loginFragment).commit(); //adding loginFragment to container
         }
 
-
     }
+
 
     @Override
     public void naviagateTo(Fragment fragmentToNavigateTo, boolean addToBackStack) {
@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements Navigation {
         if(addToBackStack){
             fragmentTransaction.addToBackStack(null);
         }
-
-
 
         fragmentTransaction.commit();
     }

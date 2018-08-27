@@ -72,6 +72,7 @@
         >
         <!--col1 row1-->
         <android.support.v7.widget.CardView
+            android:id="@+id/plansTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_columnWeight="1"
@@ -106,6 +107,7 @@
 
         <!--col2 row1-->
         <android.support.v7.widget.CardView
+            android:id="@+id/inventoryTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_columnWeight="1"
@@ -141,6 +143,7 @@
 
         <!--col1 row2-->
         <android.support.v7.widget.CardView
+            android:id="@+id/financesTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_columnWeight="1"
@@ -175,6 +178,7 @@
 
         <!--col2 row2-->
         <android.support.v7.widget.CardView
+            android:id="@+id/forumsTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_columnWeight="1"
@@ -209,6 +213,7 @@
 
         <!--col1 row3-->
         <android.support.v7.widget.CardView
+            android:id="@+id/milestonesTile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_columnWeight="1"

@@ -83,6 +83,7 @@ public class loginFragment extends Fragment {
                  Intent i =  new Intent(getActivity(), SecondaryActivity.class);
                  
                  startActivity(i,null);
+                 getActivity().finish();    //Destroy this activity from backstack so itdoesnt go back with back button
 
              }
          });
