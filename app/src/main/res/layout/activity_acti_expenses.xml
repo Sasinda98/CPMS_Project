@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".expenses.actiExpenses"
+    android:background="@color/backgroundDark"
+    >
+
+    <!--top appbar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:title="@string/expenses"
+            app:titleTextColor="@color/primaryTextColor"></android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <!--bottom navbar-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/primaryColor"
+        app:itemIconTint="@color/bttm_navbar_tab_colors"
+        app:itemTextColor="@color/bttm_navbar_tab_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation"
+        android:elevation="8dp"
+        />
+
+    <!--recent summary list-->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ImageButton
+        android:id="@+id/directButt"
+        android:layout_width="@dimen/buttonWxH"
+        android:layout_height="@dimen/buttonWxH"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/buttonPadding3"
+        android:layout_marginStart="@dimen/buttonPadding3"
+        android:layout_marginTop="@dimen/buttonPadding2"
+        android:background="@drawable/hammer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+    <ImageButton
+        android:id="@+id/miscellaneousButt"
+        android:layout_width="@dimen/buttonWxH"
+        android:layout_height="@dimen/buttonWxH"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/buttonPadding"
+        android:layout_marginStart="@dimen/buttonPadding"
+        android:layout_marginTop="@dimen/buttonPadding2"
+        android:background="@drawable/settings"
+        app:layout_constraintStart_toEndOf="@+id/directButt"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+    <ImageButton
+        android:id="@+id/consultationButt"
+        android:layout_width="@dimen/buttonWxH"
+        android:layout_height="@dimen/buttonWxH"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="128dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="@dimen/buttonPadding"
+        android:background="@drawable/group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/directButt" />
+
+    <ImageButton
+        android:id="@+id/overButt"
+        android:layout_width="@dimen/buttonWxH"
+        android:layout_height="@dimen/buttonWxH"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/buttonPadding"
+        android:layout_marginStart="@dimen/buttonPadding"
+        android:layout_marginTop="@dimen/buttonPadding"
+        android:background="@drawable/bill"
+        app:layout_constraintStart_toEndOf="@+id/consultationButt"
+        app:layout_constraintTop_toBottomOf="@+id/miscellaneousButt" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/captionPadding"
+        android:layout_marginStart="@dimen/captionPadding"
+        android:text="@string/directCost"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/directButt" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="@dimen/captionPadding1"
+        android:layout_height="@dimen/captionPadding2"
+        android:layout_marginLeft="@dimen/captionPadding3"
+        android:layout_marginStart="@dimen/captionPadding3"
+        android:text="@string/miscellaneous"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/miscellaneousButt" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/captionPadding"
+        android:layout_marginStart="@dimen/captionPadding"
+        android:text="@string/consultation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consultationButt" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/captionPadding2"
+        android:layout_marginLeft="@dimen/captionPadding4"
+        android:layout_marginStart="@dimen/captionPadding4"
+        android:text="@string/overheads"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/overButt" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/captionPadding5"
+        android:layout_marginStart="@dimen/captionPadding5"
+        android:layout_marginTop="@dimen/captionPadding4"
+        android:text="@string/recents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -31,9 +31,31 @@
     <dimen name="gl_padding">20dp</dimen>
     <dimen name="card_size">170dp</dimen>
     <dimen name="cornerRadius">4dp</dimen>
+
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="listitem_height">30dp</dimen>
+
+
+
+    <!--expenses homescreen-->
+    <dimen name="buttonPadding">44dp</dimen>
+    <dimen name="buttonWxH">50dip</dimen>
+    <dimen name="buttonPadding2">60dp</dimen>
+    <dimen name="buttonPadding3">128dp</dimen>
+    <dimen name="captionPadding">116dp</dimen>
+    <dimen name="captionPadding1">92dp</dimen>
+    <dimen name="captionPadding2">18dp</dimen>
+    <dimen name="captionPadding3">4dp</dimen>
+    <dimen name="captionPadding4">16dp</dimen>
+    <dimen name="captionPadding5">44dp</dimen>
+    <dimen name="fabpadding">40dp</dimen>
+    <string name="desc_listadapter">Description</string>
+    <string name="category_listadapter">Category</string>
 
 </resources>

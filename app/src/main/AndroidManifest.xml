@@ -21,6 +21,11 @@
         <activity
             android:name=".SecondaryActivity"
             android:label="@string/title_activity_secondary" />
+
+        <activity android:name=".expenses.actiExpenses">
+
+        </activity>
     </application>
+
 
 </manifest>

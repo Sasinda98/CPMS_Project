@@ -30,4 +30,14 @@
     <string name="title_notifications">Notifications</string>
     <string name="Messages">Messages</string>
     <string name="Forums">Forums</string>
+
+    <string name="amount_listadapter">Amount</string>
+    <string name="expenses">Expenses</string>
+    <string name="directCost">Direct Costs</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="consultation">Consultation</string>
+    <string name="overheads">Overheads</string>
+    <string name="recents">Recent Summary</string>
+
+
 </resources>

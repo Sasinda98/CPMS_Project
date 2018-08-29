@@ -427,7 +427,7 @@
                             android:id="@+id/sender_pic_imgView4"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/harshan"
+                            android:src="@drawable/db_inventory"
                             android:elevation="4dp"
 
                             app:civ_border_color="#BDBDBD"
@@ -523,7 +523,7 @@
                             android:id="@+id/sender_pic_imgView5"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/dc_pic"
+                            android:src="@drawable/db_inventory"
                             android:elevation="4dp"
 
                             app:civ_border_color="#BDBDBD"

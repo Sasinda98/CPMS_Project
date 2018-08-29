@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:weightSum="100">
+
+    <TextView
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="@string/desc_listadapter"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/textView1"
+        android:layout_weight="50"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="50">
+
+        <TextView
+        android:gravity="center"
+        android:text="@string/category_listadapter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:id="@+id/textView2" />
+
+
+        <TextView
+            android:gravity="center"
+            android:text="@string/amount_listadapter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:id="@+id/textView3" />
+
+    </LinearLayout>
+
+    </LinearLayout>
