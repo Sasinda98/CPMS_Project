@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,9 @@ public class loginFragment extends Fragment {
         passwordEntry = view.findViewById(R.id.password_editText);
 
 
+
+
+
         //Refered to the following links to see how to add custom fonts -:
         // #1 https://stackoverflow.com/questions/26140094/custom-fonts-in-android-api-below-16
         // #2 https://stackoverflow.com/questions/43350183/cannot-resolve-method-getassets-while-adding-custom-font
@@ -103,6 +107,8 @@ public class loginFragment extends Fragment {
 
              }
          });
+
+
 
          signInBtn.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -134,9 +140,22 @@ public class loginFragment extends Fragment {
                             {
                                 String value = jsonObject.getString("userId");
 
-                                Toast.makeText(getContext(), "Userid= " + value, Toast.LENGTH_LONG).show();
-                                //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-                                // startActivity(i,null);
+                                boolean isEmailMatched = Boolean.valueOf(jsonObject.getString("isEmailMatched"));
+                                boolean isPasswordMatched = Boolean.valueOf(jsonObject.getString("isPasswordMatched"));
+                                String userId = jsonObject.getString("userId"); //null if there is no a matching accnt.
+
+                                if( isEmailMatched && isPasswordMatched && userId != null ){ //means user credentials match an actual accnt in db, script returns null itheres no matcvh
+                                    //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                                    // startActivity(i,null);
+                                    Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
+
+
+                                }
+                                else{
+                                    //account doesnt exist. invalid credentials..
+                                    Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
+                                }
+
 
 
                             } else{
