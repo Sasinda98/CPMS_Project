@@ -38,6 +38,9 @@
     <string name="consultation">Consultation</string>
     <string name="overheads">Overheads</string>
     <string name="recents">Recent Summary</string>
+    <string name="item_name">Item Name</string>
+    <string name="inventory_item_qty">Item Qty</string>
+    <string name="inventory_item_name">item Name</string>
 
 
 </resources>
