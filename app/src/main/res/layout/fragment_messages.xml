@@ -68,7 +68,7 @@
                         >
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/sender_pic_imgView1"
+                            android:id="@+id/item_row_image"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:src="@drawable/db_inventory"

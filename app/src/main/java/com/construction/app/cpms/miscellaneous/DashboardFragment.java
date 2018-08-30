@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.expenses.actiExpenses;
-import com.construction.app.cpms.userManagement.signupFragment;
+import com.construction.app.cpms.inventoryManagement.*;
 
 
 /**
@@ -57,8 +57,11 @@ public class DashboardFragment extends Fragment {
         inventoryTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Inventory Tile Clicked", Toast.LENGTH_SHORT);
-                toast.show();
+//                Toast toast = Toast.makeText(getContext(), "Inventory Tile Clicked", Toast.LENGTH_SHORT);
+//                toast.show();
+                Intent intent = new Intent(getActivity(), inventory_items_list.class);
+                startActivity(intent, null);
+
             }
         });
 

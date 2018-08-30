@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.construction.app.cpms">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:noHistory="true"
-            >
+        <activity
+            android:name=".MainActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,11 +23,8 @@
         <activity
             android:name=".SecondaryActivity"
             android:label="@string/title_activity_secondary" />
-
-        <activity android:name=".expenses.actiExpenses">
-
-        </activity>
+        <activity android:name=".expenses.actiExpenses" />
+        <activity android:name=".inventoryManagement.inventory_items_list"></activity>
     </application>
-
 
 </manifest>
