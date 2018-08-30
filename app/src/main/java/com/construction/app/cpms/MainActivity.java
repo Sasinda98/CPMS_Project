@@ -12,7 +12,7 @@ import com.construction.app.cpms.userManagement.signupFragment;
 
 public class MainActivity extends AppCompatActivity implements Navigation {
 
-    private boolean isLoggedIn = true ;  //for testing purposes value is hardcoded.
+    private boolean isLoggedIn = false ;  //for testing purposes value is hardcoded.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,7 @@ public class MainActivity extends AppCompatActivity implements Navigation {
                 getSupportFragmentManager().beginTransaction().add(R.id.container, loginFragment).commit(); //adding loginFragment to container
             }
         }
-
-
-
     }
-
 
     @Override
     public void naviagateTo(Fragment fragmentToNavigateTo, boolean addToBackStack) {
