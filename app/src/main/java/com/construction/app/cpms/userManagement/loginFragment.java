@@ -75,9 +75,6 @@ public class loginFragment extends Fragment {
         passwordEntry = view.findViewById(R.id.password_editText);
 
 
-
-
-
         //Refered to the following links to see how to add custom fonts -:
         // #1 https://stackoverflow.com/questions/26140094/custom-fonts-in-android-api-below-16
         // #2 https://stackoverflow.com/questions/43350183/cannot-resolve-method-getassets-while-adding-custom-font
@@ -113,78 +110,67 @@ public class loginFragment extends Fragment {
          signInBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 //navigate to forgot password fragment.
-                 //((Navigation)getActivity()).naviagateTo(new DashboardFragment(), true);
 
-                // ((Navigation)getActivity()).naviagateTo(new testing(), true);
+                //Checking if the form entered data is correct...
+                 if(!FormValidator.isEmailValid(emailEntry.getText().toString()) && !FormValidator.isPasswordEntryCorrect(passwordEntry.getText().toString())){
+                     Toast toast = Toast.makeText(getContext(), "Login Credentials Are Invalid", Toast.LENGTH_SHORT);
+                     toast.show();
+                 }
+                 else {
+                     //if form entered data is correct go ahead with database operations etc...
+                     stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                         @Override
+                         public void onResponse(String response) {       //Handling the response using json object...
+                             try {
+                                 JSONObject jsonObject = new JSONObject(response);   //Response to jsonobject
 
-                 //once logged in, start secondary activity
+                                 //checking if the sent response has the relevant attributes.. if so continue with the sign in..
+                                 if (jsonObject.names().get(0).equals("isEmailMatched")
+                                         && jsonObject.names().get(1).equals("isPasswordMatched")
+                                         && jsonObject.names().get(2).equals("userId")) {
+                                     String value = jsonObject.getString("userId");
 
+                                     boolean isEmailMatched = Boolean.valueOf(jsonObject.getString("isEmailMatched"));
+                                     boolean isPasswordMatched = Boolean.valueOf(jsonObject.getString("isPasswordMatched"));
+                                     String userId = jsonObject.getString("userId"); //null if there is no a matching accnt.
 
-                 //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-                // startActivity(i,null);
-
-                // getActivity().finish();    //Destroy this activity from backstack so itdoesnt go back with back button
-
-
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {       //Handling the response using json object...
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);   //Response to jsonobject
-
-                            //checking if the sent response has the relevant attributes.. if so continue with the sign in..
-                            if(jsonObject.names().get(0).equals("isEmailMatched")
-                                    && jsonObject.names().get(1).equals("isPasswordMatched")
-                                        &&  jsonObject.names().get(2).equals("userId") )
-                            {
-                                String value = jsonObject.getString("userId");
-
-                                boolean isEmailMatched = Boolean.valueOf(jsonObject.getString("isEmailMatched"));
-                                boolean isPasswordMatched = Boolean.valueOf(jsonObject.getString("isPasswordMatched"));
-                                String userId = jsonObject.getString("userId"); //null if there is no a matching accnt.
-
-                                if( isEmailMatched && isPasswordMatched && userId != null ){ //means user credentials match an actual accnt in db, script returns null itheres no matcvh
-                                    //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-                                    // startActivity(i,null);
-                                    Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
+                                     if (isEmailMatched && isPasswordMatched && userId != null) { //means user credentials match an actual accnt in db, script returns null itheres no matcvh
+                                         //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                                         // startActivity(i,null);
+                                         Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
 
 
-                                }
-                                else{
-                                    //account doesnt exist. invalid credentials..
-                                    Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
-                                }
+                                     } else {
+                                         //account doesnt exist. invalid credentials..
+                                         Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
+                                     }
 
 
+                                 } else {
+                                     Toast.makeText(getContext(), "Error Occurred, DB OR INT", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
+                                 }
 
-                            } else{
-                                Toast.makeText(getContext(), "Error Occurred, DB OR INT", Toast.LENGTH_LONG).show();    //When there are issues wit response, network down etc.
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    //send email and password to post...
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("email", emailEntry.getText().toString());
-                        params.put("password", passwordEntry.getText().toString());
-                        return params;
-                    }
-                };
-
-                requestQueue.add(stringRequest);
-
+                             } catch (JSONException e) {
+                                 e.printStackTrace();
+                             }
+                         }
+                     }, new Response.ErrorListener() {
+                         @Override
+                         public void onErrorResponse(VolleyError error) {
+                             Toast.makeText(getContext(), "Error Occurred, while connecting to internet", Toast.LENGTH_LONG).show();    //When there are issues wit response, network down etc.
+                         }
+                     }) {
+                         //send email and password to post...
+                         @Override
+                         protected Map<String, String> getParams() throws AuthFailureError {
+                             HashMap<String, String> params = new HashMap<>();
+                             params.put("email", emailEntry.getText().toString());
+                             params.put("password", passwordEntry.getText().toString());
+                             return params;
+                         }
+                     };
+                     requestQueue.add(stringRequest);
+                 }
              }//end of onclick
          });
 

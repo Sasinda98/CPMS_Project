@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,6 +44,7 @@ public class signupFragment extends Fragment {
     private TextInputEditText mobileNumberEntry = null;
     private TextInputEditText emailEntry = null;
     private TextInputEditText passwordEntry = null;
+    private TextInputEditText confirmPasswordEntry = null;
 
 
     //Database
@@ -50,7 +53,7 @@ public class signupFragment extends Fragment {
     private StringRequest stringRequest;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
 
@@ -65,8 +68,9 @@ public class signupFragment extends Fragment {
         fNameEntry = view.findViewById(R.id.fname_editText);
         lNameEntry = view.findViewById(R.id.lname_editText);
         mobileNumberEntry = view.findViewById(R.id.mobile_editText);
-        emailEntry = view.findViewById(R.id.fname_editText);
+        emailEntry = view.findViewById(R.id.email_editText);
         passwordEntry = view.findViewById(R.id.password_editText);
+        confirmPasswordEntry = view.findViewById(R.id.confPassword_editText);
 
         continueBtn = view.findViewById(R.id.ContinueBtn);
 
@@ -79,35 +83,76 @@ public class signupFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
+
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                boolean isFormValid = true;
 
+                if(!FormValidator.isNameValid(fNameEntry.getText().toString())){
+                   fNameEntry.setError("Enter your first name");
+                   //return;
+                    isFormValid = false;
+                }
+
+
+                if(!FormValidator.isNameValid(lNameEntry.getText().toString())){
+                    lNameEntry.setError("Enter your last name");
+                    isFormValid = false;
+                }
+
+                if(!FormValidator.isPhoneValid(mobileNumberEntry.getText().toString())){
+                    mobileNumberEntry.setError("Check your mobile number");
+                    isFormValid = false;
+                }
+
+                if(!FormValidator.isEmailValid(emailEntry.getText().toString())){
+                    emailEntry.setError("Check your email address");
+                    isFormValid = false;
+                }
+
+                //if length of password not enough display error if not, check if conf and pw fields match , if not display error
+                if(!FormValidator.isPasswordEntryCorrect(passwordEntry.getText().toString())){
+                    passwordEntry.setError("Password length > 5");
+                    isFormValid = false;
+                } else {
+                    //if confirm pw input and pw dont match
+                    if (!passwordEntry.getText().toString().equals(confirmPasswordEntry.getText().toString())) {
+                        isFormValid = false;
+                        passwordEntry.setError("Passwords don't match");
+                        confirmPasswordEntry.setError("Passwords don't match");
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }
 
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("fName", fNameEntry.getText().toString());
-                        params.put("lName", lNameEntry.getText().toString());
-                        params.put("contactNo", mobileNumberEntry.getText().toString());
-                        params.put("email", emailEntry.getText().toString());
-                        params.put("password", passwordEntry.getText().toString());
-                        return params;
-                    }
-                };
+                //if form entered data checks out, go ahead with post requests to php script
+                if(isFormValid == true){
 
-                requestQueue.add(request);
+                    StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String,String> params = new HashMap<>();
+                            params.put("fName", fNameEntry.getText().toString());
+                            params.put("lName", lNameEntry.getText().toString());
+                            params.put("contactNo", mobileNumberEntry.getText().toString());
+                            params.put("email", emailEntry.getText().toString());
+                            params.put("password", passwordEntry.getText().toString());
+                            return params;
+                        }
+                    };
+
+                    requestQueue.add(request);
+                }
 
             }//end onclick
         });
