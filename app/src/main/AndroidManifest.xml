@@ -24,7 +24,8 @@
             android:name=".SecondaryActivity"
             android:label="@string/title_activity_secondary" />
         <activity android:name=".expenses.actiExpenses" />
-        <activity android:name=".inventoryManagement.inventory_items_list"></activity>
+        <activity android:name=".inventoryManagement.inventory_items_list" />
+        <activity android:name=".inventoryManagement.inventory_category_grid"></activity>
     </application>
 
 </manifest>

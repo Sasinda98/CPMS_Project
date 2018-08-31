@@ -2,12 +2,9 @@ package com.construction.app.cpms.inventoryManagement;
 // http://camposha.info/source/android-custom-cardview-listview-source
 //above used as examples
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,7 +42,7 @@ public class inventory_item_row_adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view==null)
         {
-            view= LayoutInflater.from(c).inflate(R.layout.category_items_list_row,viewGroup,false);
+            view= LayoutInflater.from(c).inflate(R.layout.inventory_items_list_row,viewGroup,false);
         }
 
         final inventory_item_Bean item= (inventory_item_Bean) this.getItem(i);

@@ -59,7 +59,7 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
 //                Toast toast = Toast.makeText(getContext(), "Inventory Tile Clicked", Toast.LENGTH_SHORT);
 //                toast.show();
-                Intent intent = new Intent(getActivity(), inventory_items_list.class);
+                Intent intent = new Intent(getActivity(), inventory_category_grid.class);
                 startActivity(intent, null);
 
             }

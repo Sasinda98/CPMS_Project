@@ -41,6 +41,7 @@
     <string name="item_name">Item Name</string>
     <string name="inventory_item_qty">Item Qty</string>
     <string name="inventory_item_name">item Name</string>
+    <string name="categories_title">CATEGORIES</string>
 
 
 </resources>
