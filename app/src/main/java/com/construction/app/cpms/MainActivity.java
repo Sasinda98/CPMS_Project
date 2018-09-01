@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements Navigation {
         if(addToBackStack){
             fragmentTransaction.addToBackStack(null);
         }
-
         fragmentTransaction.commit();
     }
 }
