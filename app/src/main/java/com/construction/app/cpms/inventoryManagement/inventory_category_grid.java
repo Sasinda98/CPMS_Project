@@ -36,7 +36,7 @@ public class inventory_category_grid extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Click action
-                Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
+                Intent intent = new Intent(inventory_category_grid.this, inventory_add_item.class);
                 startActivity(intent);
             }
         });

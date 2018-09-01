@@ -25,7 +25,9 @@
             android:label="@string/title_activity_secondary" />
         <activity android:name=".expenses.actiExpenses" />
         <activity android:name=".inventoryManagement.inventory_items_list" />
-        <activity android:name=".inventoryManagement.inventory_category_grid"></activity>
+        <activity android:name=".inventoryManagement.inventory_category_grid" />
+        <activity android:name=".inventoryManagement.inventory_add_item" android:windowSoftInputMode="adjustPan"></activity>
+
     </application>
 
 </manifest>
