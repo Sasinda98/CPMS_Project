@@ -31,7 +31,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".inventoryManagement.inventory_request_item"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".inventoryManagement.inventory_project_manager"></activity>
     </application>
 
 </manifest>
