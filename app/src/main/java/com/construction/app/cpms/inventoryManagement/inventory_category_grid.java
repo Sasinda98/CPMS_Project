@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -28,7 +29,14 @@ public class inventory_category_grid extends AppCompatActivity {
         adapter = new inventory_category_adapter(this, getData());
         gridView.setAdapter(adapter);
 
+    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
+            startActivity(intent);
 
+        }
+    });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.categoryFloatingActionButton);
@@ -36,8 +44,8 @@ public class inventory_category_grid extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Click action
-//                Intent intent = new Intent(inventory_category_grid.this, inventory_add_item.class);
-                Intent intent = new Intent(inventory_category_grid.this, inventory_request_item.class);
+                Intent intent = new Intent(inventory_category_grid.this, inventory_add_item.class);
+                
                 startActivity(intent);
             }
         });

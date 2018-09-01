@@ -55,12 +55,14 @@ public class inventory_category_adapter extends BaseAdapter {
 
         image.setImageResource(item.getImageID());
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(c, item.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(c, item.getName(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        })
+//        ;
 
         return view;
     }
