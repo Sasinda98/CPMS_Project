@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inventoryManagement.inventory_category_grid"
-    android:background="@color/backgroundDark">
+    tools:context=".inventoryManagement.inventory_project_manager">
 
 
     <!--top appbar-->
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="224dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="236dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="232dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="236dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.CardView>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -22,7 +54,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="8dp"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="@string/categories_title"
+            app:title="Inventory Manager"
             app:titleTextColor="@color/primaryTextColor"></android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -44,40 +76,17 @@
         android:elevation="8dp"
         />
 
-
-    <GridView
-        android:id="@+id/inventory_category_grid"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:horizontalSpacing="20dp"
-        android:numColumns="3"
-        android:padding="20dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/categoryFloatingActionButton"
-        android:layout_width="65dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:background="@drawable/helmet"
-        android:clickable="true"
-        android:tint="@color/primaryLightColor"
-        app:backgroundTint="@color/primaryLightColor"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus" />
+    </android.support.v7.widget.CardView>
+
 
 </android.support.constraint.ConstraintLayout>
 
