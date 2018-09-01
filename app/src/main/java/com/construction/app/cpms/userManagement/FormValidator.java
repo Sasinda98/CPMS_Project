@@ -4,7 +4,7 @@ package com.construction.app.cpms.userManagement;
 //This class handles basic form validations.
 public class FormValidator {
 
-    private final static int MIN_EMAIL_LENGTH = 5;
+    private final static int MIN_EMAIL_LENGTH = 1;
     private final static int MIN_PASSWORD_LENGTH = 5;
     private final static int MIN_NAME_LENGTH = 5;
     private final static int MIN_PHONE_LENGTH = 10;
