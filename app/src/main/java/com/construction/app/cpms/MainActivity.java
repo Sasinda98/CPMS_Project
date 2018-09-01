@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements Navigation {
         else {      //if not logged in
             if(savedInstanceState == null){ //Checking for savedinstances, to prevent creation of more than one fragment.
                 loginFragment loginFragment = new loginFragment();  //instantiation of login fragment.
-                getSupportFragmentManager().beginTransaction().add(R.id.container, loginFragment).commit(); //adding loginFragment to container
+                getSupportFragmentManager().beginTransaction().add(R.id.container1, loginFragment).commit(); //adding loginFragment to container
             }
         }
     }
