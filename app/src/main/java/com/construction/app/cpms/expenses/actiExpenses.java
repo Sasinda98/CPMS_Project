@@ -22,6 +22,8 @@ public class actiExpenses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_expenses);
+
+        
         Log.d(TAG, "onCreate: Started");
         ListView mListView = (ListView) findViewById(R.id.listView);
 

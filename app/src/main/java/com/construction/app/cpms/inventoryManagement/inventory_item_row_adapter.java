@@ -58,12 +58,12 @@ public class inventory_item_row_adapter extends BaseAdapter {
 
         image.setImageResource(item.getImageID());
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(c, item.getItemName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(c, item.getItemName(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return view;
     }

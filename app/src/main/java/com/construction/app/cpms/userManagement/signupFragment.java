@@ -131,7 +131,31 @@ public class signupFragment extends Fragment {
                     StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
 
+                                //checking if the sent response has the relevant attributes.. if so continue with the sign in..
+                                if (jsonObject.names().get(0).equals("isEmailInDB") && jsonObject.names().get(1).equals("isUserAdded")) {
+
+                                    boolean isEmailInDB = Boolean.valueOf(jsonObject.getString("isEmailInDB"));
+                                    boolean isUserAddedToDB = Boolean.valueOf(jsonObject.getString("isUserAdded"));
+
+                                    if (isEmailInDB && isUserAddedToDB == false) { //returns true if user entered email already exist in db.
+                                        emailEntry.setError("Email already registered");
+
+                                    } else {
+                                       //code to execute when user got added...
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(getContext(), "Error Occurred, DB OR INT", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override

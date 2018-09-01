@@ -43,5 +43,22 @@
     <string name="inventory_item_name">item Name</string>
     <string name="categories_title">CATEGORIES</string>
 
+    //Array to get units for inventory units spinner
+
+    <string-array name="inventory_units_array">
+        <item>Kg</item>
+        <item>Tonne</item>
+        <item>Liters</item>
+        <item>Meters</item>
+        <item>Cubic Meters</item>
+        <item>Square Meters</item>
+        <item>Cubes</item>
+        <item>Nos</item>
+        <item>Bags</item>
+        <item>Bars</item>
+
+
+    </string-array>
+
 
 </resources>

@@ -1,8 +1,11 @@
 package com.construction.app.cpms.inventoryManagement;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import com.construction.app.cpms.R;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -11,16 +14,25 @@ import java.util.ArrayList;
 public class inventory_items_list extends AppCompatActivity {
 
     inventory_item_row_adapter adapter;
-    ListView lv;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_items_list);
 
-        lv = (ListView) findViewById(R.id.items_listView);
+        listView = (ListView) findViewById(R.id.items_listView);
         adapter = new inventory_item_row_adapter(this, getData());
-        lv.setAdapter(adapter);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(inventory_items_list.this, inventory_request_item.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
