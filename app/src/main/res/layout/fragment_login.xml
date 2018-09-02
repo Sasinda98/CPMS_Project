@@ -64,7 +64,7 @@
                 android:id="@+id/email_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_email"
+
                 tools:ignore="RtlHardcoded" />
         </android.support.design.widget.TextInputLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/email_editText"
-                android:drawableLeft="@drawable/ic_password_solid"
+
                 android:inputType="textPassword"
                 tools:ignore="RtlHardcoded" />
 

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
     android:background="@color/backgroundDark"
+    android:id="@+id/forumCardParentLayout"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
     >
 
     <android.support.v7.widget.CardView
@@ -27,7 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="23sp"
-                android:text="Forum Post Test Title 1"
                 android:textColor="#212121"
                 android:textAlignment="center" />
             <!--Post tag-->
@@ -36,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="Posted by : Gayal Sasinda"
                 android:textColor="#616161"
                 android:textAlignment="center"
                 android:layout_below="@id/postTitle"/>
@@ -48,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="Apparently we had reached a great height in the atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was dished out, and the car seemed to float in the middle of an immense dark sphere, whose upper half was strewn with silver. Looking down into the dark gulf below..."
                 android:textColor="#424242"
                 android:layout_below="@id/postedBy"
 
@@ -63,7 +63,7 @@
 
                 <!--Track btn-->
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/track"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 
                 <!--view more btn-->
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/viewMore"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
@@ -96,10 +96,11 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintStart_toEndOf="@+id/track"
                     app:layout_constraintTop_toTopOf="parent" />
                 <!--Time stamp-->
                 <TextView
+                    android:id="@+id/timeStamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
