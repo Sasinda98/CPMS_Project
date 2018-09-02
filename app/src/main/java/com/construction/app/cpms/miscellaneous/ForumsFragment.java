@@ -162,6 +162,13 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
             toolbar.setNavigationIcon(R.drawable.ic_back);
             toolbar.setSubtitleTextColor(getResources().getColor(R.color.btm_navbar_item_notchecked));
 
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //used stackoverflow forum to find this..
+                    getFragmentManager().popBackStack();
+                }
+            });
 
         }
     }
@@ -189,6 +196,14 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
             case R.id.addPost :
                 Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
                 toast1.show();
+                break;
+            case R.id.settings :
+                Toast toast2 = Toast.makeText(getContext(), "Setting Submenu Selected", Toast.LENGTH_SHORT);
+                toast2.show();
+                break;
+            case R.id.logout :
+                Toast toast3 = Toast.makeText(getContext(), "logout Submenu Selected", Toast.LENGTH_SHORT);
+                toast3.show();
                 break;
         }
 

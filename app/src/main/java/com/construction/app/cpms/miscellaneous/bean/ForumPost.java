@@ -12,7 +12,7 @@ public class ForumPost {
     public ForumPost(String forumId, String title, String postedBy, String body) {
         this.forumId = forumId;
         this.title = title;
-        this.postedBy = postedBy;
+        this.postedBy = "Posted By : " + postedBy;
         this.body = body;
     }
 
