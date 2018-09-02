@@ -47,7 +47,8 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
         return this.forumPostArrayList.size();
     }
 
-    public void filterList(List<ForumPost> list){
+    //search func specific method
+    public void setFilterList(List<ForumPost> list){
         forumPostArrayList = new ArrayList<>();
         forumPostArrayList.addAll(list);
         notifyDataSetChanged();

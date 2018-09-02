@@ -214,7 +214,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
             }
         }
 
-        forumRecyclerViewAdapter.filterList(filtered);
+        forumRecyclerViewAdapter.setFilterList(filtered);
 
         return true;
     }
