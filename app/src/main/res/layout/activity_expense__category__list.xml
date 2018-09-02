@@ -2,42 +2,27 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondaryActivity"
-    >
+    tools:context=".expenses.Expense_Category_List">
 
-<!--Unsure about where to put the appbar-->
-    <!--<android.support.design.widget.AppBarLayout
+    <!--top appbar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@color/primaryTextColor"
-            app:title="@string/dashboard"
             android:elevation="8dp"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            >
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>-->
+            app:title="Direct Costs"
+            app:titleTextColor="@color/primaryTextColor"/>
+    </android.support.design.widget.AppBarLayout>
 
-
-    <!-- Frame layout with spacings set aside for appbars
-     using margin bottom
-     -->
-    <FrameLayout
-        android:id="@+id/secondaryContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        >
-
-    </FrameLayout>
-
-
+    <!--bottom navbar-->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -53,5 +38,17 @@
         app:menu="@menu/navigation"
         android:elevation="8dp"
         />
+
+    <ListView
+        android:id="@+id/exp_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

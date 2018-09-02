@@ -20,9 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--widnow soft input mode prevents bottom bar coming up with keyboard-->
         <activity
             android:name=".SecondaryActivity"
-            android:label="@string/title_activity_secondary" />
+            android:label="@string/title_activity_secondary"
+            android:windowSoftInputMode="adjustNothing"
+            />
         <activity android:name=".expenses.actiExpenses" />
         <activity android:name=".inventoryManagement.inventory_items_list" />
         <activity android:name=".inventoryManagement.inventory_category_grid" />
@@ -32,7 +35,9 @@
         <activity
             android:name=".inventoryManagement.inventory_request_item"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".inventoryManagement.inventory_project_manager"></activity>
+        <activity android:name=".inventoryManagement.inventory_project_manager" />
+        <activity android:name=".expenses.Expense_Category_List" />
+        <activity android:name=".expenses.Expense_Add"></activity>
     </application>
 
 </manifest>

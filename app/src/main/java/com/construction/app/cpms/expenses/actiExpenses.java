@@ -1,11 +1,18 @@
 package com.construction.app.cpms.expenses;
 
+import android.content.Intent;
 import android.graphics.Color;
+
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import com.construction.app.cpms.R;
+
+
 import java.util.ArrayList;
 
 
@@ -13,7 +20,6 @@ public class actiExpenses extends AppCompatActivity {
 
     private static final String TAG = "ExpensesActivity";
 
-    ListView LV = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,7 @@ public class actiExpenses extends AppCompatActivity {
 
         
         Log.d(TAG, "onCreate: Started");
-        ListView mListView = (ListView) findViewById(R.id.listView);
+        ListView mListView = findViewById(R.id.listView);
 
         //create sample expenses
         Expense exp1 = new Expense("Labour Charges", "Direct", 50000);
@@ -46,8 +52,34 @@ public class actiExpenses extends AppCompatActivity {
         ExpenseListAdapter adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, theList);
         mListView.setAdapter(adapter);
 
-        LV = (ListView) findViewById(R.id.listView);
-        LV.setBackgroundColor(Color.WHITE);
+
+        mListView.setBackgroundColor(Color.WHITE);
+
+        ImageButton directButt = findViewById(R.id.directButt);
+        directButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton add = findViewById(R.id.addExpenses);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(actiExpenses.this, Expense_Add.class);
+
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
 
     }

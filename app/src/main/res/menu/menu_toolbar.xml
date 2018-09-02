@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/searchPost"
+        android:title="Search Post"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
+
+    <item
+        android:id="@+id/addPost"
+        android:title="Add Post"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Log Out"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        />
+
+</menu>

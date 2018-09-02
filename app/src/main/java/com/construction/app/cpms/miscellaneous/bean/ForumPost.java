@@ -1,7 +1,7 @@
 package com.construction.app.cpms.miscellaneous.bean;
 
 //form represents class in java, that could hold a single forum database record.
-public class Forum {
+public class ForumPost {
 
     private String forumId;
     private String title;
@@ -9,10 +9,10 @@ public class Forum {
     private String body;
 
 
-    public Forum(String forumId, String title, String postedBy, String body) {
+    public ForumPost(String forumId, String title, String postedBy, String body) {
         this.forumId = forumId;
         this.title = title;
-        this.postedBy = postedBy;
+        this.postedBy = "Posted By : " + postedBy;
         this.body = body;
     }
 

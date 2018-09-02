@@ -60,7 +60,7 @@ public class loginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-    /*    requestQueue = Volley.newRequestQueue(getContext());*/
+        requestQueue = Volley.newRequestQueue(getContext());
 
         //getting references to respective textfiels on xml(UI)
         signUpHeaderTV = view.findViewById(R.id.signInHeader);
@@ -111,7 +111,7 @@ public class loginFragment extends Fragment {
              @Override
              public void onClick(View view) {
 
-              /*  //Checking if the form entered data is correct...
+                //Checking if the form entered data is correct...
                  if(!FormValidator.isEmailValid(emailEntry.getText().toString()) && !FormValidator.isPasswordEntryCorrect(passwordEntry.getText().toString())){
                      Toast toast = Toast.makeText(getContext(), "Login Credentials Are Invalid", Toast.LENGTH_SHORT);
                      toast.show();
@@ -168,7 +168,7 @@ public class loginFragment extends Fragment {
                          }
                      };
                      requestQueue.add(stringRequest);
-                 }*/
+                 }
              }//end of onclick
          });
 
