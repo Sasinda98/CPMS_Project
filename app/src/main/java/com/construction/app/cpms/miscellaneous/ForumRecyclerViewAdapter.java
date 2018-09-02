@@ -4,10 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.support.v7.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
@@ -20,6 +24,7 @@ import java.util.List;
 public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<ForumPost>  forumPostArrayList = new ArrayList<ForumPost>();
+    private int index;
 
     public ForumRecyclerViewAdapter(Context context, ArrayList<ForumPost> forumPostArrayList) {
         this.context = context;
@@ -34,11 +39,42 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
     }
 
     @Override   //manipulation of elements in the card
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         //extracting the values from the arraylist and setting individual card view's ui components to match...
         viewHolder.forumTitle.setText(forumPostArrayList.get(i).getTitle());
         viewHolder.postedBy.setText(forumPostArrayList.get(i).getPostedBy());
         viewHolder.body.setText(forumPostArrayList.get(i).getBody());
+
+        index = i;
+        viewHolder.popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //inflate pop up                                //anchor point
+                PopupMenu popupMenu = new PopupMenu(context, viewHolder.popup);
+                popupMenu.inflate(R.menu.menu_forum_card_popup);
+
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        String message = "Nothing selected";
+                        switch (menuItem.getItemId()){
+                            case R.id.edit : message = "Edit selected"; break;
+                            case R.id.delete : ForumPost.deletePost(context,"5", forumPostArrayList.get(index));
+                                                message = "Delete selected";
+                                                forumPostArrayList.remove(index);
+                                                notifyDataSetChanged();
+                                                break;
+                        }
+
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
 
     }
 
@@ -67,6 +103,9 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
 
         LinearLayout parentCardlayout;
 
+        ImageButton popup;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //mapping the ui elements, dynamic
@@ -79,6 +118,7 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
             track = itemView.findViewById(R.id.track);
             viewMore = itemView.findViewById(R.id.viewMore);
             parentCardlayout = itemView.findViewById(R.id.forumCardParentLayout);
+            popup = itemView.findViewById(R.id.popMenu);
 
 
         }
