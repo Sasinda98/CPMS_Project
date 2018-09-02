@@ -47,12 +47,11 @@
 
     <string-array name="inventory_units_array">
         <item>Kg</item>
-        <item>Tonne</item>
-        <item>Liters</item>
+        <item>Tonnes</item>
         <item>Meters</item>
-        <item>Cubic Meters</item>
         <item>Square Meters</item>
         <item>Cubes</item>
+        <item>Liters</item>
         <item>Nos</item>
         <item>Bags</item>
         <item>Bars</item>
