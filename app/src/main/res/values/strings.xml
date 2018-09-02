@@ -42,6 +42,10 @@
     <string name="inventory_item_qty">Item Qty</string>
     <string name="inventory_item_name">item Name</string>
     <string name="categories_title">CATEGORIES</string>
+    <string name="descriptionExpense">Description</string>
+    <string name="Rs_Expense">Rs.</string>
+    <string name="category_expense">Category</string>
+    <string name="submit">Submit</string>
 
     //Array to get units for inventory units spinner
 

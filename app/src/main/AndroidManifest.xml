@@ -32,7 +32,9 @@
         <activity
             android:name=".inventoryManagement.inventory_request_item"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".inventoryManagement.inventory_project_manager"></activity>
+        <activity android:name=".inventoryManagement.inventory_project_manager" />
+        <activity android:name=".expenses.Expense_Category_List" />
+        <activity android:name=".expenses.Expense_Add"></activity>
     </application>
 
 </manifest>
