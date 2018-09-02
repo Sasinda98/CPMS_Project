@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ForumsFragment extends Fragment {
+public class ForumsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private Toolbar toolbar;
 
@@ -50,6 +51,8 @@ public class ForumsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ForumPost> postArrayList;  // Forum class is a bean.
     private ForumRecyclerViewAdapter forumRecyclerViewAdapter;
+
+    private MenuItem menuItem;  //search func specific
 
 
     public ForumsFragment() {
@@ -169,6 +172,10 @@ public class ForumsFragment extends Fragment {
         menu.clear();
         //getActivity().getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         inflater.inflate(R.menu.menu_toolbar,menu);
+        menuItem = menu.findItem(R.id.searchPost);      //getting reference
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+
     }
 
     //called when user taps on option menu
@@ -186,5 +193,29 @@ public class ForumsFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Search function specific method, corresponds to the user input when you tap on the search icon in toolbar
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    //Search function specific method, corresponds to the user input when you tap on the search icon in toolbar
+    //whenever text in search box changes, it is passed in to 's' as param.
+    @Override
+    public boolean onQueryTextChange(String input) {
+
+        ArrayList<ForumPost> filtered = new ArrayList<>();
+
+        for (ForumPost f:postArrayList) {
+            if(f.getTitle().toLowerCase().contains(input.toLowerCase())){
+                filtered.add(f);
+            }
+        }
+
+        forumRecyclerViewAdapter.filterList(filtered);
+
+        return true;
     }
 }

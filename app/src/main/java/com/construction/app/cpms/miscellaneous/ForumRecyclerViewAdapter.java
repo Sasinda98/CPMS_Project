@@ -13,6 +13,7 @@ import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //Used a lot of tutorials as reference to put this code together...
 
@@ -44,6 +45,12 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
     @Override   //return item count in arraylist
     public int getItemCount() {
         return this.forumPostArrayList.size();
+    }
+
+    public void filterList(List<ForumPost> list){
+        forumPostArrayList = new ArrayList<>();
+        forumPostArrayList.addAll(list);
+        notifyDataSetChanged();
     }
 
     //holds the widgets
