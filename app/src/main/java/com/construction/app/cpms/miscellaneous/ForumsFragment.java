@@ -12,8 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,19 +27,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ForumsFragment extends Fragment {
+
+    private Toolbar toolbar;
 
     /*Database stuff*/
     private  StringRequest stringRequest;
@@ -144,12 +148,43 @@ public class ForumsFragment extends Fragment {
 
     //Used mdc codelabs as reference
     private void setUpTopBar(View view){
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);    //set to true, if not toolbar icons wont come up
+        toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         if(activity != null){
             activity.setSupportActionBar(toolbar);
+            activity.getSupportActionBar().setTitle("Forums");
+            activity.getSupportActionBar().setSubtitle("All Posts");
+            toolbar.setNavigationIcon(R.drawable.ic_back);
+            toolbar.setSubtitleTextColor(getResources().getColor(R.color.btm_navbar_item_notchecked));
+
+
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        //getActivity().getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        inflater.inflate(R.menu.menu_toolbar,menu);
+    }
+
+    //called when user taps on option menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.searchPost :
+                Toast toast = Toast.makeText(getContext(), "Search Selected", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.addPost :
+                Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
+                toast1.show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
