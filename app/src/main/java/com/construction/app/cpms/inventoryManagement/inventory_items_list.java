@@ -13,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.miscellaneous.bean.ForumPost;
 
 import android.os.Bundle;
 import android.view.View;
@@ -51,7 +50,7 @@ public class inventory_items_list extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_items_list);
+        setContentView(R.layout.activity_inventory_items_list);
 
         Intent intent = getIntent();
 
@@ -77,7 +76,13 @@ public class inventory_items_list extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Intent intent = new Intent(inventory_items_list.this, inventory_request_item.class);
+                inventory_item_Bean itemBean = (inventory_item_Bean) listView.getItemAtPosition(i);
+                String itemName = itemBean.getItemName();
+                int itemID = itemBean.getItemID();
+                intent.putExtra("itemName", itemName);
+                intent.putExtra("itemID", itemID);
                 startActivity(intent);
             }
         });
@@ -111,7 +116,7 @@ public class inventory_items_list extends AppCompatActivity {
                                 String itemUnit = object.getString("itemUnit");
                                 //image id is recieved through the intent from categories activity
 
-                                inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, R.drawable.light_bulb);
+                                inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, R.drawable.gloves);
 
                                 System.out.println("ITEM NAME= " + inventoryItem.getItemName()+"ITEM Qty= " + itemQty+"ITEM Cat= " + itemCat+"ITEM Unit= " + itemUnit);
 
