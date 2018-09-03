@@ -69,10 +69,18 @@ public class addForumPost extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.cp_createPost:
-                Toast toast = Toast.makeText(this, "submit selected" + title.getText() +" " + description.getText(), Toast.LENGTH_SHORT);
-                toast.show();
+         /*       Toast toast = Toast.makeText(this, "submit selected" + title.getText() +" " + description.getText(), Toast.LENGTH_SHORT);
+                toast.show();*/
                 ForumPost insertThis = new ForumPost("",this.title.getText().toString(), "12", this.description.getText().toString());  /*Login change requiedr*/
                 ForumPost.insertPost(this, insertThis,"12");    /*Login change required*/
+
+                Toast.makeText(this,"Loading...", Toast.LENGTH_SHORT).show();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 appCompatActivity.onBackPressed();  //return to main page
 
                 break;

@@ -102,7 +102,7 @@ public class ForumPost {
                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
+                        System.out.println("ON RESPONSE DELETE======================");
 
                     }
                 }, new Response.ErrorListener() {

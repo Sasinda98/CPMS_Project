@@ -118,6 +118,7 @@ public class inventory_items_list extends AppCompatActivity {
                                 //populate arraylist
                                 itemArrayList.add(inventoryItem);
                             }
+                            adapter.notifyDataSetChanged();
 
 
                         } catch (JSONException e) {
