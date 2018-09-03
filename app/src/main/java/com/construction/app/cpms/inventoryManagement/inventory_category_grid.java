@@ -33,8 +33,11 @@ public class inventory_category_grid extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             inventory_category_Bean catBean = (inventory_category_Bean) gridView.getItemAtPosition(i);
+            String catName = catBean.getName();
+            int imgID = catBean.getImageID();
             Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
-            intent.putExtra("catObj", catBean);
+            intent.putExtra("catName", catName);
+            intent.putExtra("catImg",imgID);
             startActivity(intent);
 
         }

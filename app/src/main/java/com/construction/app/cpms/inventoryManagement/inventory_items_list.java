@@ -32,17 +32,17 @@ import java.util.Map;
 public class inventory_items_list extends AppCompatActivity {
     //Getting category object from category grid activity.
     //We get the image id and the category name for the query from this
-    Intent intent = getIntent();
-    inventory_category_Bean catBean = intent.getParcelableExtra("catObj");
 
-    String catName = catBean.getName();
-    int imgID = catBean.getImageID();
+
+
+
 
     /*Database Variables*/
     private  StringRequest stringRequest;
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
-
+    private String catName;
+    private int imgID;
     private ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
 
     inventory_item_row_adapter adapter;
@@ -53,6 +53,11 @@ public class inventory_items_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_items_list);
 
+        Intent intent = getIntent();
+
+        catName = intent.getStringExtra("catName");
+        imgID = intent.getIntExtra("imgID", 0);
+
         requestQueue = Volley.newRequestQueue(inventory_items_list.this);
         itemArrayList = new ArrayList<inventory_item_Bean>();
 
@@ -60,6 +65,10 @@ public class inventory_items_list extends AppCompatActivity {
 
 
         fetchdata();
+
+        for(inventory_item_Bean itemB : itemArrayList) {
+            System.out.println(itemB.getItemName());
+        }
 
         listView = (ListView) findViewById(R.id.items_listView);
         adapter = new inventory_item_row_adapter(this, itemArrayList);
@@ -75,6 +84,7 @@ public class inventory_items_list extends AppCompatActivity {
 
 
     }
+
 
     private void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -101,8 +111,10 @@ public class inventory_items_list extends AppCompatActivity {
                                 String itemUnit = object.getString("itemUnit");
                                 //image id is recieved through the intent from categories activity
 
-                                inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, imgID);
-                                System.out.println(object.getString("title"));
+                                inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, R.drawable.light_bulb);
+
+                                System.out.println("ITEM NAME= " + itemName+"ITEM Qty= " + itemQty+"ITEM Cat= " + itemCat+"ITEM Unit= " + itemUnit);
+
                                 //populate arraylist
                                 itemArrayList.add(inventoryItem);
                             }
