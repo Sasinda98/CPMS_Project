@@ -38,7 +38,8 @@
         <activity android:name=".expenses.Expense_Category_List" />
         <activity android:name=".expenses.Expense_Add" />
         <activity android:name=".miscellaneous.addForumPost" />
-        <activity android:name=".inventoryManagement.testParcel"></activity>
+        <activity android:name=".inventoryManagement.testParcel" />
+        <activity android:name=".miscellaneous.editForumPost"></activity>
     </application>
 
 </manifest>
