@@ -2,20 +2,32 @@ package com.construction.app.cpms.inventoryManagement;
 
 public class inventory_item_Bean {
 
+
+
+    private int itemID;
     private String itemName;
-    private String itemQuantity;
+    private double itemQuantity;
     private String category;
     private String unit;
     private int imageID;
 
 
 
-    public inventory_item_Bean(String itemName, String itemQuantity, String category, String unit, int imageID) {
+    public inventory_item_Bean(int itemID, String itemName, double itemQuantity, String category, String unit, int imageID) {
+        this.itemID = itemID;
         this.itemName = itemName;
         this.itemQuantity = itemQuantity;
         this.category = category;
         this.unit = unit;
         this.imageID = imageID;
+    }
+
+    public int getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
     }
 
 
@@ -36,11 +48,11 @@ public class inventory_item_Bean {
         this.category = category;
     }
 
-    public String getItemQuantity() {
+    public double getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(String itemQuantity) {
+    public void setItemQuantity(double itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 

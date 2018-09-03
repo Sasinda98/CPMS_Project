@@ -32,7 +32,9 @@ public class inventory_category_grid extends AppCompatActivity {
     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            inventory_category_Bean catBean = (inventory_category_Bean) gridView.getItemAtPosition(i);
             Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
+            intent.putExtra("catObj", catBean);
             startActivity(intent);
 
         }

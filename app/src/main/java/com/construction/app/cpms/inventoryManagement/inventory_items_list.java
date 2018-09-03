@@ -1,17 +1,49 @@
 package com.construction.app.cpms.inventoryManagement;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class inventory_items_list extends AppCompatActivity {
+    //Getting category object from category grid activity.
+    //We get the image id and the category name for the query from this
+    Intent intent = getIntent();
+    inventory_category_Bean catBean = intent.getParcelableExtra("catObj");
+
+    String catName = catBean.getName();
+    int imgID = catBean.getImageID();
+
+    /*Database Variables*/
+    private  StringRequest stringRequest;
+    private RequestQueue requestQueue;
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
+
+    private ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
 
     inventory_item_row_adapter adapter;
     ListView listView;
@@ -21,8 +53,16 @@ public class inventory_items_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_items_list);
 
+        requestQueue = Volley.newRequestQueue(inventory_items_list.this);
+        itemArrayList = new ArrayList<inventory_item_Bean>();
+
+
+
+
+        fetchdata();
+
         listView = (ListView) findViewById(R.id.items_listView);
-        adapter = new inventory_item_row_adapter(this, getData());
+        adapter = new inventory_item_row_adapter(this, itemArrayList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -36,59 +76,75 @@ public class inventory_items_list extends AppCompatActivity {
 
     }
 
-    private ArrayList getData(){
-         ArrayList<inventory_item_Bean> itemBeanList = new ArrayList<>();
+    private void fetchdata(){
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                System.out.println("Do backgorund func");
+                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("ON RESPONSE");
 
-        inventory_item_Bean inventoryItemBean = new inventory_item_Bean("Cement", "100","Masonry" , "Bags", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
 
-        inventoryItemBean = new inventory_item_Bean("Bricks", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                                System.out.println("FOR LOOP");
+                                JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
 
-        inventoryItemBean = new inventory_item_Bean("Cinder Blocks", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                                //Getting all the attributes of the bean from the JSON object
+                                int itemID = Integer.valueOf(object.getString("itemID"));
+                                String itemName = object.getString("itemName");
+                                String itemCat = object.getString("itemCategory");
+                                double itemQty = Double.valueOf(object.getString("itemQty"));
+                                String itemUnit = object.getString("itemUnit");
+                                //image id is recieved through the intent from categories activity
 
-        inventoryItemBean = new inventory_item_Bean("Sand", "50","Masonry" , "Cubes.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                                inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, imgID);
+                                System.out.println(object.getString("title"));
+                                //populate arraylist
+                                itemArrayList.add(inventoryItem);
+                            }
 
-        inventoryItemBean = new inventory_item_Bean("Rubble", "250","Masonry" , "tonnes.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
 
-        inventoryItemBean = new inventory_item_Bean("Metal", "40", "Masonry", "tonnes", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        inventoryItemBean = new inventory_item_Bean("Lime", "250","Masonry" , "Cubes", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                    }
+                }){
+                    //send email and password to post...
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("iCat", catName);
+                        return params;
+                    }
 
-        inventoryItemBean = new inventory_item_Bean("Plywood", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
 
-        inventoryItemBean = new inventory_item_Bean("Shuttering", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+            @Override
+            protected void onPostExecute(Void aVoid) {
 
-        inventoryItemBean = new inventory_item_Bean("2X2 Timber", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+            }
 
-        inventoryItemBean = new inventory_item_Bean("4X2 Timber", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+        };
 
-        inventoryItemBean = new inventory_item_Bean("10mm Tor Steel", "2500","Masonry" , "Meters", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-
-        inventoryItemBean = new inventory_item_Bean("12mm Tor Steel", "2500","Masonry" , "Meters", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-
-        inventoryItemBean = new inventory_item_Bean("16mm Tor Steel", "2500","Masonry" , "Meters", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-
-        inventoryItemBean = new inventory_item_Bean("08mm Tor Steel", "2500","Masonry" , "Meters", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-
-        inventoryItemBean = new inventory_item_Bean("1.5' Wire Nails", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-
-        inventoryItemBean = new inventory_item_Bean("3' Wire Nails", "2500","Masonry" , "Nos.", R.drawable.brickwall);
-        itemBeanList.add(inventoryItemBean);
-        return itemBeanList;
+        asyncTask.execute();
     }
+
+
+
 }

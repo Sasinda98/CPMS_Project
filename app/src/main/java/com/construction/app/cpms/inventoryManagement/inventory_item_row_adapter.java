@@ -52,8 +52,9 @@ public class inventory_item_row_adapter extends BaseAdapter {
         TextView qty= (TextView) view.findViewById(R.id.item_row_qty);
         TextView unit= (TextView) view.findViewById(R.id.item_row_unit);
 
+
         name.setText(item.getItemName());
-        qty.setText (item.getItemQuantity());
+        qty.setText (String.valueOf(item.getItemQuantity()));
         unit.setText(item.getUnit());
 
         image.setImageResource(item.getImageID());
