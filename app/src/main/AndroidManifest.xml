@@ -37,7 +37,7 @@
         <activity android:name=".inventoryManagement.inventory_project_manager" />
         <activity android:name=".expenses.Expense_Category_List" />
         <activity android:name=".expenses.Expense_Add" />
-        <activity android:name=".inventoryManagement.ParcelTest"></activity>
+        <activity android:name=".miscellaneous.addForumPost"></activity>
     </application>
 
 </manifest>

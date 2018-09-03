@@ -2,12 +2,14 @@ package com.construction.app.cpms.miscellaneous;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,14 +46,14 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     private Toolbar toolbar;
 
     /*Database stuff*/
-    private  StringRequest stringRequest;
-    private  RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/fetchForumPosts.php";
+    private  static StringRequest stringRequest;
+    private  static RequestQueue requestQueue;
+    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchForumPosts.php";
 
     private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
-    private ArrayList<ForumPost> postArrayList;  // Forum class is a bean.
-    private ForumRecyclerViewAdapter forumRecyclerViewAdapter;
+    private static ArrayList<ForumPost> postArrayList;  // Forum class is a bean.
+    private static ForumRecyclerViewAdapter forumRecyclerViewAdapter;
 
     private MenuItem menuItem;  //search func specific
 
@@ -73,7 +76,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         postArrayList = new ArrayList<ForumPost>();
 
 
-        fetchdata();
+        //fetchdata();
 
         System.out.println("On create executing");
 
@@ -91,7 +94,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         return view;
     }
 
-    private void fetchdata(){
+    private static void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -115,7 +118,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                                 postArrayList.add(forumPost);
                             }
                             forumRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -147,7 +149,18 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //fetchdata();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        postArrayList.clear();
+        fetchdata();
+    }
 
     //Used mdc codelabs as reference
     private void setUpTopBar(View view){
@@ -194,8 +207,11 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                 toast.show();
                 break;
             case R.id.addPost :
-                Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
-                toast1.show();
+             /*   Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
+                toast1.show();*/
+                Intent i =  new Intent(getContext(), addForumPost.class);
+                startActivity(i);
+
                 break;
             case R.id.settings :
                 Toast toast2 = Toast.makeText(getContext(), "Setting Submenu Selected", Toast.LENGTH_SHORT);
@@ -233,4 +249,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
         return true;
     }
+
+
 }

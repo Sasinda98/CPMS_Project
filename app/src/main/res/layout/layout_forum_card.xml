@@ -119,6 +119,26 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
 
+           <!-- <TextView
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/popMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&#8942;"
+                android:textSize="20sp"
+                android:layout_marginRight="4dp"
+                />-->
+
+            <ImageButton
+                android:id="@+id/popMenu"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_more_popup"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@null"/>
 
 
 
