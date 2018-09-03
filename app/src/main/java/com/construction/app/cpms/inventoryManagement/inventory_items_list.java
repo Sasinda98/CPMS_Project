@@ -43,7 +43,7 @@ public class inventory_items_list extends AppCompatActivity {
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
     private String catName;
     private int imgID;
-    private ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
+    private static ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
 
     inventory_item_row_adapter adapter;
     ListView listView;
@@ -113,7 +113,7 @@ public class inventory_items_list extends AppCompatActivity {
 
                                 inventory_item_Bean inventoryItem = new inventory_item_Bean(itemID, itemName, itemQty, itemCat, itemUnit, R.drawable.light_bulb);
 
-                                System.out.println("ITEM NAME= " + itemName+"ITEM Qty= " + itemQty+"ITEM Cat= " + itemCat+"ITEM Unit= " + itemUnit);
+                                System.out.println("ITEM NAME= " + inventoryItem.getItemName()+"ITEM Qty= " + itemQty+"ITEM Cat= " + itemCat+"ITEM Unit= " + itemUnit);
 
                                 //populate arraylist
                                 itemArrayList.add(inventoryItem);

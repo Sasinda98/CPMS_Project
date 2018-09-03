@@ -61,7 +61,10 @@ public class inventory_category_grid extends AppCompatActivity {
     private ArrayList getData() {
         ArrayList<inventory_category_Bean> categoryList = new ArrayList<>();
 
-        inventory_category_Bean categoryBean = new inventory_category_Bean("MASONRY", R.drawable.brickwall);
+        inventory_category_Bean categoryBean = new inventory_category_Bean("COMMON", R.drawable.toolbox);
+        categoryList.add(categoryBean);
+
+        categoryBean = new inventory_category_Bean("MASONRY", R.drawable.brickwall);
         categoryList.add(categoryBean);
 
         categoryBean = new inventory_category_Bean("CARPENTRY", R.drawable.saw);
