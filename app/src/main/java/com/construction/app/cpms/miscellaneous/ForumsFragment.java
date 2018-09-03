@@ -31,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+import com.construction.app.cpms.miscellaneous.bean.Refresh;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,7 +104,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                     @Override
                     public void onResponse(String response) {
                         System.out.println("ON RESPONSE");
-
                         try {
                              JSONArray jsonArray = new JSONArray(response);
 
@@ -160,6 +160,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         super.onStart();
         postArrayList.clear();
         fetchdata();
+
     }
 
     //Used mdc codelabs as reference

@@ -3,7 +3,11 @@ package com.construction.app.cpms.miscellaneous.bean;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -14,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.ForumsFragment;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -132,12 +138,10 @@ public class ForumPost {
         asyncTask.execute();
     }
 
-    private static boolean responseStat;
-    private static AppCompatActivity appCompatActivity;
-    //Inserts post to db
-    public static boolean insertPost(Context context, ForumPost forumPost, String loggedInUID){
 
-        responseStat = false;
+    //Inserts post to db
+    public static void insertPost(final Context context, ForumPost forumPost, String loggedInUID){
+
         URL_PHP_SCRIPT="http://projectcpms99.000webhostapp.com/scripts/gayal/insertForumPost.php";
 
         requestQueue = Volley.newRequestQueue(context);
@@ -153,10 +157,11 @@ public class ForumPost {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("ON RESPONSE");
-                        responseStat = true;
+
+
                         try {
                             JSONObject jsonArray = new JSONObject(response);
-
+                           
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -194,8 +199,67 @@ public class ForumPost {
         };
 
         asyncTask.execute();
-        return responseStat;
+
     }
+
+    //Updates post db
+    public static void updatePost(Context context, ForumPost forumPost){
+
+        URL_PHP_SCRIPT="http://projectcpms99.000webhostapp.com/scripts/gayal/updateForumPost.php";
+
+        requestQueue = Volley.newRequestQueue(context);
+
+        forumPost_p = forumPost;
+
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("ON RESPONSE UPDATE POST========================");
+
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> hashMap = new HashMap<>();
+                        hashMap.put("forumId", forumPost_p.getForumId());
+                        hashMap.put("title", forumPost_p.getTitle());
+                        hashMap.put("body", forumPost_p.getBody());
+                        return hashMap;
+                    }
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+        };
+
+        asyncTask.execute();
+
+    }
+
+
+
+
 }
 
 

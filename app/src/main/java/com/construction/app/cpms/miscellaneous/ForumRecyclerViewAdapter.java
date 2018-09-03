@@ -1,6 +1,7 @@
 package com.construction.app.cpms.miscellaneous;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
 
         viewHolder.popup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 //inflate pop up                                //anchor point
                 PopupMenu popupMenu = new PopupMenu(context, viewHolder.popup);
                 popupMenu.inflate(R.menu.menu_forum_card_popup);
@@ -62,7 +63,12 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         String message = "Nothing selected";
                         switch (menuItem.getItemId()){
-                            case R.id.edit : message = "Edit selected"; break;
+                            case R.id.edit : message = "Edit selected";
+                                Intent intent =  new Intent(view.getContext(), editForumPost.class);
+                                intent.putExtra("forumId",forumPost.getForumId().toString());        /*Improve later*/
+                                view.getContext().startActivity(intent);
+
+                                            break;
                             case R.id.delete : ForumPost.deletePost(context,"5", forumPost);
                                                 message = "Delete selected";
                                                 System.out.println("=======DELETE fid = " + forumPost.getForumId());
