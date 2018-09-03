@@ -49,7 +49,7 @@ public class signupFragment extends Fragment {
 
     //Database
     private RequestQueue requestQueue;
-    private String insertUrl = "http://projectcpms99.000webhostapp.com/scripts/insertUser.php";
+    private String insertUrl = "http://projectcpms99.000webhostapp.com/scripts/gayal/insertUser.php";
     private StringRequest stringRequest;
 
     @Override

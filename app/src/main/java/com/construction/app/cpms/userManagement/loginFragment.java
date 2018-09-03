@@ -53,7 +53,7 @@ public class loginFragment extends Fragment {
     /*Database stuff*/
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/signIn.php";
+    private String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/signIn.php";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

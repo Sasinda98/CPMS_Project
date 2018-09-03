@@ -32,7 +32,12 @@ public class inventory_category_grid extends AppCompatActivity {
     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            inventory_category_Bean catBean = (inventory_category_Bean) gridView.getItemAtPosition(i);
+            String catName = catBean.getName();
+            int imgID = catBean.getImageID();
             Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
+            intent.putExtra("catName", catName);
+            intent.putExtra("catImg",imgID);
             startActivity(intent);
 
         }
@@ -56,7 +61,10 @@ public class inventory_category_grid extends AppCompatActivity {
     private ArrayList getData() {
         ArrayList<inventory_category_Bean> categoryList = new ArrayList<>();
 
-        inventory_category_Bean categoryBean = new inventory_category_Bean("MASONRY", R.drawable.brickwall);
+        inventory_category_Bean categoryBean = new inventory_category_Bean("COMMON", R.drawable.toolbox);
+        categoryList.add(categoryBean);
+
+        categoryBean = new inventory_category_Bean("MASONRY", R.drawable.brickwall);
         categoryList.add(categoryBean);
 
         categoryBean = new inventory_category_Bean("CARPENTRY", R.drawable.saw);
