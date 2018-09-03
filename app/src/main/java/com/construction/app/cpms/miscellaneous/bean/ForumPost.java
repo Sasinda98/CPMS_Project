@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -72,13 +73,9 @@ public class ForumPost {
     }
 
 
-    public static void updatePost(Context context, ForumPost forumPost, String loggedInUID){
-
-    }
-
-
+    /*Database stuff here*/
     private static RequestQueue requestQueue;
-    private static String URL_PHP_SCRIPT="http://projectcpms99.000webhostapp.com/scripts/deleteForumPost.php";
+    private static String URL_PHP_SCRIPT="http://projectcpms99.000webhostapp.com/scripts/gayal/deleteForumPost.php";
     private static ForumPost forumPost_p;
     private static String loggedInUID_p;
 
@@ -101,13 +98,6 @@ public class ForumPost {
                     public void onResponse(String response) {
                         System.out.println("ON RESPONSE");
 
-                        try {
-                            JSONObject jsonArray = new JSONObject(response);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -140,7 +130,72 @@ public class ForumPost {
         };
 
         asyncTask.execute();
-
     }
 
+    private static boolean responseStat;
+    private static AppCompatActivity appCompatActivity;
+    //Inserts post to db
+    public static boolean insertPost(Context context, ForumPost forumPost, String loggedInUID){
+
+        responseStat = false;
+        URL_PHP_SCRIPT="http://projectcpms99.000webhostapp.com/scripts/gayal/insertForumPost.php";
+
+        requestQueue = Volley.newRequestQueue(context);
+
+        forumPost_p = forumPost;
+        loggedInUID_p = loggedInUID;
+
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("ON RESPONSE");
+                        responseStat = true;
+                        try {
+                            JSONObject jsonArray = new JSONObject(response);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> hashMap = new HashMap<>();
+                        hashMap.put("title", forumPost_p.getTitle());
+                        hashMap.put("postedBy", loggedInUID_p);
+                        hashMap.put("body", forumPost_p.getBody());
+                        return hashMap;
+                    }
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+        };
+
+        asyncTask.execute();
+        return responseStat;
+    }
 }
+
+

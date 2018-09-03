@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_more_vert_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_send_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,8 +45,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\GayalR\Dropbox\1. Group Project\UI\1A-Icon-Pack\arrow-point-to-right.png" />
-                                      <entry key="outputName" value="ic_more_popup" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="outputName" value="ic_forum_submit_arrow" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="9b9b9b" />
                                     </map>
                                   </option>

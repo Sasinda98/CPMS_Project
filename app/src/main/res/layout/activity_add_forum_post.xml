@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".miscellaneous.addForumPost">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/primaryTextColor"
+            android:elevation="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:navigationIcon="@drawable/ic_back"
+            tools:ignore="UnusedAttribute">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ap_forumTitle_inputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title Of The Post"
+        app:helperText="Type In The Forum Title"
+        android:layout_marginTop="32dp"
+
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/ap_forumTitle_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            tools:ignore="RtlHardcoded" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ap_forumDescription_inputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        app:helperText="Type In The Description"
+        android:layout_marginTop="32dp"
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/ap_forumDescription_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="250dp"
+            android:includeFontPadding="false"
+            android:gravity="top"
+
+            tools:ignore="RtlHardcoded" />
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
+</LinearLayout>

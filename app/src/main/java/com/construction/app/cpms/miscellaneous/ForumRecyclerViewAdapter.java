@@ -24,7 +24,7 @@ import java.util.List;
 public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<ForumPost>  forumPostArrayList = new ArrayList<ForumPost>();
-    private int index;
+
 
     public ForumRecyclerViewAdapter(Context context, ArrayList<ForumPost> forumPostArrayList) {
         this.context = context;
@@ -39,13 +39,16 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
     }
 
     @Override   //manipulation of elements in the card
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        //extracting the values from the arraylist and setting individual card view's ui components to match...
-        viewHolder.forumTitle.setText(forumPostArrayList.get(i).getTitle());
-        viewHolder.postedBy.setText(forumPostArrayList.get(i).getPostedBy());
-        viewHolder.body.setText(forumPostArrayList.get(i).getBody());
+    public void onBindViewHolder( final ViewHolder viewHolder,final int i) {
 
-        index = i;
+        final ForumPost forumPost = forumPostArrayList.get(i);
+
+        //extracting the values from the arraylist and setting individual card view's ui components to match...
+        viewHolder.forumTitle.setText(forumPost.getTitle());
+        viewHolder.postedBy.setText(forumPost.getPostedBy());
+        viewHolder.body.setText(forumPost.getBody());
+
+
         viewHolder.popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,19 +63,22 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                         String message = "Nothing selected";
                         switch (menuItem.getItemId()){
                             case R.id.edit : message = "Edit selected"; break;
-                            case R.id.delete : ForumPost.deletePost(context,"5", forumPostArrayList.get(index));
+                            case R.id.delete : ForumPost.deletePost(context,"5", forumPost);
                                                 message = "Delete selected";
-                                                forumPostArrayList.remove(index);
+                                                System.out.println("=======DELETE fid = " + forumPost.getForumId());
+                                                System.out.println("=======DELETE title = " + forumPost.getTitle());
+                                                forumPostArrayList.remove(i);
                                                 notifyDataSetChanged();
                                                 break;
                         }
 
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
-                        return true;
+                        return false;
                     }
                 });
                 popupMenu.show();
+
             }
         });
 
