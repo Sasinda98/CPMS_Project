@@ -36,7 +36,7 @@ public class inventory_request_item extends AppCompatActivity {
         //Getting current time to pass to script
         currentTime = now();
         //Just for testing in Logcat
-        System.out.println(currentTime);
+        System.out.println("============================================================="+currentTime+"=============================================================");
 
 
 

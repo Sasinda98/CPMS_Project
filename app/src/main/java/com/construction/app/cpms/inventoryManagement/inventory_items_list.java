@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,6 +158,8 @@ public class inventory_items_list extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                Toast toast = Toast.makeText(inventory_items_list.this, "Loading Items", Toast.LENGTH_SHORT);
+                toast.show();
             }
         };
 
