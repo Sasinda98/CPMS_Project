@@ -1,5 +1,6 @@
 package com.construction.app.cpms.userManagement;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.addForumPost;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -145,6 +148,8 @@ public class signupFragment extends Fragment {
 
                                     } else {
                                        //code to execute when user got added...
+                                        ((Navigation)getActivity()).naviagateTo(new loginFragment(), false);
+                                        Toast.makeText(getContext(),"Sign Up Succesful",Toast.LENGTH_LONG).show();
                                     }
 
 

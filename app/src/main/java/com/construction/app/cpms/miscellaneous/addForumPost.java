@@ -1,6 +1,8 @@
 package com.construction.app.cpms.miscellaneous;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -72,7 +74,7 @@ public class addForumPost extends AppCompatActivity {
          /*       Toast toast = Toast.makeText(this, "submit selected" + title.getText() +" " + description.getText(), Toast.LENGTH_SHORT);
                 toast.show();*/
                 ForumPost insertThis = new ForumPost("",this.title.getText().toString(), "12", this.description.getText().toString());  /*Login change requiedr*/
-                ForumPost.insertPost(this, insertThis,"12");    /*Login change required*/
+                ForumPost.insertPost(this, insertThis,getLoggedInUserId());    /*Login change required*/
 
                 Toast.makeText(this,"Loading...", Toast.LENGTH_SHORT).show();
                 try {
@@ -87,5 +89,19 @@ public class addForumPost extends AppCompatActivity {
             }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getLoggedInUserId(){
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+
+        String email = preferences.getString("email","");
+        String password = preferences.getString("password","");
+        String userId = preferences.getString("userId","");
+
+        //   Toast.makeText(getContext(),"Details em " + email + " " + password, Toast.LENGTH_LONG).show();
+        System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
+        return userId;
+
     }
 }

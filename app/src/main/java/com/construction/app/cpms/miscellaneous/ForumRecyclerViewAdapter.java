@@ -46,7 +46,7 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
 
         //extracting the values from the arraylist and setting individual card view's ui components to match...
         viewHolder.forumTitle.setText(forumPost.getTitle());
-        viewHolder.postedBy.setText(forumPost.getPostedBy());
+        viewHolder.postedBy.setText("Posted By : " + forumPost.getPostedBy());
         viewHolder.body.setText(forumPost.getBody());
 
 
