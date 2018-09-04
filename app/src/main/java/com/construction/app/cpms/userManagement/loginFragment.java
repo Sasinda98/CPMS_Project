@@ -2,12 +2,15 @@ package com.construction.app.cpms.userManagement;
 
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 // instead of this import android.app.Fragment;
 //use this
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import android.support.design.widget.TextInputEditText;
@@ -135,9 +138,13 @@ public class loginFragment extends Fragment {
                                      String userId = jsonObject.getString("userId"); //null if there is no a matching accnt.
 
                                      if (isEmailMatched && isPasswordMatched && userId != null) { //means user credentials match an actual accnt in db, script returns null itheres no matcvh
-                                         //Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-                                         // startActivity(i,null);
-                                         Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
+                                         saveLoginCredentials(userId);
+
+                                         Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                                         startActivity(i,null);
+                                       //  Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
+
+
                                      } else {
                                          //account doesnt exist. invalid credentials..
                                          Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
@@ -175,5 +182,19 @@ public class loginFragment extends Fragment {
 
         return view;
     }
+
+    public void saveLoginCredentials(String userId){
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.putString("email",emailEntry.getText().toString());
+        editor.putString("password",passwordEntry.getText().toString());
+        editor.putString("userId", userId);
+        editor.commit();
+       // Toast.makeText(getContext(),"Save login creds", Toast.LENGTH_LONG).show();
+        System.out.println("===========SaveLOGIN SHARED PREF==========");
+    }
+
 
 }

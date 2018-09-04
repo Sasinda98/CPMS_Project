@@ -1,26 +1,70 @@
 package com.construction.app.cpms.expenses;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Expense_Category_List extends AppCompatActivity {
 
     private static final String TAG = "ExpensesActivity";
+    /*Database Variables*/
+    private StringRequest stringRequest;
+    private RequestQueue requestQueue;
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php";
+    private String expCategory;
+    private static ArrayList<Expense> expenseArrayList;
 
+    private ExpenseListAdapter adapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense__category__list);
 
-        Log.d(TAG, "onCreate: Started");
+        Intent intent = getIntent();
+        expCategory = intent.getStringExtra("expCategory");
+
+        requestQueue = Volley.newRequestQueue(Expense_Category_List.this);
+        expenseArrayList = new ArrayList<Expense>();
+
+
+
+
+        fetchdata();
+
+        listView = (ListView) findViewById(R.id.exp_listView);
+        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
+        listView.setAdapter(adapter);
+
+
+
+
+        /**Log.d(TAG, "onCreate: Started");
         ListView mListView = findViewById(R.id.exp_listView);
 
         //create sample expenses
@@ -61,9 +105,77 @@ public class Expense_Category_List extends AppCompatActivity {
         ExpenseListAdapter adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, theList);
         mListView.setAdapter(adapter);
 
+        **/
 
 
 
+    }
 
+
+    private void fetchdata(){
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                                JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
+
+                                //Getting all the attributes of the bean from the JSON object
+                                String description = object.getString("description");
+                                String category = object.getString("category");
+                                double amount = Double.valueOf(object.getString("Amount"));
+
+
+                                Expense expense = new Expense(description, category, amount);
+
+                                System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category+"Amount= " + amount);
+
+                                //populate arraylist
+                                expenseArrayList.add(expense);
+                            }
+                            adapter.notifyDataSetChanged();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("category", expCategory);
+                        return params;
+                    }
+
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+        };
+
+        asyncTask.execute();
     }
 }
