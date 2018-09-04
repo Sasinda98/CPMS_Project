@@ -65,9 +65,9 @@ public class inventory_items_list extends AppCompatActivity {
 
         fetchdata();
 
-        for(inventory_item_Bean itemB : itemArrayList) {
-            System.out.println(itemB.getItemName());
-        }
+//        for(inventory_item_Bean itemB : itemArrayList) {
+//            System.out.println(itemB.getItemName());
+//        }
 
         listView = (ListView) findViewById(R.id.items_listView);
         adapter = new inventory_item_row_adapter(this, itemArrayList);

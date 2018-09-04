@@ -38,8 +38,8 @@ public class Expense_Category_List extends AppCompatActivity {
     private String expCategory;
     private static ArrayList<Expense> expenseArrayList;
 
-    ExpenseListAdapter adapter;
-    ListView listView;
+    private ExpenseListAdapter adapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class Expense_Category_List extends AppCompatActivity {
         setContentView(R.layout.activity_expense__category__list);
 
         Intent intent = getIntent();
-
         expCategory = intent.getStringExtra("expCategory");
 
         requestQueue = Volley.newRequestQueue(Expense_Category_List.this);
@@ -57,6 +56,10 @@ public class Expense_Category_List extends AppCompatActivity {
 
 
         fetchdata();
+
+        listView = (ListView) findViewById(R.id.exp_listView);
+        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
+        listView.setAdapter(adapter);
 
 
 
@@ -113,17 +116,14 @@ public class Expense_Category_List extends AppCompatActivity {
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                System.out.println("Do backgorund func");
                 stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
 
                         try {
                             JSONArray jsonArray = new JSONArray(response);
 
                             for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
-                                System.out.println("FOR LOOP");
                                 JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
 
                                 //Getting all the attributes of the bean from the JSON object

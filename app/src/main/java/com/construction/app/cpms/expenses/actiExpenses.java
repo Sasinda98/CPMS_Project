@@ -61,6 +61,7 @@ public class actiExpenses extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", "Direct");
 
                 startActivity(intent);
             }
