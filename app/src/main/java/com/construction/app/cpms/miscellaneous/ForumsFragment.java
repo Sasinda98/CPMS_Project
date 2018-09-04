@@ -2,7 +2,9 @@ package com.construction.app.cpms.miscellaneous;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -214,13 +216,15 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                 startActivity(i);
 
                 break;
-            case R.id.settings :
-                Toast toast2 = Toast.makeText(getContext(), "Setting Submenu Selected", Toast.LENGTH_SHORT);
+            case R.id.allPosts :
+                Toast toast2 = Toast.makeText(getContext(), "AllPOSTS Submenu Selected", Toast.LENGTH_SHORT);
                 toast2.show();
+                filterByUserId(getLoggedInUserId(), false);    //false loads all posts
                 break;
-            case R.id.logout :
-                Toast toast3 = Toast.makeText(getContext(), "logout Submenu Selected", Toast.LENGTH_SHORT);
+            case R.id.myPosts :
+                Toast toast3 = Toast.makeText(getContext(), "MYPOSTS Submenu Selected", Toast.LENGTH_SHORT);
                 toast3.show();
+                filterByUserId(getLoggedInUserId(), true);     //true filters
                 break;
         }
 
@@ -245,11 +249,59 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                 filtered.add(f);
             }
         }
-
         forumRecyclerViewAdapter.setFilterList(filtered);
+        forumRecyclerViewAdapter.notifyDataSetChanged();
 
         return true;
     }
+
+    public String getLoggedInUserId(){
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+
+        String email = preferences.getString("email","");
+        String password = preferences.getString("password","");
+        String userId = preferences.getString("userId","");
+
+        //   Toast.makeText(getContext(),"Details em " + email + " " + password, Toast.LENGTH_LONG).show();
+        System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
+        return userId;
+
+    }
+
+    //filter out post by who posted the post.
+    private void filterByUserId(String userId, boolean doFilter){
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+
+
+        ArrayList<ForumPost> container = new ArrayList<>();
+        ArrayList<ForumPost> backupList = new ArrayList<>();
+        backupList = postArrayList;
+
+        if(doFilter == true) {
+
+            activity.getSupportActionBar().setSubtitle("My Posts");
+
+            for (ForumPost f : postArrayList) {
+                System.out.println(f.getPostedBy());
+
+                if (Integer.parseInt(f.getPostedBy().toString()) == Integer.parseInt(userId)) {
+                    System.out.println("Inner FOR LOOOP RUNS!");
+                    container.add(f);
+                }
+            }
+            System.out.println("CONTAINER SIZE==============================" + container.size());
+            forumRecyclerViewAdapter.setFilterList(container);
+        }
+        else if(doFilter == false){
+
+            activity.getSupportActionBar().setSubtitle("All Posts");
+            //restore
+            forumRecyclerViewAdapter.setFilterList(backupList);
+        }
+
+    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package com.construction.app.cpms.miscellaneous;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +47,8 @@ public class DashboardFragment extends Fragment {
         forumsTile = (CardView) view.findViewById(R.id.forumsTile);
         milestonesTile = (CardView) view.findViewById(R.id.milestonesTile);
 
+        getLoginCredentials();
+
         //Click listeners for the tiles, navigate to the relevant activity you made using intents.
         plansTile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +91,10 @@ public class DashboardFragment extends Fragment {
         milestonesTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Milestones Tile Clicked", Toast.LENGTH_SHORT);
-                toast.show();
+               // Toast toast = Toast.makeText(getContext(), "Milestones Tile Clicked", Toast.LENGTH_SHORT);
+                //toast.show();
+
+                getLoginCredentials();
             }
         });
 
@@ -104,5 +110,19 @@ public class DashboardFragment extends Fragment {
             activity.setSupportActionBar(toolbar);
         }
     }
+
+    public void getLoginCredentials(){
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+
+        String email = preferences.getString("email","");
+        String password = preferences.getString("password","");
+        String userId = preferences.getString("userId","");
+
+     //   Toast.makeText(getContext(),"Details em " + email + " " + password, Toast.LENGTH_LONG).show();
+        System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
+    }
+
+
 
 }
