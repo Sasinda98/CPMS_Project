@@ -67,6 +67,50 @@ public class actiExpenses extends AppCompatActivity {
             }
         });
 
+        ImageButton mButt = findViewById(R.id.miscellaneousButt);
+        mButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", "Miscell");
+
+                startActivity(intent);
+            }
+        });
+
+        ImageButton cButt = findViewById(R.id.consultationButt);
+        cButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", "Consult");
+
+                startActivity(intent);
+            }
+        });
+
+        ImageButton overButt = findViewById(R.id.overButt);
+        overButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", "Overheads");
+
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
+
         FloatingActionButton add = findViewById(R.id.addExpenses);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
