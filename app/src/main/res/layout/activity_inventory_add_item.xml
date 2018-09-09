@@ -59,7 +59,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/inventory_add_item_qty_layout"
+        android:id="@+id/inventoryRequestQtyLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/inventory_add_item_qty_layout"
+        app:layout_constraintStart_toEndOf="@+id/inventoryRequestQtyLayout"
         app:layout_constraintTop_toBottomOf="@+id/inventory_add_item_name_layout" />
 
     <TextView
@@ -98,7 +98,7 @@
         android:text="Categories"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_add_item_qty_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/inventoryRequestQtyLayout" />
 
     <Button
         android:id="@+id/add_item_confirm_btn"

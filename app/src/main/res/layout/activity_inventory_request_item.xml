@@ -42,7 +42,7 @@
         />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/inventory_add_item_qty_layout"
+        android:id="@+id/inventoryRequestQtyLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -53,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/request_item_name">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/inventory_request_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Quantity"
@@ -97,11 +98,11 @@
         android:layout_marginTop="40dp"
         android:text="UNIT"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/inventory_add_item_qty_layout"
+        app:layout_constraintStart_toEndOf="@+id/inventoryRequestQtyLayout"
         app:layout_constraintTop_toBottomOf="@+id/request_item_name" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/request_item_message"
+        android:id="@+id/requestItemMessageLayout"
 
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="300dp"
@@ -110,9 +111,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_add_item_qty_layout">
+        app:layout_constraintTop_toBottomOf="@+id/inventoryRequestQtyLayout">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/inventory_request_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|left"
@@ -131,7 +133,7 @@
         android:layout_marginTop="28dp"
         android:text="Confirm"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/request_item_message" />
+        app:layout_constraintTop_toBottomOf="@+id/requestItemMessageLayout" />
 
     <Button
         android:id="@+id/request_item_cancel_btn"
