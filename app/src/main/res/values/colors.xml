@@ -14,5 +14,12 @@
 
   <color name="cardBackground">#212121</color>
   <color name="btm_navbar_item_notchecked">#f8bbd0</color>
+
+  <!--Colours for new Plan Dashboard-->
+  <color name="green">#00bfa5</color>
+  <color name="yellow">#ffb300</color>
+  <color name="backgroundW">#fcfcfc</color>
+  <color name="cardText">#000000</color>
+
     <color name="greenPlus">#43b05c</color>
 </resources>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Plan.addPlan">
+
+    <!--Top Bar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Use this button to navigate backwards from Add Plan to Plan
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/primaryColor"
+            android:src="@drawable/ic_back"/> -->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="8dp"
+            android:layout_gravity="center"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="@string/uploadPlan"
+                app:titleTextColor="@color/primaryTextColor">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--Bottom Navigation Bar-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/primaryColor"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bttm_navbar_tab_colors"
+        app:itemTextColor="@color/bttm_navbar_tab_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="102dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:contextClickable="false"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toStartOf="@+id/editText6"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent"/>
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="102dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Description"
+        app:layout_constraintEnd_toStartOf="@+id/editText"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="102dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="textPersonName"
+        android:text="Image"
+        app:layout_constraintEnd_toStartOf="@+id/editText3"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="247dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="70dp"
+        android:ems="10"
+        android:hint="Enter the plan name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText4"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="247dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Enter the image URL"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/editText6"
+        android:background="@android:color/transparent"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/editText_1"
+        android:layout_width="247dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="Enter a brief description"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.722"
+        app:layout_constraintStart_toEndOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="110dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="200dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/purplebackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/ic_cancel_red"
+        android:text="CANCEL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <!--android:drawableRight="@drawable/ic_cancel_red" -->
+
+
+    <ImageButton
+
+        android:id="@+id/button_2"
+        android:layout_width="110dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="200dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/purplebackground"
+        android:clickable="true"
+        android:elevation="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/ic_file_upload_green"
+        android:text="SUBMIT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.73" />
+    <!--android:drawableRight="@drawable/ic_file_upload_green" -->
+
+
+
+
+</android.support.constraint.ConstraintLayout>
+
+
+    <!--
+        <EditText
+            android:id="@+id/des"
+            android:layout_width="263dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/calB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintStart_toEndOf="@+id/editText" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Description"
+            app:layout_constraintBottom_toTopOf="@+id/calB"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name "
+            app:layout_constraintBottom_toTopOf="@+id/editText5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="264dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="184dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/des"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.619"
+            app:layout_constraintStart_toEndOf="@+id/editText" />
+
+        <Button
+            android:id="@+id/calB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="228dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/des"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/editText5" />
+    -->
+

@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.construction.app.cpms.Navigation;
+import com.construction.app.cpms.Plan.MainPlan;
+import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.expenses.actiExpenses;
 import com.construction.app.cpms.inventoryManagement.*;
@@ -53,8 +55,10 @@ public class DashboardFragment extends Fragment {
         plansTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Plans Tile Clicked", Toast.LENGTH_SHORT);
-                toast.show();
+                /*Toast toast = Toast.makeText(getContext(), "Plans Tile Clicked", Toast.LENGTH_SHORT);
+                toast.show();*/
+                Intent intent = new Intent(getActivity(), newMainPlan.class);
+                startActivity(intent, null);
             }
         });
 

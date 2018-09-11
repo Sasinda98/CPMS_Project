@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_done_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="5" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,10 +44,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="C:\Users\GayalR\Dropbox\1. Group Project\UI\1A-Icon-Pack\arrow-point-to-right.png" />
-                                      <entry key="outputName" value="ic_forum_edit_submit" />
-                                      <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="9b9b9b" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Harshan\Desktop\GHub\button_add-512.png" />
+                                      <entry key="outputName" value="ic_action_plan_add_plan_new" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="fcfcfc" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -83,7 +84,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_message_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/file/ic_file_upload_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -93,7 +94,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_message_black_24dp" />
+                            <entry key="color" value="31e52a" />
+                            <entry key="outputName" value="ic_file_upload_green" />
                             <entry key="sourceFile" value="C:\Users\GayalR\Desktop\icons\baseline-phone_iphone-24px.svg" />
                           </map>
                         </option>
