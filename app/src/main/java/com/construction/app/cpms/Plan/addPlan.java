@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,13 +33,16 @@ public class addPlan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plan);
 
-        //cancel button
+        //cancel button stuff
         ImageButton iBn = (ImageButton)findViewById(R.id.button);
         iBn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myyIntent = new Intent(addPlan.this, newMainPlan.class);
                 startActivity(myyIntent);
+
+                CharSequence message1 = "Plan Upload Cancelled ";
+                Toast.makeText(addPlan.this, message1, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -75,6 +79,12 @@ public class addPlan extends AppCompatActivity {
                     }
                 };
                 requestQueue.add(request);
+
+                CharSequence message = "Plan Uploaded Successfully ";
+                Toast.makeText(addPlan.this, message, Toast.LENGTH_LONG).show();
+
+                Intent newIntent = new Intent(addPlan.this, newMainPlan.class);
+                startActivity(newIntent);
             }
             });
 
