@@ -1,5 +1,6 @@
 package com.construction.app.cpms.Plan;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -17,8 +18,15 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.MainActivity;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.bean.ForumPost;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,19 +34,22 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainPlan extends AppCompatActivity {
 
-    //new
+    //Recycler view to display the plans dynamically created
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private CustomAdapter adapter;
     private List<MyData> data_list;
+    private static String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php";
+
+    StringRequest stringRequest;
+    RequestQueue requestQueue;
 
 
     FloatingActionButton fab;
@@ -60,6 +71,7 @@ public class MainPlan extends AppCompatActivity {
         }); */
 
         Log.d(TAG, "onCreate: Started");
+        requestQueue = Volley.newRequestQueue(this);
 
         //new stuff, just in case delete everything below
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -82,10 +94,11 @@ public class MainPlan extends AppCompatActivity {
         });
     }
 
-    private void load_data_from_server(final int pID){
-        AsyncTask<Integer,Void,Void> task = new AsyncTask<Integer, Void, Void>() {
+    private void load_data_from_server(final int pID) {
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Integer... integers) {
+            protected Void doInBackground(Void... integers) {
+/*
 
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
@@ -109,24 +122,59 @@ public class MainPlan extends AppCompatActivity {
                 } catch (JSONException e) {
                     System.out.println("End of Content");
                 }
+                return null;*/
+
+               /* String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php"; */
+                stringRequest = new StringRequest(com.android.volley.Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("ON RESPONSE");
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i < jsonArray.length(); i++) { //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                                System.out.println("FOR LOOP");
+                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
+
+                                MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"));
+                                /*System.out.println(object.getString("title")); */
+                                //populate arraylist
+                                data_list.add(data);
+                            }
+                            adapter.notifyDataSetChanged();    //if you don't notify the adapter about updates to arraylist so recycler view can load them up.
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    //nothing to end since the script returns all the plans
+
+                    /*
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> hashMap = new HashMap<>();
+                        hashMap.put("name", "Lex Luthor Mansion");
+                        return hashMap;
+                    } */
+                };
+                requestQueue.add(stringRequest);
                 return null;
+
             }
+
             @Override
-            protected void onPostExecute(Void aVoid){
+            protected void onPostExecute(Void aVoid) {
                 adapter.notifyDataSetChanged();
             }
         };
         task.execute();
     }
-
-
-}
-
-
-
-
-
-
+    }
   /* restore      ListView pListView = (ListView) findViewById(R.id.listViewPlan);
 
         ArrayList<String> planList = new ArrayList<>();
