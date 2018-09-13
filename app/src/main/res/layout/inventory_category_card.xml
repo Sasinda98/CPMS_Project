@@ -10,13 +10,13 @@
         android:id="@+id/inventory_category_card"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_margin="5dp"
         android:padding="5dp"
         app:cardBackgroundColor="@color/backgroundLight"
         app:cardCornerRadius="4dp"
         app:cardElevation="8dp"
         app:layout_columnWeight="1"
-        app:layout_rowWeight="1"
-        >
+        app:layout_rowWeight="1">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +24,6 @@
 
             <ImageView
                 android:id="@+id/inventory_category_card_image"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
@@ -35,7 +34,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/brickwall" />
+                app:srcCompat="@drawable/brickwall"
+                android:layout_width="wrap_content" />
 
             <TextView
                 android:id="@+id/inventory_category_text"

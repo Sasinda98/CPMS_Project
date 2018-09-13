@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -44,6 +45,7 @@ public class inventory_category_grid extends AppCompatActivity {
     });
 
 
+        //Floating action button leading to add item
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.categoryFloatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,15 @@ public class inventory_category_grid extends AppCompatActivity {
                 // Click action
                 Intent intent = new Intent(inventory_category_grid.this, inventory_add_item.class);
 
+                startActivity(intent);
+            }
+        });
+        //Button Leading to inventory management panel
+        Button placeHolderButton = (Button) findViewById(R.id.catPlaceHolderBtn);
+        placeHolderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(inventory_category_grid.this, inventory_manager_panel.class);
                 startActivity(intent);
             }
         });
@@ -88,5 +99,6 @@ public class inventory_category_grid extends AppCompatActivity {
         return categoryList;
 
     }
+
 
 }

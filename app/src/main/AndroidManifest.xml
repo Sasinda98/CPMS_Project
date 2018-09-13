@@ -41,7 +41,10 @@
         <activity android:name=".expenses.Expense_Add" />
         <activity android:name=".miscellaneous.addForumPost" />
         <activity android:name=".inventoryManagement.testParcel" />
-        <activity android:name=".miscellaneous.editForumPost"></activity>
+        <activity android:name=".miscellaneous.editForumPost" />
+        <activity android:name=".inventoryManagement.inventory_manager_panel" />
+        <activity android:name=".inventoryManagement.testingActivity" />
+        <activity android:name=".inventoryManagement.incoming_requests"></activity>
     </application>
 
 </manifest>
