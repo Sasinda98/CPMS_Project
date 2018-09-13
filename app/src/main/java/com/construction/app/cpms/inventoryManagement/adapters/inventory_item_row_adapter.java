@@ -1,4 +1,4 @@
-package com.construction.app.cpms.inventoryManagement;
+package com.construction.app.cpms.inventoryManagement.adapters;
 // http://camposha.info/source/android-custom-cardview-listview-source
 //above used as examples
 import android.content.Context;
@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
+
 import java.util.ArrayList;
 
 public class inventory_item_row_adapter extends BaseAdapter {

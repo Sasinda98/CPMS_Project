@@ -1,16 +1,15 @@
-package com.construction.app.cpms.inventoryManagement;
+package com.construction.app.cpms.inventoryManagement.adapters;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.construction.app.cpms.MainActivity;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.inventoryManagement.beans.inventory_category_Bean;
+
 import java.util.ArrayList;
 public class inventory_category_adapter extends BaseAdapter {
 

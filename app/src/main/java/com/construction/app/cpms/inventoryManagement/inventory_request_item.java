@@ -29,6 +29,7 @@ public class inventory_request_item extends AppCompatActivity {
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
     private String currentTime;
     private String itemName;
+    private double iQty;
     private int itemID;
     private TextView reqItemTextView;
     private TextInputEditText reqMessage = null;
@@ -51,6 +52,9 @@ public class inventory_request_item extends AppCompatActivity {
         itemName = intent.getStringExtra("itemName");
         itemID = intent.getIntExtra("itemID", 0);
 
+        Bundle b = getIntent().getExtras();
+        iQty = b.getDouble("itemQty");
+    System.out.println("Testing================================================================================================ "+ iQty);
 
         //Initialising all the stuff on the xml
         reqItemTextView = (TextView) findViewById(R.id.request_item_name);
@@ -92,35 +96,49 @@ public class inventory_request_item extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double rQty = Double.valueOf(reqQty.getText().toString());
+                System.out.println("=============================================================================== rQty============================================================"+rQty);
+                System.out.println("=============================================================================== iQty============================================================"+iQty);
+
+                //Validating whether request qty greater than qty in stock
+                if(iQty < rQty){
+                    CharSequence msg = "Request Quantity Higher than inventory Quantity";
+                    Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
+
+                }
+                else{
+                    StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String,String> params = new HashMap<>();
+                            params.put("iID", Integer.toString(itemID));
+                            params.put("rQty", reqQty.getText().toString());
+                            params.put("rMsg", reqMessage.getText().toString());
+                            params.put("rDate", currentTime);
+                            return params;
+                        }
+                    };
+
+                    requestQueue.add(request);
+
+                    CharSequence msg = "RequestSent";
+                    Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
+
+
+                }
 
 
 
-                StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("iID", Integer.toString(itemID));
-                        params.put("rQty", reqQty.getText().toString());
-                        params.put("rMsg", reqMessage.getText().toString());
-                        params.put("rDate", currentTime);
-                        return params;
-                    }
-                };
-
-                requestQueue.add(request);
-
-                CharSequence msg = "RequestSent";
-                Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
 
 
 

@@ -13,6 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.inventoryManagement.adapters.inventory_item_row_adapter;
+import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
 
 import android.os.Bundle;
 import android.view.View;
@@ -82,8 +84,13 @@ public class inventory_items_list extends AppCompatActivity {
                 inventory_item_Bean itemBean = (inventory_item_Bean) listView.getItemAtPosition(i);
                 String itemName = itemBean.getItemName();
                 int itemID = itemBean.getItemID();
+                Double itemQty = itemBean.getItemQuantity();
+                Bundle b = new Bundle();
+                b.putDouble("itemQty", itemQty);
+
                 intent.putExtra("itemName", itemName);
                 intent.putExtra("itemID", itemID);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });

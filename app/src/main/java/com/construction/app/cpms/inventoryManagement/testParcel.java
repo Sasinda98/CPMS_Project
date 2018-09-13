@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.inventoryManagement.beans.inventory_category_Bean;
 
 
 public class testParcel extends AppCompatActivity {

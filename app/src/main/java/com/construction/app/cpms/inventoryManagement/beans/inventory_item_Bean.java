@@ -1,4 +1,4 @@
-package com.construction.app.cpms.inventoryManagement;
+package com.construction.app.cpms.inventoryManagement.beans;
 
 public class inventory_item_Bean {
 

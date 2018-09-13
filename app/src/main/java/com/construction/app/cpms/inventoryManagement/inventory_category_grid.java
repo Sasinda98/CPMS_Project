@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.inventoryManagement.adapters.inventory_category_adapter;
+import com.construction.app.cpms.inventoryManagement.beans.inventory_category_Bean;
 
 import java.util.ArrayList;
 

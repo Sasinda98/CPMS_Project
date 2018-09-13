@@ -1,7 +1,7 @@
 
 // Used as tutorial: https://www.sitepoint.com/transfer-data-between-activities-with-android-parcelable/
 
-package com.construction.app.cpms.inventoryManagement;
+package com.construction.app.cpms.inventoryManagement.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
