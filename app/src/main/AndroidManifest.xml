@@ -44,7 +44,7 @@
         <activity android:name=".miscellaneous.editForumPost" />
         <activity android:name=".inventoryManagement.inventory_manager_panel" />
         <activity android:name=".inventoryManagement.testingActivity" />
-        <activity android:name=".inventoryManagement.incoming_requests"></activity>
+        <activity android:name=".inventoryManagement.inventory_incoming_requests"></activity>
     </application>
 
 </manifest>

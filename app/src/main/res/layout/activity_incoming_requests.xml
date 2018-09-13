@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inventoryManagement.incoming_requests">
+    tools:context=".inventoryManagement.inventory_incoming_requests">
 
     <!--top appbar-->
     <android.support.design.widget.AppBarLayout

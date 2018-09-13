@@ -8,14 +8,14 @@ public class incoming_requests_bean {
     private double reqQty;
     private String reqDate;
     private String message;
-
-
-
     private String itemName;
     private String subConFName;
     private String subConLname;
+    private double itemQty;
+    private String itemCategory;
+    private String itemUnit;
 
-    public incoming_requests_bean(int reqID, int subConID, int itemID, double reqQty, String reqDate, String message, String itemName, String subConFName, String subConLname) {
+    public incoming_requests_bean(int reqID, int subConID, int itemID, double reqQty, String reqDate, String message, String itemName, String subConFName, String subConLname, double itemQty, String itemCategory, String itemUnit) {
         this.reqID = reqID;
         this.subConID = subConID;
         this.itemID = itemID;
@@ -25,7 +25,41 @@ public class incoming_requests_bean {
         this.itemName = itemName;
         this.subConFName = subConFName;
         this.subConLname = subConLname;
+        this.itemQty = itemQty;
+        this.itemCategory = itemCategory;
+        this.itemUnit = itemUnit;
     }
+
+
+    public double getItemQty() {
+        return itemQty;
+    }
+
+    public void setItemQty(double itemQty) {
+        this.itemQty = itemQty;
+    }
+
+    public String getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
+    }
+
+    public String getItemUnit() {
+        return itemUnit;
+    }
+
+    public void setItemUnit(String itemUnit) {
+        this.itemUnit = itemUnit;
+    }
+
+
+
+
+
+
 
     public int getReqID() {
         return reqID;

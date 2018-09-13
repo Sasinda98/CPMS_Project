@@ -52,11 +52,13 @@ public class incoming_requests_adapter extends BaseAdapter {
 
         TextView subConName= (TextView) view.findViewById(R.id.req_row_con_name);
         TextView itemName= (TextView) view.findViewById(R.id.req_row_item_name);
+        TextView dateTextView = (TextView) view.findViewById(R.id.req_row_requestDate);
 
         String conName = item.getSubConFName() + " " + item.getSubConLname();
-
+        String date = item.getReqDate().substring(0,10);
         subConName.setText(conName);
         itemName.setText(item.getItemName());
+        dateTextView.setText(date);
 
         return view;
 

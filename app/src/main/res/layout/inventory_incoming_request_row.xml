@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardBackgroundColor="@color/backgroundLight"
         app:cardCornerRadius="4dp"
@@ -20,46 +20,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/request_row_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="16dp"
-
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-
-                android:elevation="4dp"
-                android:src="@drawable/helmet"
-                app:civ_border_color="#BDBDBD"
-                app:civ_border_width="1dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/req_row_con_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="84dp"
-                android:layout_marginStart="84dp"
-                android:layout_marginTop="20dp"
-                android:text="Con Name"
-                android:textSize="22sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/req_row_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginTop="12dp"
                 android:text="Item Name"
                 android:textSize="22sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/req_row_con_name"
-                app:layout_constraintStart_toEndOf="@+id/req_row_con_name" />
+                app:layout_constraintStart_toEndOf="@+id/request_row_image"
+                app:layout_constraintTop_toBottomOf="@+id/req_row_date_label" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/request_row_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+
+                android:elevation="4dp"
+                android:src="@drawable/helmet"
+                app:civ_border_color="#BDBDBD"
+                app:civ_border_width="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/req_row_con_name"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:text="Contractor Name"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@+id/request_row_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/req_row_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="12dp"
+                android:text="Date:  "
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@+id/request_row_image"
+                app:layout_constraintTop_toBottomOf="@+id/req_row_con_name" />
+
+            <TextView
+                android:id="@+id/req_row_requestDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:text="DateValue"
+                android:textSize="22sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/req_row_date_label"
+                app:layout_constraintStart_toEndOf="@+id/req_row_date_label" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
