@@ -45,6 +45,10 @@ dependencies {
     api 'de.hdodenhof:circleimageview:2.1.0'
     api 'com.mcxiaoke.volley:library:1.0.19'
 
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    api 'com.google.firebase:firebase-database:16.0.2'
+
 
 
 }
+apply plugin: 'com.google.gms.google-services'
