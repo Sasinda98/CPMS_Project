@@ -35,7 +35,7 @@
         <activity android:name=".Plan.MainPlan" />
         <activity android:name=".Plan.addPlan" />
         <activity android:name=".Plan.newMainPlan" />
-            android:windowSoftInputMode="adjustPan" />
+        android:windowSoftInputMode="adjustPan" />
         <activity android:name=".inventoryManagement.inventory_project_manager" />
         <activity android:name=".expenses.Expense_Category_List" />
         <activity android:name=".expenses.Expense_Add" />
@@ -44,7 +44,8 @@
         <activity android:name=".miscellaneous.editForumPost" />
         <activity android:name=".inventoryManagement.inventory_manager_panel" />
         <activity android:name=".inventoryManagement.testingActivity" />
-        <activity android:name=".inventoryManagement.inventory_incoming_requests"></activity>
+        <activity android:name=".inventoryManagement.inventory_incoming_requests" />
+        <activity android:name=".inventoryManagement.inventory_inspect_request"></activity>
     </application>
 
 </manifest>

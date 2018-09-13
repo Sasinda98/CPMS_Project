@@ -1,9 +1,12 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -59,6 +62,39 @@ public class inventory_incoming_requests extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.requests_listView);
         adapter = new incoming_requests_adapter(this, requestArrayList);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent intent = new Intent(inventory_incoming_requests.this, inventory_inspect_request.class);
+                incoming_requests_bean requestBean = (incoming_requests_bean) listView.getItemAtPosition(i);
+                String itemName = requestBean.getItemName();
+                String subConName = requestBean.getSubConFName() + " " + requestBean.getSubConLname();
+                String category = requestBean.getItemCategory();
+                String message = requestBean.getMessage();
+                Double reqQty = requestBean.getReqQty();
+                int itemID = requestBean.getItemID();
+                int subConID = requestBean.getSubConID();
+                Double itemQty = requestBean.getItemQty();
+                Bundle b = new Bundle();
+                b.putDouble("itemQty", itemQty);
+                b.putDouble("reqQty", reqQty);
+                System.out.println("=========================================================================================================================="+message);
+
+                intent.putExtra("itemName", itemName);
+                intent.putExtra("itemID", itemID);
+                intent.putExtra("subConID", subConID);
+                intent.putExtra("subConName", subConName);
+                intent.putExtra("category", category);
+                intent.putExtra("message", message);
+
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void fetchdata(){
@@ -91,6 +127,8 @@ public class inventory_incoming_requests extends AppCompatActivity {
                                 double itemQty = Double.valueOf(object.getString("itemQty"));
                                 String itemCategory = object.getString("itemCategory");
                                 String itemUnit = object.getString("itemUnit");
+
+
 
 
 
