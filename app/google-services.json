@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "120900764134",
+    "firebase_url": "https://cpms-4780c.firebaseio.com",
+    "project_id": "cpms-4780c",
+    "storage_bucket": "cpms-4780c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120900764134:android:150d6ba5f7e259a2",
+        "android_client_info": {
+          "package_name": "com.construction.app.cpms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120900764134-0ds2ggocget0mcs01m1tlmrn6egmhb4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh4JduqRAYjJjHwkym64PKausTLSoyfBk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

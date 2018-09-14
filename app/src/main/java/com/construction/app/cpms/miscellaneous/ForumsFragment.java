@@ -212,8 +212,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
             case R.id.addPost :
              /*   Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
                 toast1.show();*/
-                Intent i =  new Intent(getContext(), addForumPost.class);
-                startActivity(i);
+
 
                 break;
             case R.id.allPosts :

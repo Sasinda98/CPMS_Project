@@ -18,12 +18,6 @@ import com.construction.app.cpms.R;
  */
 public class MessagesFragment extends Fragment {
 
-
-    public MessagesFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
