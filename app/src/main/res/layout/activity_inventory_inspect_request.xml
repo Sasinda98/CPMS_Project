@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundLight"
+    tools:context=".inventoryManagement.inventory_inspect_request">
+
+    <!--top appbar-->
+
+
+    <!--bottom navbar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:title="Pending Request"
+            app:titleTextColor="@color/primaryTextColor"></android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/primaryColor"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bttm_navbar_tab_colors"
+        app:itemTextColor="@color/bttm_navbar_tab_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+    <TextView
+        android:id="@+id/incoming_request_reqNameHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
+        android:text="Requester:"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/incoming_request_reqName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/white"
+        android:text="TextView"
+
+        android:textSize="22sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_reqNameHolder"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_reqNameHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_itemNameHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="Item:"
+
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_reqNameHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="76dp"
+        android:layout_marginStart="76dp"
+        android:background="@android:color/white"
+        android:text="TextView"
+
+        android:textSize="22sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_itemNameHolder"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_itemNameHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_categoryHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="Category:"
+
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_itemNameHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/white"
+
+        android:text="TextView"
+        android:textSize="22sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_categoryHolder"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_categoryHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_mesageHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Message:"
+
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_categoryHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_message"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/white"
+        android:lines="8"
+        android:maxLines="10"
+
+        android:minLines="6"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_mesageHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_itemQtyHolder"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="In Stock"
+
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_message" />
+
+    <TextView
+        android:id="@+id/incoming_request_itemQty"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/white"
+        android:text="TextView"
+
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_itemQtyHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_reqQtyHolder"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:text="Requested Quantity"
+
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_itemQtyHolder"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_itemQtyHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_balanceHolder"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:text="Balance"
+
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_reqQtyHolder"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_reqQtyHolder" />
+
+    <TextView
+        android:id="@+id/incoming_request_reqQty"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+
+        android:layout_marginStart="24dp"
+        android:background="@android:color/white"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_itemQty"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_itemQty" />
+
+    <TextView
+        android:id="@+id/incoming_request_balance"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/white"
+        android:text="TextView"
+
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_reqQty"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_reqQty" />
+
+    <Button
+        android:id="@+id/incoming_request_approve_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:text="Approve"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_request_itemQty" />
+
+    <Button
+        android:id="@+id/incoming_request_deny_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+        android:text="Deny"
+        app:layout_constraintBaseline_toBaselineOf="@+id/incoming_request_approve_btn"
+        app:layout_constraintStart_toEndOf="@+id/incoming_request_approve_btn" />
+
+</android.support.constraint.ConstraintLayout>

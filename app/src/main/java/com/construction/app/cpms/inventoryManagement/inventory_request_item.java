@@ -81,6 +81,8 @@ public class inventory_request_item extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         return sdf.format(cal.getTime());
+
+
     }
 
 
