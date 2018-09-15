@@ -24,7 +24,18 @@ import java.util.ArrayList;
  */
 public class MessagesFragment extends Fragment {
 
+    private String projectId;   //to be passed in from Harshan's createPlans and Harshan's user_plan
+    private String userId;      //logged in user's userid.
+
     private ArrayList<ChatRoomMain> chatRoomMainArrayList = new ArrayList<>();
+
+    //task1-: get the list of users relevant to current project from database, depends on Harshan's assigning users to relevant project func.
+    //tasl2-: if the project doesnt have a project entry under messaging in firebase(Query to find out) add it
+    // by creating relevant chatrooms for available users, if not don't. set it as root and continue to task3.
+    //task3-: get timestamp, get latestmessage using query and also image of user using firebase (if task 2 had to get done, disregard non mandatory fields).
+    //task4-: fill up an arraylist pass to adapter and display!
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
