@@ -124,7 +124,7 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
             forumTitle = itemView.findViewById(R.id.postTitle);
             postedBy = itemView.findViewById(R.id.postedBy);
             body = itemView.findViewById(R.id.body);
-            timestamp = itemView.findViewById(R.id.timeStamp);
+            timestamp = itemView.findViewById(R.id.lm_timeStamp);
 
             //bottom clickable, static.
             track = itemView.findViewById(R.id.track);

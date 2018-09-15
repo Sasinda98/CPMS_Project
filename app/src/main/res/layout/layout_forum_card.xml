@@ -102,7 +102,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
                 <!--Time stamp-->
                 <TextView
-                    android:id="@+id/timeStamp"
+                    android:id="@+id/lm_timeStamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
