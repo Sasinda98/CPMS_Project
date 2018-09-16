@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,11 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.addForumPost;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -37,9 +43,13 @@ import java.util.Map;
 
 public class signupFragment extends Fragment {
 
+    private FirebaseAuth mAuth;
+    private static final String TAG = "signupFragment";
+
     private TextView signUpHeaderTV = null;
     private TextView signUpSubHeadingTV = null;
     private Button continueBtn = null;
+
 
     /*Text inputs*/
     private TextInputEditText fNameEntry = null;
@@ -63,6 +73,7 @@ public class signupFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
         signUpHeaderTV = view.findViewById(R.id.signUpHeader);
         signUpSubHeadingTV = view.findViewById(R.id.signUpSubHeader);
 
@@ -148,8 +159,37 @@ public class signupFragment extends Fragment {
 
                                     } else {
                                        //code to execute when user got added...
-                                        ((Navigation)getActivity()).naviagateTo(new loginFragment(), false);
-                                        Toast.makeText(getContext(),"Sign Up Succesful",Toast.LENGTH_LONG).show();
+
+                                        //adding user to firebase to makeuse of realtime database in funcs
+                                        mAuth.createUserWithEmailAndPassword(emailEntry.getText().toString(), passwordEntry.getText().toString())
+                                                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                        if (task.isSuccessful()) {
+                                                            // Sign in success, update UI with the signed-in user's information
+                                                            Log.d(TAG, "createUserWithEmail:success");
+                                                            FirebaseUser user = mAuth.getCurrentUser();
+
+                                                            //Navigate to sign in page if sign up is successful.
+                                                            ((Navigation)getActivity()).naviagateTo(new loginFragment(), false);
+                                                            Toast.makeText(getContext(),"Sign Up Succesful",Toast.LENGTH_LONG).show();
+
+                                                            // updateUI(user);
+                                                        } else {
+                                                            // If sign in fails, display a message to the user.
+                                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                            Toast.makeText(getContext(), "Authentication failed.",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                           // updateUI(null);
+                                                        }
+
+                                                        // ...
+                                                    }
+                                                });
+
+
+
+
                                     }
 
 
@@ -188,6 +228,14 @@ public class signupFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+       // updateUI(currentUser);
     }
 
 }

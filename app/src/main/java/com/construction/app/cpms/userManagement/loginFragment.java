@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,11 @@ import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.*;
 import com.construction.app.cpms.SecondaryActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,8 +48,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//Used Tool->Firebase to assist in coding the email and password auth
 public class loginFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
+    private static final String TAG = "loginFragment";
 
     private TextView signUpHeaderTV;
     private TextView signUpSubHeaderTV;
@@ -62,6 +71,8 @@ public class loginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        mAuth = FirebaseAuth.getInstance(); //initializing authinstance
 
         requestQueue = Volley.newRequestQueue(getContext());
 
@@ -140,9 +151,36 @@ public class loginFragment extends Fragment {
                                      if (isEmailMatched && isPasswordMatched && userId != null) { //means user credentials match an actual accnt in db, script returns null itheres no matcvh
                                          saveLoginCredentials(userId);
 
+                                         mAuth.signInWithEmailAndPassword(emailEntry.getText().toString(), passwordEntry.getText().toString())
+                                                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                                     @Override
+                                                     public void onComplete(@NonNull Task<AuthResult> task) {
+                                                         if (task.isSuccessful()) {
+                                                             // Sign in success, update UI with the signed-in user's information
+                                                             Log.d(TAG, "signInWithEmail:success");
+                                                             FirebaseUser user = mAuth.getCurrentUser();
+                                                             Toast.makeText(getContext(), "Authentication Successful.", Toast.LENGTH_SHORT).show();
+                                                             //  updateUI(user);
+
+                                                             Intent i =  new Intent(getActivity(), SecondaryActivity.class);
+                                                             startActivity(i,null);
+                                                         } else {
+                                                             // If sign in fails, display a message to the user.
+                                                             Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                                             Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                             //updateUI(null);
+                                                         }
+
+                                                         // ...
+                                                     }
+                                                 });
+
+
+
+
+/*
                                          Intent i =  new Intent(getActivity(), SecondaryActivity.class);
-                                         startActivity(i,null);
-                                       //  Toast.makeText(getContext(), "Userid= " + value + "Access=Allowed", Toast.LENGTH_LONG).show();
+                                         startActivity(i,null);*/
 
 
                                      } else {
@@ -194,6 +232,14 @@ public class loginFragment extends Fragment {
         editor.commit();
        // Toast.makeText(getContext(),"Save login creds", Toast.LENGTH_LONG).show();
         System.out.println("===========SaveLOGIN SHARED PREF==========");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+      //  updateUI(currentUser);
     }
 
 
