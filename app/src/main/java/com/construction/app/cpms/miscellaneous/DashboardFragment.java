@@ -32,6 +32,7 @@ public class DashboardFragment extends Fragment {
     private CardView financesTile;
     private CardView forumsTile;
     private CardView milestonesTile;
+    private CardView projectTile;
 
 
     @Override
@@ -48,6 +49,7 @@ public class DashboardFragment extends Fragment {
         financesTile = (CardView) view.findViewById(R.id.financesTile);
         forumsTile = (CardView) view.findViewById(R.id.forumsTile);
         milestonesTile = (CardView) view.findViewById(R.id.milestonesTile);
+        projectTile =  (CardView) view.findViewById(R.id.projectTile);
 
         getLoginCredentials();
 
@@ -99,6 +101,13 @@ public class DashboardFragment extends Fragment {
                 //toast.show();
 
                 getLoginCredentials();
+            }
+        });
+
+        projectTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //have your stuff here..... intent...
             }
         });
 

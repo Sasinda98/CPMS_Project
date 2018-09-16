@@ -245,6 +245,41 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
+                <!--col2 row3-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/projectTile"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:cardBackgroundColor="@color/cardBackground"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Proj_temp"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="@dimen/db_card_title" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/db_inventory" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
             </android.support.v7.widget.GridLayout>
 
         </LinearLayout>
