@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -45,6 +46,8 @@ public class signupFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private static final String TAG = "signupFragment";
+
+
 
     private TextView signUpHeaderTV = null;
     private TextView signUpSubHeadingTV = null;
@@ -139,88 +142,63 @@ public class signupFragment extends Fragment {
                     }
                 }
 
+
+
                 //if form entered data checks out, go ahead with post requests to php script
                 if(isFormValid == true){
 
-                    StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
+                    //FIREBASE
+                    //adding user to firebase to makeuse of realtime database in funcs
+                    mAuth.createUserWithEmailAndPassword(emailEntry.getText().toString(), passwordEntry.getText().toString())
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
 
-                                //checking if the sent response has the relevant attributes.. if so continue with the sign in..
-                                if (jsonObject.names().get(0).equals("isEmailInDB") && jsonObject.names().get(1).equals("isUserAdded")) {
+                                        //firebase uid passed in as parameter to store it in the remote db.
+                                        insertRemoteDb(user.getUid());      //Add user record to remotedatabase, so others can also see this user.
 
-                                    boolean isEmailInDB = Boolean.valueOf(jsonObject.getString("isEmailInDB"));
-                                    boolean isUserAddedToDB = Boolean.valueOf(jsonObject.getString("isUserAdded"));
+                                        //Navigate to sign in page if sign up is successful.
+                                        ((Navigation)getActivity()).naviagateTo(new loginFragment(), false);
 
-                                    if (isEmailInDB && isUserAddedToDB == false) { //returns true if user entered email already exist in db.
-                                        emailEntry.setError("Email already registered");
+                                        Toast.makeText(getContext(),"Sign Up Succesful",Toast.LENGTH_LONG).show();
 
+                                        // updateUI(user);
                                     } else {
-                                       //code to execute when user got added...
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
 
-                                        //adding user to firebase to makeuse of realtime database in funcs
-                                        mAuth.createUserWithEmailAndPassword(emailEntry.getText().toString(), passwordEntry.getText().toString())
-                                                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                                        if (task.isSuccessful()) {
-                                                            // Sign in success, update UI with the signed-in user's information
-                                                            Log.d(TAG, "createUserWithEmail:success");
-                                                            FirebaseUser user = mAuth.getCurrentUser();
+                                        //used stackobverflow as referemces to know which exceptions to handle. link - https://stackoverflow.com/questions/37859582/how-to-catch-a-firebase-auth-specific-exceptions/38676613
+                                        String errorCode = ((FirebaseAuthException)task.getException()).getErrorCode();
 
-                                                            //Navigate to sign in page if sign up is successful.
-                                                            ((Navigation)getActivity()).naviagateTo(new loginFragment(), false);
-                                                            Toast.makeText(getContext(),"Sign Up Succesful",Toast.LENGTH_LONG).show();
+                                        //add more validations later on if time permits use the link above to do so.. for now email verification and password is done.
+                                        switch (errorCode){
+                                            case "ERROR_EMAIL_ALREADY_IN_USE":
+                                                Toast.makeText(getContext(), "The email address is already in use by another account.", Toast.LENGTH_LONG).show();
+                                                emailEntry.setError("The email address is already in use by another account.");
+                                                emailEntry.requestFocus();
+                                                break;
+                                            case "ERROR_WEAK_PASSWORD":     //redundant case since check is done above before it comes here.
+                                                Toast.makeText(getContext(), "The given password is invalid.", Toast.LENGTH_LONG).show();
+                                                passwordEntry.setError("The password is invalid, it must 6 characters at least");
+                                                passwordEntry.requestFocus();
+                                                break;
 
-                                                            // updateUI(user);
-                                                        } else {
-                                                            // If sign in fails, display a message to the user.
-                                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                            Toast.makeText(getContext(), "Authentication failed.",
-                                                                    Toast.LENGTH_SHORT).show();
-                                                           // updateUI(null);
-                                                        }
-
-                                                        // ...
-                                                    }
-                                                });
+                                                default: Toast.makeText(getContext(),"Something Went Wrong", Toast.LENGTH_LONG).show();
+                                        }
 
 
-
-
+                                        Toast.makeText(getContext(), "Sign up failed!",
+                                                Toast.LENGTH_SHORT).show();
+                                        // updateUI(null);
                                     }
 
-
-                                } else {
-                                    Toast.makeText(getContext(), "Error Occurred, DB OR INT", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
                                 }
+                            });
 
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String,String> params = new HashMap<>();
-                            params.put("fName", fNameEntry.getText().toString());
-                            params.put("lName", lNameEntry.getText().toString());
-                            params.put("contactNo", mobileNumberEntry.getText().toString());
-                            params.put("email", emailEntry.getText().toString());
-                            params.put("password", passwordEntry.getText().toString());
-                            return params;
-                        }
-                    };
-
-                    requestQueue.add(request);
                 }
 
             }//end onclick
@@ -228,6 +206,58 @@ public class signupFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void insertRemoteDb(final String firebaseUserId ){
+        StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    //checking if the sent response has the relevant attributes.. if so continue with the sign in..
+                    if (jsonObject.names().get(0).equals("isEmailInDB") && jsonObject.names().get(1).equals("isUserAdded")) {
+
+                        boolean isEmailInDB = Boolean.valueOf(jsonObject.getString("isEmailInDB"));
+                        boolean isUserAddedToDB = Boolean.valueOf(jsonObject.getString("isUserAdded"));
+
+                        if (isEmailInDB && isUserAddedToDB == false) { //returns true if user entered email already exist in db.
+                            //handed over to firebase->         //emailEntry.setError("Email already registered");
+
+                        } else {
+                            //code to execute when user got added...
+
+                        }
+
+
+                    } else {
+                        Toast.makeText(getContext(), "Error Occurred, Remote DB OR INTERNET", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> params = new HashMap<>();
+                params.put("fName", fNameEntry.getText().toString());
+                params.put("lName", lNameEntry.getText().toString());
+                params.put("contactNo", mobileNumberEntry.getText().toString());
+                params.put("email", emailEntry.getText().toString());
+                params.put("password", passwordEntry.getText().toString());
+                params.put("firebaseId", firebaseUserId);
+                return params;
+            }
+        };
+         requestQueue.add(request);
     }
 
     @Override
