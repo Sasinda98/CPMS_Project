@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -98,44 +99,15 @@ public class MainPlan extends AppCompatActivity {
         @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... integers) {
-/*
-
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php?id="+pID)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-
-                    JSONArray array = new JSONArray(response.body().string());
-
-                    for(int i = 0; i<array.length(); i++){
-                        JSONObject object = array.getJSONObject(i);
-                        MyData data = new MyData(object.getInt("pID"),object.getString("Name"),object.getString("Image"));
-
-                        data_list.add(data);
-                    }
-                    adapter.notifyDataSetChanged();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    System.out.println("End of Content");
-                }
-                return null;*/
-
-               /* String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php"; */
                 stringRequest = new StringRequest(com.android.volley.Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
                         try {
                             JSONArray jsonArray = new JSONArray(response);
 
                             for (int i = 0; i < jsonArray.length(); i++) { //loop through jsonarray(stores objects in each index) and put data to arraylist.
                                 System.out.println("FOR LOOP");
                                 JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-
                                 MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"));
                                 /*System.out.println(object.getString("title")); */
                                 //populate arraylist
@@ -149,7 +121,8 @@ public class MainPlan extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        CharSequence message4 = "Error. Check INTERNET CONNECTION!";
+                        Toast.makeText(MainPlan.this, message4, Toast.LENGTH_LONG).show();
                     }
                 }) {
                     //nothing to end since the script returns all the plans
@@ -220,3 +193,29 @@ public class MainPlan extends AppCompatActivity {
     }
 }
 */
+
+/*   OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url("https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php?id="+pID)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+
+                    JSONArray array = new JSONArray(response.body().string());
+
+                    for(int i = 0; i<array.length(); i++){
+                        JSONObject object = array.getJSONObject(i);
+                        MyData data = new MyData(object.getInt("pID"),object.getString("Name"),object.getString("Image"));
+
+                        data_list.add(data);
+                    }
+                    adapter.notifyDataSetChanged();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    System.out.println("End of Content");
+                }
+                return null;*/
+
+/* String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php"; */
