@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -7,39 +7,55 @@
     android:layout_height="wrap_content"
     tools:context=".Plan.MainPlan">
 
+        <!--Top Bar-->
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
+            android:layout_width="450dp"
             android:layout_height="wrap_content">
+
+                <!--Use this button to navigate backwards from Add Plan to Plan
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="@color/primaryColor"
+                    android:src="@drawable/ic_back"/> -->
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:elevation="8dp"
+                    android:layout_gravity="center"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:title="@string/planTopBarTitle"
+                    app:title="@string/viewPlan"
                     app:titleTextColor="@color/primaryTextColor">
                 </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
+    <!--Bottom Navigation Bar-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/primaryColor"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bttm_navbar_tab_colors"
+        app:itemTextColor="@color/bttm_navbar_tab_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:background="@color/primaryColor"
-            app:itemIconTint="@color/bttm_navbar_tab_colors"
-            app:itemTextColor="@color/bttm_navbar_tab_colors"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/navigation"
-            android:elevation="8dp"
-            />
 
+        <RelativeLayout
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="800dp">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -50,13 +66,14 @@
             android:scrollbars="vertical"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="6dp">
+            android:layout_marginTop="67dp">
 
         </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
 
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
 
 
 <!--backup of code
@@ -127,3 +144,66 @@ android:src="@drawable/ic_action_plan_add_plan_new" />
           app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout> -->
+
+<!--backup2
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".Plan.MainPlan">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:elevation="8dp"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:title="@string/planTopBarTitle"
+                    app:titleTextColor="@color/primaryTextColor">
+                </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/primaryColor"
+            app:itemIconTint="@color/bttm_navbar_tab_colors"
+            app:itemTextColor="@color/bttm_navbar_tab_colors"
+
+            app:menu="@menu/navigation"
+            android:elevation="8dp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardElevation="5dp"
+            card_view:cardCornerRadius="5dp"
+            android:scrollbars="vertical"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+</RelativeLayout> -->
