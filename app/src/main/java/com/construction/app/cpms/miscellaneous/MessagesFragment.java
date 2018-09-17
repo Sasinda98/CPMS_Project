@@ -2,6 +2,7 @@ package com.construction.app.cpms.miscellaneous;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,10 +28,13 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 
+import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
 import com.construction.app.cpms.miscellaneous.bean.User;
 import com.construction.app.cpms.userManagement.forgotPasswordFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,8 +48,8 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class MessagesFragment extends Fragment {
-
-    private static String projectId = "0";   //to be passed in from Harshan's createPlans and Harshan's user_plan
+    /*STATIC fields are because we need to access them inside async task etc*/
+    private static String projectId = "1";   //to be passed in from Harshan's createPlans and Harshan's user_plan
     private String userId;      //logged in user's userid.
 
     private static ArrayList<ChatRoomMainItem> chatRoomMainArrayList = new ArrayList<ChatRoomMainItem>();
@@ -57,7 +61,13 @@ public class MessagesFragment extends Fragment {
     private  static RequestQueue requestQueue;
     private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchUserDetails.php";
 
+    /*Firbase*/
+    FirebaseAuth mAuth;
+
+
+    /*Dialog to provide user some clues as to whats going onj*/
     private static AlertDialog.Builder builder;
+    private static ProgressDialog progressDialog;
 
     //task1-: get the list of users relevant to current project from database, depends on Harshan's assigning users to relevant project func.
     //tasl2-: if the project doesnt have a project entry under messaging in firebase(Query to find out) add it
@@ -73,7 +83,15 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_messages, null, false);
 
+        mAuth = FirebaseAuth.getInstance(); //firebase
+
+
         requestQueue = Volley.newRequestQueue(getContext());
+
+        //setting up progress dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Message Not Set");
+
 
 
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
@@ -148,7 +166,7 @@ public class MessagesFragment extends Fragment {
                             }
                             messageRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                           // e.printStackTrace();
                             //occurs when no response comes up empty, meaning no users in the project you are searching for
 
 
@@ -189,15 +207,21 @@ public class MessagesFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                // forumRecyclerViewAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
             protected void onPreExecute() {
-                super.onPreExecute();
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
             }
         };
 
         asyncTask.execute();
+    }
+
+    private void firebaseMagic(){
+
     }
 
 
@@ -207,6 +231,17 @@ public class MessagesFragment extends Fragment {
         chatRoomMainArrayList.clear();
         fetchdata();
 
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser==null){
+            System.out.println("FIREBASE LOGIN FAILED... NO USER -%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        }else{
+            System.out.println( "FireBAse = " + currentUser.getUid());
+        }
+
+        // updateUI(currentUser);
     }
 
 
