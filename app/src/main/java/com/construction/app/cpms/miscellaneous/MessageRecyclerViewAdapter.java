@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.miscellaneous.bean.ChatRoomMain;
+import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 
 import java.util.ArrayList;
 
@@ -21,11 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 //Handles message cards
 public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<ChatRoomMain> chatRoomItems = new ArrayList<ChatRoomMain>();
+    private ArrayList<ChatRoomMainItem> chatRoomItems = new ArrayList<ChatRoomMainItem>();
     private Context context;
 
     //Constructor
-    public MessageRecyclerViewAdapter(ArrayList<ChatRoomMain> chatRoomItems, Context context) {
+    public MessageRecyclerViewAdapter(ArrayList<ChatRoomMainItem> chatRoomItems, Context context) {
         this.chatRoomItems = chatRoomItems;
         this.context = context;
     }

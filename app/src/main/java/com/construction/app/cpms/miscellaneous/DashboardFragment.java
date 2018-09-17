@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -18,6 +19,7 @@ import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.Plan.MainPlan;
 import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
 import com.construction.app.cpms.inventoryManagement.*;
 
@@ -40,6 +42,10 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         setUpTopBar(view);
+
+        /*Setting Dashboard as selected in the bottom nav bar, needed because line 85 Message fragment, alert navigates to this frag*/
+        BottomNavigationView navigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 

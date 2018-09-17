@@ -1,6 +1,6 @@
 package com.construction.app.cpms.miscellaneous.bean;
 
-public class ChatRoomMain {
+public class ChatRoomMainItem {
     public String getName() {
         return name;
     }
@@ -49,7 +49,7 @@ public class ChatRoomMain {
     private String role;
     private String lastMessage;
 
-    public ChatRoomMain(String name, String timeStamp, String deliverStatus, String role, String lastMessage) {
+    public ChatRoomMainItem(String name, String timeStamp, String deliverStatus, String role, String lastMessage) {
         this.name = name;
         this.timeStamp = timeStamp;
         this.deliverStatus = deliverStatus;
