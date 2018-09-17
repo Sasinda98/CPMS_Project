@@ -36,6 +36,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder( ViewHolder holder, int position) {
 
             holder.name.setText(my_data.get(position).getName());
+            holder.description.setText(my_data.get(position).getDecript());
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
     }
 
@@ -47,10 +48,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
         public ImageView imageView;
+        public TextView description;
 
         public ViewHolder(View itemView){
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name_n);
+            description = (TextView) itemView.findViewById(R.id.des_d);
             imageView = (ImageView) itemView.findViewById(R.id.image_i);
         }
 

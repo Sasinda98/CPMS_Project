@@ -3,12 +3,14 @@ package com.construction.app.cpms.Plan;
 public class MyData {
     private int pid;
     private String name, image_link;
+    private String decript;
 
 
-    public MyData(int pid, String name, String image_link) {
+    public MyData(int pid, String name, String image_link, String decript) {
         this.pid = pid;
         this.name = name;
         this.image_link = image_link;
+        this.decript = decript;
     }
 
     public int getPid() {
@@ -33,5 +35,13 @@ public class MyData {
 
     public void setImage_link(String image_link) {
         this.image_link = image_link;
+    }
+
+    public String getDecript() {
+        return decript;
+    }
+
+    public void setDecript(String decript) {
+        this.decript = decript;
     }
 }

@@ -85,6 +85,7 @@ public class MainPlan extends AppCompatActivity {
         adapter = new CustomAdapter(this, data_list);
         recyclerView.setAdapter(adapter);
 
+        //as the user scrolls, a network request is requested.
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -94,7 +95,7 @@ public class MainPlan extends AppCompatActivity {
             }
         });
     }
-
+    //database part
     private void load_data_from_server(final int pID) {
         @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
@@ -108,12 +109,13 @@ public class MainPlan extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) { //loop through jsonarray(stores objects in each index) and put data to arraylist.
                                 System.out.println("FOR LOOP");
                                 JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-                                MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"));
+                                MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"), object.getString("Description"));
                                 /*System.out.println(object.getString("title")); */
-                                //populate arraylist
+                                //populate arrayList
                                 data_list.add(data);
                             }
-                            adapter.notifyDataSetChanged();    //if you don't notify the adapter about updates to arraylist so recycler view can load them up.
+                            //notifies the adapter about updates to arrayList.
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -125,8 +127,7 @@ public class MainPlan extends AppCompatActivity {
                         Toast.makeText(MainPlan.this, message4, Toast.LENGTH_LONG).show();
                     }
                 }) {
-                    //nothing to end since the script returns all the plans
-
+                    //nothing to end since all plans are displayed
                     /*
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
