@@ -93,10 +93,12 @@ public class MessagesFragment extends Fragment {
 
         //setting up progress dialog
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Message Not Set");
+
+       // firebaseMagic();
+        progressDialog.setMessage("Getting Project Data...");
+        initializeProjectChatNode(projectId);   //if project node doesnt exist, create it in firebase...
 
 
-        firebaseMagic();
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
         builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Project has 0 users assigned, Therefore Messaging is currently disabled.");
@@ -122,8 +124,6 @@ public class MessagesFragment extends Fragment {
 
         setUpTopBar(view);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-
-
 
 
         return view;
@@ -264,12 +264,62 @@ public class MessagesFragment extends Fragment {
     }
 
 
+    private void initializeProjectChatNode(final String projectId){
+        //traditional query is bad according to -: https://stackoverflow.com/questions/47893328/checking-if-a-particular-value-exists-in-the-firebase-database?rq=1
+        //therefore going with the method recommended by Alex Mamo
+        //doing this way prevents looping through entire tree
+
+        //prefix "Project-P" is used before specifying the project id.
+
+        final DatabaseReference project = root.child("Messages").child("Project-P" + projectId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+
+            String projectId_node = "Project-P" + projectId;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //if no such object in databse, 'Project-P1'
+                if(!dataSnapshot.exists()){
+                    //create it
+                    DatabaseReference project1 = root.child("Messages");
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(projectId_node, "");
+                    project1.updateChildren(hashMap);
+
+
+                }else {
+
+                    //CHAT ROOMS ARE CREATED/LOADED ON DEMAND OF USER WHEN THEY TAP ON THE PERSON TO Send MEssages.
+
+
+                   /* System.out.println("Firebase HAS IT!!!!!!!!!!!!!!!!!!!!!");
+                    DatabaseReference project1 = root.child("Messages").child(projectId_node);
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("Chatroom-Success", "");
+                    project1.updateChildren(hashMap);*/
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        };
+
+        project.addListenerForSingleValueEvent(eventListener);
+
+    }
+
+    public  void getUserChatroomCombinations(){
+        HashMap<String,String> hashMap = new HashMap<>();
+    }
+
+
+
     @Override
     public void onStart() {
         super.onStart();
         chatRoomMainArrayList.clear();
         fetchdata();
-
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
