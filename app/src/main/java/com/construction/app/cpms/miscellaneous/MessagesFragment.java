@@ -35,6 +35,12 @@ import com.construction.app.cpms.miscellaneous.bean.User;
 import com.construction.app.cpms.userManagement.forgotPasswordFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,8 +68,8 @@ public class MessagesFragment extends Fragment {
     private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchUserDetails.php";
 
     /*Firbase*/
-    FirebaseAuth mAuth;
-
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance(); //firebase
+    private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
 
     /*Dialog to provide user some clues as to whats going onj*/
     private static AlertDialog.Builder builder;
@@ -83,9 +89,6 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_messages, null, false);
 
-        mAuth = FirebaseAuth.getInstance(); //firebase
-
-
         requestQueue = Volley.newRequestQueue(getContext());
 
         //setting up progress dialog
@@ -93,7 +96,7 @@ public class MessagesFragment extends Fragment {
         progressDialog.setMessage("Message Not Set");
 
 
-
+        firebaseMagic();
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
         builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Project has 0 users assigned, Therefore Messaging is currently disabled.");
@@ -119,6 +122,9 @@ public class MessagesFragment extends Fragment {
 
         setUpTopBar(view);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+
+
 
         return view;
     }
@@ -221,6 +227,39 @@ public class MessagesFragment extends Fragment {
     }
 
     private void firebaseMagic(){
+        //traditional query is bad according to -: https://stackoverflow.com/questions/47893328/checking-if-a-particular-value-exists-in-the-firebase-database?rq=1
+        //therefore going with the method reccommended by Alex Mamo
+        //doing this way prevents looping through entire tree
+
+        final DatabaseReference project = root.child("Messages").child("Project-P1");
+
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //if no such object in databse, 'Project-P1'
+                if(!dataSnapshot.exists()){
+                    //create it
+                    DatabaseReference project1 = root.child("Messages");
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("Project-P1", "");
+                    project1.updateChildren(hashMap);
+
+
+                }else {
+                    System.out.println("Firebase HAS IT!!!!!!!!!!!!!!!!!!!!!");
+                    DatabaseReference project1 = root.child("Messages").child("Project-P1");
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("Chatroom", "");
+                    project1.updateChildren(hashMap);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        };
+
+        project.addListenerForSingleValueEvent(eventListener);
 
     }
 
