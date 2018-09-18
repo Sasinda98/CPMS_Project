@@ -22,7 +22,9 @@
         </activity>
         <activity
             android:name=".SecondaryActivity"
-            android:label="@string/title_activity_secondary" />
+            android:label="@string/title_activity_secondary"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".expenses.actiExpenses" />
         <activity android:name=".inventoryManagement.inventory_items_list" />
         <activity android:name=".inventoryManagement.inventory_category_grid" />
