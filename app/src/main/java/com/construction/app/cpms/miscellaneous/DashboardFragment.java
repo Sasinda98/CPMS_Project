@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,11 @@ import com.construction.app.cpms.expenses.actiExpenses;
 import com.construction.app.cpms.inventoryManagement.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,6 +52,7 @@ public class DashboardFragment extends Fragment {
 
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,25 +138,40 @@ public class DashboardFragment extends Fragment {
         /*Profile pic change related stuff*/
 
         //Reference-: https://stackoverflow.com/questions/45366125/how-to-store-google-authenticated-user-profile-picture-in-firebase-android
-        CircleImageView circleImageView = view.findViewById(R.id.db_profile_image);
+         final CircleImageView circleImageView = view.findViewById(R.id.db_profile_image);
      /*   Glide.with(getContext()).load("https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/user%2FJw405DV177dkOg2nBWAjsAERs8j1%2FprofilePic%2Funnamed.jpg?alt=media&token=3597b2d3-6a6c-4fb2-8449-0dbe8ca095bb")
                 .asBitmap().into(circleImageView);*/
         if(firebaseUser != null){
             Uri profpic = firebaseUser.getPhotoUrl();
 
-            if(profpic == null){    //user's profile pic not set by them yet.
-                circleImageView.setImageResource(R.drawable.ic_prof_pic);
-            }else {     //user has profile pic set
-              //  circleImageView.setImageURI(null);
+            circleImageView.setImageResource(R.drawable.ic_prof_pic);       //default profile pic, until one load from firebase.
 
-                  Glide.with(getContext()).load(profpic)
-                .asBitmap().into(circleImageView);
+            DatabaseReference reference = firebaseDatabase.getReference().getRoot();
+
+            reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String url = (String) dataSnapshot.getValue();
+
+                        if(url!= null || url != "") {
+                            Glide.with(getContext()).load(url)
+                                    .asBitmap().into(circleImageView);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
 
              //   circleImageView.setImageURI(firebaseUser.getPhotoUrl());
             }
 
-        }
+
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
