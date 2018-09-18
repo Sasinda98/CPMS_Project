@@ -5,13 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".miscellaneous.Profile">
+    tools:context=".miscellaneous.Profile"
+    android:background="@color/backgroundDark"
+    >
 
+
+    <TextView
+        android:layout_marginTop="@dimen/um_signup_heading_spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Personalize Account"
+        android:textSize="32sp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="@dimen/um_signup_heading_spacing"
+        android:id="@+id/actprofile_profile_pic"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#000"
+        />
 
     <android.support.design.button.MaterialButton
         android:id="@+id/buttonBadluck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="BadLuck Brian"/>
+
 
 </LinearLayout>

@@ -56,9 +56,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\Harshan\Desktop\GHub\button_add-512.png" />
-                                      <entry key="outputName" value="ic_prof_pic" />
+                                      <entry key="outputName" value="ic_prof_pic_dark" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="themeColor" value="333333" />
                                     </map>
                                   </option>
                                 </PersistentState>
