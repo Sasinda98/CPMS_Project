@@ -4,6 +4,7 @@ package com.construction.app.cpms.miscellaneous;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.Plan.MainPlan;
 import com.construction.app.cpms.Plan.newMainPlan;
@@ -22,6 +25,10 @@ import com.construction.app.cpms.R;
 import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
 import com.construction.app.cpms.inventoryManagement.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -36,6 +43,8 @@ public class DashboardFragment extends Fragment {
     private CardView milestonesTile;
     private CardView projectTile;
 
+
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,6 +125,39 @@ public class DashboardFragment extends Fragment {
                 //have your stuff here..... intent...
             }
         });
+
+
+        /*Profile pic change related stuff*/
+
+        //Reference-: https://stackoverflow.com/questions/45366125/how-to-store-google-authenticated-user-profile-picture-in-firebase-android
+        CircleImageView circleImageView = view.findViewById(R.id.db_profile_image);
+     /*   Glide.with(getContext()).load("https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/user%2FJw405DV177dkOg2nBWAjsAERs8j1%2FprofilePic%2Funnamed.jpg?alt=media&token=3597b2d3-6a6c-4fb2-8449-0dbe8ca095bb")
+                .asBitmap().into(circleImageView);*/
+        if(firebaseUser != null){
+            Uri profpic = firebaseUser.getPhotoUrl();
+
+            if(profpic == null){    //user's profile pic not set by them yet.
+                circleImageView.setImageResource(R.drawable.ic_prof_pic);
+            }else {     //user has profile pic set
+              //  circleImageView.setImageURI(null);
+
+                  Glide.with(getContext()).load(profpic)
+                .asBitmap().into(circleImageView);
+
+
+             //   circleImageView.setImageURI(firebaseUser.getPhotoUrl());
+            }
+
+        }
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
