@@ -54,6 +54,8 @@ public class DashboardFragment extends Fragment {
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
+    private ValueEventListener profilePictureListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -150,12 +152,12 @@ public class DashboardFragment extends Fragment {
 
             //listener to set the circle imageview, updates it when value of child photoUrl changes.
             //which is the whole point of the listener used here.
-            reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
+            ValueEventListener profilePictureListener = reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String url = (String) dataSnapshot.getValue();
 
-                        if(url!= null && url != "") {
+                        if( ( url!= null ) && ( url != "" ) ) {
                             Glide.with(getContext()).load(url)
                                     .asBitmap().into(circleImageView);
                         }
@@ -209,6 +211,14 @@ public class DashboardFragment extends Fragment {
         System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
     }
 
-
-
+    //removing the set listeners
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //removing the listeners set on firebase once destroyed..
+        if( profilePictureListener != null ) {
+            DatabaseReference databaseReference = firebaseDatabase.getReference().getRoot();
+            databaseReference.child("users").child(firebaseUser.getUid()).child("photoUrl").removeEventListener(profilePictureListener);
+        }
+    }
 }

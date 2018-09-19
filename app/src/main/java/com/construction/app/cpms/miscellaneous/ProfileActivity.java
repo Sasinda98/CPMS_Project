@@ -41,6 +41,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
+    private ValueEventListener profilePictureListener;
+
     private final static String TAG = "ProfileActivity";
     private final int requestCode = 44;     //picked random number to be 44, which will be the code to identify the intent
 
@@ -119,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             //listener to set the circle imageview, updates it when value of child photoUrl changes.
             //which is the whole point of the listener used here.
-            reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
+           profilePictureListener = reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //getting download url of prof pic
@@ -179,5 +181,16 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //removing the set listeners
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //removing the listeners set on firebase once destroyed..
+        if( profilePictureListener != null ) {
+            DatabaseReference databaseReference = firebaseDatabase.getReference().getRoot();
+            databaseReference.child("users").child(firebaseUser.getUid()).child("photoUrl").removeEventListener(profilePictureListener);
+        }
     }
 }
