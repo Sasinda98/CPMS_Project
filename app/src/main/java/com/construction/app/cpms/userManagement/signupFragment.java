@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class signupFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String TAG = "signupFragment";
 
 
@@ -76,7 +76,7 @@ public class signupFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
+
         signUpHeaderTV = view.findViewById(R.id.signUpHeader);
         signUpSubHeadingTV = view.findViewById(R.id.signUpSubHeader);
 
@@ -85,11 +85,11 @@ public class signupFragment extends Fragment {
         fNameEntry = view.findViewById(R.id.fname_editText);
         lNameEntry = view.findViewById(R.id.lname_editText);
         mobileNumberEntry = view.findViewById(R.id.mobile_editText);
-        emailEntry = view.findViewById(R.id.email_editText);
-        passwordEntry = view.findViewById(R.id.password_editText);
-        confirmPasswordEntry = view.findViewById(R.id.confPassword_editText);
+        emailEntry = view.findViewById(R.id.su_email_editText);
+        passwordEntry = view.findViewById(R.id.su_password_editText);
+        confirmPasswordEntry = view.findViewById(R.id.su_confPassword_editText);
 
-        continueBtn = view.findViewById(R.id.ContinueBtn);
+        continueBtn = view.findViewById(R.id.su_ContinueBtn);
 
         //Refered to the following links to see how to add custom fonts -:
         // #1 https://stackoverflow.com/questions/26140094/custom-fonts-in-android-api-below-16
@@ -179,12 +179,12 @@ public class signupFragment extends Fragment {
                                             case "ERROR_EMAIL_ALREADY_IN_USE":
                                                 Toast.makeText(getContext(), "The email address is already in use by another account.", Toast.LENGTH_LONG).show();
                                                 emailEntry.setError("The email address is already in use by another account.");
-                                                emailEntry.requestFocus();
+                                               // emailEntry.requestFocus();
                                                 break;
                                             case "ERROR_WEAK_PASSWORD":     //redundant case since check is done above before it comes here.
                                                 Toast.makeText(getContext(), "The given password is invalid.", Toast.LENGTH_LONG).show();
                                                 passwordEntry.setError("The password is invalid, it must 6 characters at least");
-                                                passwordEntry.requestFocus();
+                                               // passwordEntry.requestFocus();
                                                 break;
 
                                                 default: Toast.makeText(getContext(),"Something Went Wrong", Toast.LENGTH_LONG).show();

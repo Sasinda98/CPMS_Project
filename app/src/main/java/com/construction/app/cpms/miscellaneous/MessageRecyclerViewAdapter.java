@@ -52,7 +52,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
         viewHolder.latestMessage.setText(chatRoomItems.get(i).getLastMessage());
         viewHolder.timeStamp.setText(chatRoomItems.get(i).getTimeStamp());
 
-        Glide.with(context).load("https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/user%2FJw405DV177dkOg2nBWAjsAERs8j1%2FprofilePic%2Funnamed.jpg?alt=media&token=3597b2d3-6a6c-4fb2-8449-0dbe8ca095bb")
+        Glide.with(context).load("https://www.google.com/imgres?imgurl=https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id%3D129129487743&imgrefurl=https://www.facebook.com/ProfilePictures/&h=200&w=200&tbnid=2DnrLk3Tlyfo4M&q=profile+pic&tbnh=104&tbnw=104&usg=AFrqEzd-iwWSxRb63xEnrlONjqY5TTP6Ag&vet=1&docid=8eDeiABW8CreFM&itg=1&sa=X&ved=2ahUKEwia0d_mucbdAhXTZCsKHRiyBscQ_h0wFHoECAYQCA")
         .asBitmap().into(viewHolder.profilePic);
         //onclick listener for when user selects the chatroom to go in to it
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {

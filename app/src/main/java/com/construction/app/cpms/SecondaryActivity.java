@@ -22,8 +22,12 @@ import com.construction.app.cpms.miscellaneous.ForumsFragment;
 import com.construction.app.cpms.miscellaneous.MessagesFragment;
 import com.construction.app.cpms.miscellaneous.NotificationsFragment;
 import com.construction.app.cpms.userManagement.loginFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SecondaryActivity extends AppCompatActivity implements Navigation{
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +122,7 @@ public class SecondaryActivity extends AppCompatActivity implements Navigation{
         editor.clear();
         editor.commit();
 
+        this.firebaseAuth.signOut();
         //Toast.makeText(this,"SHARED PREF CLEARED,Restart APP", Toast.LENGTH_LONG).show();
         System.out.println("===========DELETE SHARED PREF==========");
     }

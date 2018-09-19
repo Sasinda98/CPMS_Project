@@ -30,11 +30,12 @@
         />
 
     <android.support.design.button.MaterialButton
+        android:layout_marginTop="@dimen/um_signup_heading_spacing"
         android:id="@+id/buttonBadluck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="BadLuck Brian"/>
+        android:text="Choose Profile Picture"/>
 
 
 </LinearLayout>

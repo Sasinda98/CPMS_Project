@@ -148,12 +148,14 @@ public class DashboardFragment extends Fragment {
 
             DatabaseReference reference = firebaseDatabase.getReference().getRoot();
 
-            reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+            //listener to set the circle imageview, updates it when value of child photoUrl changes.
+            //which is the whole point of the listener used here.
+            reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String url = (String) dataSnapshot.getValue();
 
-                        if(url!= null || url != "") {
+                        if(url!= null && url != "") {
                             Glide.with(getContext()).load(url)
                                     .asBitmap().into(circleImageView);
                         }
