@@ -4,6 +4,7 @@ import com.construction.app.cpms.R;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +29,10 @@ public class displayPlan extends AppCompatActivity {
     }
 
     private void setImage(String Name, String Image, String description){
-        TextView name = findViewById(R.id.d_name);
+        EditText name = findViewById(R.id.d_name);
         name.setText(Name);
 
-        TextView des = findViewById(R.id.d_description);
+        EditText des = findViewById(R.id.d_description);
         des.setText(description);
 
         ImageView image = findViewById(R.id.d_image);
@@ -43,3 +44,8 @@ public class displayPlan extends AppCompatActivity {
 
 
 }
+/**Note
+ *In display plans changing the textView to editText makes the editing of description possible
+ * But try to find out a way to edit the textView
+ * According to research, textView has limitations, as in, textView can be chaned to ditable, but the existing data might not exactly change
+ */

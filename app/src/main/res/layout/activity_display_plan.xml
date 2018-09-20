@@ -33,7 +33,8 @@
             android:id="@+id/d_image"
             android:scaleType="centerCrop" />
 
-        <TextView
+        <EditText
+            android:background="@color/backgroundW"
             android:id="@+id/d_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +44,8 @@
             android:textColor="@color/cardText"
             android:layout_weight="5"/>
 
-        <TextView
+        <EditText
+            android:background="@color/backgroundW"
             android:id="@+id/d_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,8 +53,8 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="@color/cardText"
-            android:layout_weight="20"/>
-
+            android:layout_weight="20"
+            />
 
     <LinearLayout
         android:layout_marginTop="150dp"
