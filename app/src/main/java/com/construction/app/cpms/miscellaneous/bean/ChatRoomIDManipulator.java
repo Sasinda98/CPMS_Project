@@ -1,7 +1,7 @@
 package com.construction.app.cpms.miscellaneous.bean;
 
 
-public final class ChatRoomID {
+public final class ChatRoomIDManipulator {
         // expected = UID1-UID2
         //received = UID2-UID1
 
@@ -21,6 +21,14 @@ public final class ChatRoomID {
 
             //could have written as return receivedUIDCombination.contains(loggedInUID) && receivedUIDCombination.contains(receiverUID)
             //but for clearness when reading the code, left it as above.
+        }
+
+        //removes logged in UID from the UID Combination to reveal the user that's gonna receive the message
+        public static String getReceiverUserUID(String receivedUIDCombination, String loggedInUID){
+
+            receivedUIDCombination = receivedUIDCombination.replace(loggedInUID, "").replace("-", "");
+
+            return receivedUIDCombination;
         }
 
 

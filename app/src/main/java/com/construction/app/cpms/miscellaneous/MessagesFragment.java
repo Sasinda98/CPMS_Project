@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,11 +36,14 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 
-import com.construction.app.cpms.miscellaneous.bean.ChatRoomID;
+import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDManipulator;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.firebaseClasses.UserFirebaseBean;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +69,8 @@ public class MessagesFragment extends Fragment {
     private String userId;      //logged in user's userid.
 
     private static ArrayList<ChatRoomMainItem> chatRoomMainArrayList = new ArrayList<ChatRoomMainItem>();
-    private static ArrayList<User> userArrayList = new ArrayList<User>();
+    private static ArrayList<User> userArrayList = new ArrayList<User>();   //remoteDb
+    private ArrayList<UserFirebaseBean> usersFirebaseArrayList = new ArrayList<>(); //firebase JSON requires fields and # of fields to be same as in the class. Therefore two classes are used here.
     private static MessageRecyclerViewAdapter messageRecyclerViewAdapter;
 
     /*Database stuff*/
@@ -89,7 +95,6 @@ public class MessagesFragment extends Fragment {
     //task4-: fill up an arraylist pass to adapter and display!
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,15 +105,14 @@ public class MessagesFragment extends Fragment {
 
         //setting up progress dialog
         progressDialog = new ProgressDialog(getActivity());
-
-       // firebaseMagic();
         progressDialog.setMessage("Getting Project Data...");
+
         //initializeProjectChatNode(projectId);   //if project node doesnt exist, create it in firebase...
         //chatRoomInitializeFirebaseDB();
         //chatRoomInit();
 
 
-        test();
+      //useful one to make use of when composing a chatroom  test();
 
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
         builder = new AlertDialog.Builder(getContext());
@@ -202,6 +206,7 @@ public class MessagesFragment extends Fragment {
 
                             }
                             messageRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
+
                         } catch (JSONException e) {
                            // e.printStackTrace();
                             //occurs when no response comes up empty, meaning no users in the project you are searching for
@@ -552,7 +557,7 @@ public class MessagesFragment extends Fragment {
 
                 String receivedCombination = ((DataSnapshot) iterator.next()).getKey();
 
-                if(ChatRoomID.isCombinationHavingIndividualIDs(receivedCombination, receiverUID, loggedInUID)){
+                if(ChatRoomIDManipulator.isCombinationHavingIndividualIDs(receivedCombination, receiverUID, loggedInUID)){
                     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Chatroom Found = " + receivedCombination);
                 }
                 else {
