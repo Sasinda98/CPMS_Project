@@ -1,12 +1,14 @@
 package com.construction.app.cpms.Plan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,11 +35,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder( ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
             holder.name.setText(my_data.get(position).getName());
             holder.description.setText(my_data.get(position).getDecript());
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
+
+            //opens the plan when clicked
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, displayPlan.class);
+                    intent.putExtra("name",my_data.get(position).getName());
+                    intent.putExtra("image",my_data.get(position).getImage_link());
+                    intent.putExtra("description",my_data.get(position).getDecript());
+                    context.startActivity(intent);
+                }
+            });
     }
 
     @Override
@@ -49,6 +63,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public TextView name;
         public ImageView imageView;
         public TextView description;
+        RelativeLayout parentLayout;
 
         public ViewHolder(View itemView){
             super(itemView);
