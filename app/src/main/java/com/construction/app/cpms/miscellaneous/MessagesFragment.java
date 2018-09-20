@@ -4,6 +4,7 @@ package com.construction.app.cpms.miscellaneous;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +13,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 
+import com.construction.app.cpms.miscellaneous.bean.ChatRoomID;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +51,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -96,7 +105,10 @@ public class MessagesFragment extends Fragment {
         progressDialog.setMessage("Getting Project Data...");
         //initializeProjectChatNode(projectId);   //if project node doesnt exist, create it in firebase...
         //chatRoomInitializeFirebaseDB();
-        chatRoomInit();
+        //chatRoomInit();
+
+
+        test();
 
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
         builder = new AlertDialog.Builder(getContext());
@@ -130,6 +142,7 @@ public class MessagesFragment extends Fragment {
 
     //Used mdc codelabs as reference, helper method
     private void setUpTopBar(View view){
+        setHasOptionsMenu(true);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
@@ -138,7 +151,26 @@ public class MessagesFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.messages_main_toolbar, menu);   //inflate the toolbar options
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.cm_composeMessage :
+                Toast toast = Toast.makeText(getContext(), "Compose Message", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private static void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -497,6 +529,44 @@ public class MessagesFragment extends Fragment {
         if(isCombination2_Avail){
             Toast.makeText(getContext(), "COMBINATION 2 AVAILABLE", Toast.LENGTH_LONG).show();
         }*/
+    }
+
+    public void test(){
+
+        DatabaseReference reference = root;  //the main root of the database
+        final String receiverUID = "senderUID";
+        final String loggedInUID = fireBaseCurrentUser.getUid();
+
+        //  dir = Messages/Project-P{ID}/{CHATROOM ID}
+        //  dir = Messages/Project-P{ID}/{SenderUID-ReceiverUID}
+        /*        reference.child("Messages").child( "Project-P" + projectId).child(mAuth.getCurrentUser().getUid() + "-" + senderUID).setValue("");*/
+
+        //Reference for combination 1
+        DatabaseReference chatroomComb_REF = root.child( "Messages" ).child( "Project-P" + projectId );
+
+        chatroomComb_REF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //readnodes...
+                Iterator iterator = dataSnapshot.getChildren().iterator();
+
+                String receivedCombination = ((DataSnapshot) iterator.next()).getKey();
+
+                if(ChatRoomID.isCombinationHavingIndividualIDs(receivedCombination, receiverUID, loggedInUID)){
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Chatroom Found = " + receivedCombination);
+                }
+                else {
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Chatroom NOT FOUND");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
