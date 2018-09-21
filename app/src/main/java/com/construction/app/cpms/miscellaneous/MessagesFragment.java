@@ -4,18 +4,14 @@ package com.construction.app.cpms.miscellaneous;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,14 +32,12 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 
-import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDManipulator;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.User;
-import com.construction.app.cpms.miscellaneous.firebaseClasses.UserFirebaseBean;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,21 +50,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MessagesFragment extends Fragment {
+
+    public static final String TAG = "MessagesFragment";
+
     /*STATIC fields are because we need to access them inside async task etc*/
     private static String projectId = "1";   //to be passed in from Harshan's createPlans and Harshan's user_plan
     private String userId;      //logged in user's userid.
 
     private static ArrayList<ChatRoomMainItem> chatRoomMainArrayList = new ArrayList<ChatRoomMainItem>();
     private static ArrayList<User> userArrayList = new ArrayList<User>();   //remoteDb
-    private ArrayList<UserFirebaseBean> usersFirebaseArrayList = new ArrayList<>(); //firebase JSON requires fields and # of fields to be same as in the class. Therefore two classes are used here.
     private static MessageRecyclerViewAdapter messageRecyclerViewAdapter;
 
     /*Database stuff*/
@@ -82,11 +76,15 @@ public class MessagesFragment extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance(); //firebase
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
     private FirebaseUser fireBaseCurrentUser = mAuth.getCurrentUser();
+    private DatabaseReference reference;
 
 
     /*Dialog to provide user some clues as to whats going onj*/
     private static AlertDialog.Builder builder;
     private static ProgressDialog progressDialog;
+
+    //store the stuff
+    private ArrayList<FirebaseUserRoom> firebaseUserRooms = new ArrayList<>();
 
     //task1-: get the list of users relevant to current project from database, depends on Harshan's assigning users to relevant project func.
     //tasl2-: if the project doesnt have a project entry under messaging in firebase(Query to find out) add it
@@ -101,18 +99,13 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_messages, null, false);
 
+        //region Initialization
         requestQueue = Volley.newRequestQueue(getContext());
 
         //setting up progress dialog
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Getting Project Data...");
 
-        //initializeProjectChatNode(projectId);   //if project node doesnt exist, create it in firebase...
-        //chatRoomInitializeFirebaseDB();
-        //chatRoomInit();
-
-
-      //useful one to make use of when composing a chatroom  test();
 
         //Setting up the alertbox to show if, query to remote db on users for a given project id comes up empty
         builder = new AlertDialog.Builder(getContext());
@@ -127,11 +120,11 @@ public class MessagesFragment extends Fragment {
 
                     }
                 });
-
+    //endregion
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_messaging);
 
-        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( chatRoomMainArrayList, getContext());
+        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext());
 
         recyclerView.setAdapter(messageRecyclerViewAdapter);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
@@ -144,6 +137,7 @@ public class MessagesFragment extends Fragment {
         return view;
     }
 
+    //region Fragment Specific Methods
     //Used mdc codelabs as reference, helper method
     private void setUpTopBar(View view){
         setHasOptionsMenu(true);
@@ -175,6 +169,10 @@ public class MessagesFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    //endregion
 
     private static void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -262,326 +260,20 @@ public class MessagesFragment extends Fragment {
         asyncTask.execute();
     }
 
-    private void firebaseMagic(){
-        //traditional query is bad according to -: https://stackoverflow.com/questions/47893328/checking-if-a-particular-value-exists-in-the-firebase-database?rq=1
-        //therefore going with the method reccommended by Alex Mamo
-        //doing this way prevents looping through entire tree
-
-        final DatabaseReference project = root.child("Messages").child("Project-P1");
-
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //if no such object in databse, 'Project-P1'
-                if(!dataSnapshot.exists()){
-                    //create it
-                    DatabaseReference project1 = root.child("Messages");
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("Project-P1", "");
-                    project1.updateChildren(hashMap);
-
-
-                }else {
-                    System.out.println("Firebase HAS IT!!!!!!!!!!!!!!!!!!!!!");
-                    DatabaseReference project1 = root.child("Messages").child("Project-P1");
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("Chatroom", "");
-                    project1.updateChildren(hashMap);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        };
-
-        project.addListenerForSingleValueEvent(eventListener);
-
-    }
-
-
-    private void initializeProjectChatNode(final String projectId){
-        //traditional query is bad according to -: https://stackoverflow.com/questions/47893328/checking-if-a-particular-value-exists-in-the-firebase-database?rq=1
-        //therefore going with the method recommended by Alex Mamo
-        //doing this way prevents looping through entire tree
-
-        //prefix "Project-P" is used before specifying the project id.
-
-        //checking for project node, if it doesnt exist create it......
-        final DatabaseReference project = root.child("Messages").child("Project-P" + projectId);
-        ValueEventListener projectNodeListener = new ValueEventListener() {
-
-            String projectId_node = "Project-P" + projectId;        // example  = Project-P1 and so on..
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //if no such object in databse, 'Project-P1'
-                if(!dataSnapshot.exists()){
-                    //create it
-                    DatabaseReference project1 = root.child("Messages");
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(projectId_node, "");
-                    project1.updateChildren(hashMap);
-
-
-                }else {
-
-                    //CHAT ROOMS ARE CREATED/LOADED ON DEMAND OF USER WHEN THEY TAP ON THE PERSON TO Send MEssages.
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        };
-
-        project.addListenerForSingleValueEvent(projectNodeListener);
-
-    }
-
-    /*chatRoomInitializeFirebase() Attributes*/
-    boolean isCombination1_Avail;
-    boolean isCombination2_Avail;
-    public static int flag;
-
-    public void chatRoomInitializeFirebaseDB(){
-        DatabaseReference reference = root;  //the main root of the database
-       final String senderUID = "senderUID";
-                        //  dir = Messages/Project-P{ID}/{CHATROOM ID}
-                        //  dir = Messages/Project-P{ID}/{SenderUID-ReceiverUID}
-/*        reference.child("Messages").child( "Project-P" + projectId).child(mAuth.getCurrentUser().getUid() + "-" + senderUID).setValue("");*/
-
-        String chatRoomIDCombination1 = fireBaseCurrentUser.getUid() + "-" + senderUID; //1st possible chatroom id combination
-
-        //Reference for combination 1
-        final DatabaseReference chatroomComb1_REF = root.child( "Messages" ).child( "Project-P" + projectId ).child(chatRoomIDCombination1);
-
-        //Checking for first combination
-        ValueEventListener chatroomListener_COMB1 = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){ //if combination1 of chatroom id exists
-                    //combination1 of chatroom id EXISTS!
-                    isCombination1_Avail = true;
-                    System.out.println("1111111111111111111111111111111111111111111111111111");
-
-                }else {
-                    //if combination1 doesnt exist
-                    isCombination1_Avail = false;
-
-                    final String chatRoomIDCombination2 = senderUID + "-" + fireBaseCurrentUser.getUid(); //2nd possible chatroom id combination
-
-                    //Reference for combination 2
-                    final DatabaseReference chatroomComb2_REF = root.child( "Messages" ).child( "Project-P" + projectId ).child(chatRoomIDCombination2);
-
-                    //Checking for second combination
-                    ValueEventListener chatRoomListener_COMB2 = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            if(dataSnapshot.exists()){ //if combination2 of chatroom id doesnt exist
-                                //combination2 of chatroom id EXISTS!
-                                isCombination2_Avail = true;
-                                System.out.println("2222222222222222222222222222222222222");
-                            }else {
-                                isCombination2_Avail = false;
-                                //if it comes here, means chatroom combinations 1,2 don't exist
-                                //So create a room...
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("Message","");
-                                chatroomComb2_REF.updateChildren(hashMap);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    };
-
-                    chatroomComb2_REF.addListenerForSingleValueEvent(chatRoomListener_COMB2);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-
-
-
-        chatroomComb1_REF.addListenerForSingleValueEvent(chatroomListener_COMB1);
-
-
-        System.out.println("==============================isAvailCOMB 1 = " + isCombination1_Avail);
-        System.out.println("==============================isAvailCOMB 2 = " + isCombination2_Avail);
-
-        /*
-        if(isCombination1_Avail){
-            Toast.makeText(getContext(), "COMBINATION 1 AVAILABLE", Toast.LENGTH_LONG).show();
-        }
-
-        if(isCombination2_Avail){
-            Toast.makeText(getContext(), "COMBINATION 2 AVAILABLE", Toast.LENGTH_LONG).show();
-        }*/
-    }
-
-    public void chatRoomInit(){
-        DatabaseReference reference = root;  //the main root of the database
-        final String senderUID = "senderUID";
-        //  dir = Messages/Project-P{ID}/{CHATROOM ID}
-        //  dir = Messages/Project-P{ID}/{SenderUID-ReceiverUID}
-        /*        reference.child("Messages").child( "Project-P" + projectId).child(mAuth.getCurrentUser().getUid() + "-" + senderUID).setValue("");*/
-
-        String chatRoomIDCombination1 = fireBaseCurrentUser.getUid() + "-" + senderUID; //1st possible chatroom id combination
-        String chatRoomIDCombination2 = senderUID + "-" + fireBaseCurrentUser.getUid(); //2nd possible chatroom id combination
-
-
-        //Reference for combination 1
-        DatabaseReference chatroomComb1_REF = root.child( "Messages" ).child( "Project-P" + projectId ).child(chatRoomIDCombination1);
-        //Reference for combination 2
-        DatabaseReference chatroomComb2_REF = root.child( "Messages" ).child( "Project-P" + projectId ).child(chatRoomIDCombination2);
-
-
-        chatroomComb2_REF.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-
-                    isCombination2_Avail = true;
-                    System.out.println("2222222222222222222222222222222222222");
-
-                }else {
-                    isCombination2_Avail = false;
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-/*
-        //Checking for first combination
-        ValueEventListener chatroomListener_COMB1 = new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){ //if combination1 of chatroom id exists
-                    //combination1 of chatroom id EXISTS!
-                    isCombination1_Avail = true;
-                    System.out.println("1111111111111111111111111111111111111111111111111111");
-                }else {
-
-                    // combination1 doesnt exist
-                    isCombination1_Avail = false;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        };
-
-
-        //Checking for second combination
-        ValueEventListener chatRoomListener_COMB2 = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){ //if combination2 of chatroom id doesnt exist
-
-                    //combination2 of chatroom id EXISTS!
-                    isCombination2_Avail = true;
-                    System.out.println("2222222222222222222222222222222222222");
-                }else {
-
-                    //combination2 doesnt exist.
-                    isCombination2_Avail = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-
-
-
-
-        chatroomComb1_REF.addListenerForSingleValueEvent(chatroomListener_COMB1);
-        chatroomComb2_REF.addListenerForSingleValueEvent(chatRoomListener_COMB2);*/
-
-
-
-        System.out.println("==============================isAvailCOMB 1 = " + isCombination1_Avail);
-        System.out.println("==============================isAvailCOMB 2 = " + isCombination2_Avail);
-
-
-  /*      if(isCombination1_Avail){
-            Toast.makeText(getContext(), "COMBINATION 1 AVAILABLE", Toast.LENGTH_LONG).show();
-        }
-
-        if(isCombination2_Avail){
-            Toast.makeText(getContext(), "COMBINATION 2 AVAILABLE", Toast.LENGTH_LONG).show();
-        }*/
-    }
-
-    public void test(){
-
-        DatabaseReference reference = root;  //the main root of the database
-        final String receiverUID = "senderUID";
-        final String loggedInUID = fireBaseCurrentUser.getUid();
-
-        //  dir = Messages/Project-P{ID}/{CHATROOM ID}
-        //  dir = Messages/Project-P{ID}/{SenderUID-ReceiverUID}
-        /*        reference.child("Messages").child( "Project-P" + projectId).child(mAuth.getCurrentUser().getUid() + "-" + senderUID).setValue("");*/
-
-        //Reference for combination 1
-        DatabaseReference chatroomComb_REF = root.child( "Messages" ).child( "Project-P" + projectId );
-
-        chatroomComb_REF.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //readnodes...
-                Iterator iterator = dataSnapshot.getChildren().iterator();
-
-                String receivedCombination = ((DataSnapshot) iterator.next()).getKey();
-
-                if(ChatRoomIDManipulator.isCombinationHavingIndividualIDs(receivedCombination, receiverUID, loggedInUID)){
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Chatroom Found = " + receivedCombination);
-                }
-                else {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Chatroom NOT FOUND");
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
 
     @Override
     public void onStart() {
         super.onStart();
         chatRoomMainArrayList.clear();
-        fetchdata();
+        userArrayList.clear();
+        firebaseUserRooms.clear();
+        //fetchdata();
+        //listenToNode(projectId);
 
+        listenToProjectNode("Project-P1");
+
+
+        //region Firebase
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -592,7 +284,75 @@ public class MessagesFragment extends Fragment {
         }
 
         // updateUI(currentUser);
+        //endregion
     }
+
+
+    //method for checking for project node existence, if it is not there create it..
+
+    //test method for listening for chatrooms.
+    public void listenToProjectNode(String projectId){
+
+        Log.d(TAG, "listenToProjectNode(String projectId)  CALLED!");                       // /Rooms/Project-P1
+
+        reference = FirebaseDatabase.getInstance().getReference().getRoot().child("Rooms").child(projectId);
+        reference.keepSynced(true);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                firebaseUserRooms.clear();
+
+                if(dataSnapshot.exists()){
+
+                    for(DataSnapshot ds : dataSnapshot.getChildren()){
+                        Log.d(TAG, "DataSnapshot FOR LOOP = " + ds.toString());
+                        ChatRoom c = ds.getValue(ChatRoom.class);
+                        populateArrayList(firebaseUserRooms, c);
+
+                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getName() );
+                    }
+
+                    messageRecyclerViewAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        reference.addValueEventListener(valueEventListener);
+    }
+
+    public void populateArrayList(ArrayList<FirebaseUserRoom> firebaseUserRooms, ChatRoom chatRoom){
+
+        FirebaseUser currentloggedin = fireBaseCurrentUser;
+
+        FirebaseUserRoom user1 = chatRoom.getUser1();
+        FirebaseUserRoom user2 = chatRoom.getUser2();
+
+        //if userid of passed in object is same as lgged in, discard it, get user detals of other one.
+        if(user1.getUID().equals(currentloggedin.getUid())){
+            firebaseUserRooms.add(user2);   //addUser2 to the list.
+            Log.d(TAG,"User2 data added to arraylist");
+        }else if(user2.getUID().equals(currentloggedin.getUid())){
+            firebaseUserRooms.add(user1);
+            Log.d(TAG,"User1 data added to arraylist");
+        }else{
+            Log.d(TAG,"USER ID's of objects from firebase doesnt match any!");
+        }
+
+    }
+
+
+
+
+
 
 
 

@@ -49,6 +49,16 @@ public class ChatRoomMainItem {
     private String role;
     private String lastMessage;
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    private String uid;
+
     public ChatRoomMainItem(String name, String timeStamp, String deliverStatus, String role, String lastMessage) {
         this.name = name;
         this.timeStamp = timeStamp;

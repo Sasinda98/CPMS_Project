@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.3'
     api 'com.google.firebase:firebase-database:16.0.2'
 
-    api 'com.firebaseui:firebase-ui-database:0.4.0'
+    api 'com.firebaseui:firebase-ui-database:3.3.1'
 
 
 }

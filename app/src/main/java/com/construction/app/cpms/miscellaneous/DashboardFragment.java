@@ -211,7 +211,7 @@ public class DashboardFragment extends Fragment {
         System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
     }
 
-    //removing the set listeners
+/*    //removing the set listeners
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -220,5 +220,5 @@ public class DashboardFragment extends Fragment {
             DatabaseReference databaseReference = firebaseDatabase.getReference().getRoot();
             databaseReference.child("users").child(firebaseUser.getUid()).child("photoUrl").removeEventListener(profilePictureListener);
         }
-    }
+    }*/
 }

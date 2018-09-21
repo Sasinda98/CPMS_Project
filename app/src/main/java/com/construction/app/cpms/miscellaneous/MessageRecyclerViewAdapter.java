@@ -1,9 +1,7 @@
 package com.construction.app.cpms.miscellaneous;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +14,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
+import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
+
 
 import java.util.ArrayList;
 
@@ -24,13 +25,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 //Handles message cards
 public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<ChatRoomMainItem> chatRoomItems = new ArrayList<ChatRoomMainItem>();
+    private ArrayList<FirebaseUserRoom> chatRoomItems = new ArrayList<FirebaseUserRoom>();
+
+
     private Context context;
+    public static final String TAG = "MessageRecyViewAdapt";
 
     //Constructor
-    public MessageRecyclerViewAdapter(ArrayList<ChatRoomMainItem> chatRoomItems, Context context) {
+    public MessageRecyclerViewAdapter(ArrayList<FirebaseUserRoom> chatRoomItems, Context context) {
         this.chatRoomItems = chatRoomItems;
         this.context = context;
+
     }
 
     @NonNull
@@ -43,17 +48,18 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
     }
 
     @Override   //everytime a new item gets added/created to the view, this method gets called.
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
         //Setting the values of the widgets to match the ones passed in through the arraylist.
         viewHolder.name.setText(chatRoomItems.get(i).getName());
-        viewHolder.role.setText(chatRoomItems.get(i).getRole());
-        viewHolder.deliverStatus.setText(chatRoomItems.get(i).getDeliverStatus());
-        viewHolder.latestMessage.setText(chatRoomItems.get(i).getLastMessage());
-        viewHolder.timeStamp.setText(chatRoomItems.get(i).getTimeStamp());
+        viewHolder.role.setText(chatRoomItems.get(i).getType());
+        viewHolder.deliverStatus.setText("Delivered");
+        viewHolder.latestMessage.setText("To-be-implemented");
+        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
 
-        Glide.with(context).load("https://www.google.com/imgres?imgurl=https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id%3D129129487743&imgrefurl=https://www.facebook.com/ProfilePictures/&h=200&w=200&tbnid=2DnrLk3Tlyfo4M&q=profile+pic&tbnh=104&tbnw=104&usg=AFrqEzd-iwWSxRb63xEnrlONjqY5TTP6Ag&vet=1&docid=8eDeiABW8CreFM&itg=1&sa=X&ved=2ahUKEwia0d_mucbdAhXTZCsKHRiyBscQ_h0wFHoECAYQCA")
-        .asBitmap().into(viewHolder.profilePic);
+        Glide.with(context).load(chatRoomItems.get(i).getPhotoUrl())
+                .asBitmap().into(viewHolder.profilePic);
+
         //onclick listener for when user selects the chatroom to go in to it
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +70,9 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
                 context.startActivity(intent);
             }
         });
+
     }
+
 
     @Override   //return size of arraylist passed in....
     public int getItemCount() {
