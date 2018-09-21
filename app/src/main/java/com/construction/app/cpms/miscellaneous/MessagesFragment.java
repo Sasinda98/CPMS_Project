@@ -4,6 +4,7 @@ package com.construction.app.cpms.miscellaneous;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -163,6 +164,10 @@ public class MessagesFragment extends Fragment {
             case R.id.cm_composeMessage :
                 Toast toast = Toast.makeText(getContext(), "Compose Message", Toast.LENGTH_SHORT);
                 toast.show();
+                Intent intent = new Intent(getActivity(), ComposeChatRoomActivity.class);
+                startActivity(intent);
+
+
                 break;
 
         }
