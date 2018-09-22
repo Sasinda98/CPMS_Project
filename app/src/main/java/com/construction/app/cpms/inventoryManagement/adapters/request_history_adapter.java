@@ -52,13 +52,13 @@ public class request_history_adapter extends BaseAdapter {
         ImageView image = (CircleImageView) view.findViewById(R.id.request_history_row_image);
         TextView subConName= (TextView) view.findViewById(R.id.req_history_row_con_name);
         TextView itemName= (TextView) view.findViewById(R.id.req_history_row_item_name);
-//        TextView dateTextView = (TextView) view.findViewById(R.id.req_history_row_date_display);
+        TextView dateTextView = (TextView) view.findViewById(R.id.req_history_row_date_display);
 
         String conName = item.getSubConFName() + " " + item.getSubConLname();
-//        String date = item.getValDate().substring(0,10);
+        String date = item.getValDate().substring(0,10);
         subConName.setText(conName);
         itemName.setText(item.getItemName());
-//        dateTextView.setText(date);
+        dateTextView.setText(date);
         String stat = item.getReqStatus();
 
         if(stat.equalsIgnoreCase("Approved")){
