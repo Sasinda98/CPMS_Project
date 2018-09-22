@@ -4,28 +4,50 @@ package com.construction.app.cpms.miscellaneous;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.Plan.MainPlan;
 import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
+import com.construction.app.cpms.glideModule.GlideApp;
 import com.construction.app.cpms.inventoryManagement.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DashboardFragment extends Fragment {
+
+    private static final String TAG = "DashboardFragment";
 
     private CardView plansTile;
     private CardView inventoryTile;
@@ -35,11 +57,22 @@ public class DashboardFragment extends Fragment {
     private CardView projectTile;
 
 
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+    private ValueEventListener profilePictureListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.d(TAG, "onCreateView() Called");
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         setUpTopBar(view);
+
+        /*Setting Dashboard as selected in the bottom nav bar, needed because line 85 Message fragment, alert navigates to this frag*/
+        BottomNavigationView navigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 
@@ -111,6 +144,54 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+
+        /*Profile pic change related stuff*/
+
+        //Reference-: https://stackoverflow.com/questions/45366125/how-to-store-google-authenticated-user-profile-picture-in-firebase-android
+         final CircleImageView circleImageView = view.findViewById(R.id.db_profile_image);
+     /*   Glide.with(getContext()).load("https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/user%2FJw405DV177dkOg2nBWAjsAERs8j1%2FprofilePic%2Funnamed.jpg?alt=media&token=3597b2d3-6a6c-4fb2-8449-0dbe8ca095bb")
+                .asBitmap().into(circleImageView);*/
+        if(firebaseUser != null){
+            Log.d(TAG,"Firebase User != Null");
+
+            circleImageView.setImageResource(R.drawable.ic_prof_pic);       //default profile pic, until one load from firebase.
+
+            DatabaseReference reference = firebaseDatabase.getReference().getRoot();
+
+            //listener to set the circle imageview, updates it when value of child photoUrl changes.
+            //which is the whole point of the listener used here.
+            ValueEventListener profilePictureListener = reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String url = (String) dataSnapshot.getValue();
+
+                        if( ( url!= null ) && ( url != "" ) && getContext() != null ) {/*
+                            Glide.with(getContext()).asBitmap().load(url)
+                                    .into(circleImageView);*/
+                            //caches stuff better
+                            GlideApp.with(getContext()).asBitmap().load(url).into(circleImageView);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG,"onCancelled");
+                    }
+                });
+             //   circleImageView.setImageURI(firebaseUser.getPhotoUrl());
+            }
+
+
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         return view;
     }
 
@@ -135,7 +216,5 @@ public class DashboardFragment extends Fragment {
      //   Toast.makeText(getContext(),"Details em " + email + " " + password, Toast.LENGTH_LONG).show();
         System.out.println("==============GET CREDENTIAL EXECUTED DASHBOARD=====================");
     }
-
-
 
 }

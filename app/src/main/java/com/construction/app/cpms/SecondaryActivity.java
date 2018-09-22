@@ -22,8 +22,12 @@ import com.construction.app.cpms.miscellaneous.ForumsFragment;
 import com.construction.app.cpms.miscellaneous.MessagesFragment;
 import com.construction.app.cpms.miscellaneous.NotificationsFragment;
 import com.construction.app.cpms.userManagement.loginFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SecondaryActivity extends AppCompatActivity implements Navigation{
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +36,19 @@ public class SecondaryActivity extends AppCompatActivity implements Navigation{
 
       //  goToFragment(new DashboardFragment());
 
+
         if(savedInstanceState == null){ //Checking for savedinstances, to prevent creation of more than one fragment.
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             DashboardFragment dashboardFragment= new DashboardFragment();  //instantiation of login fragment.
             getSupportFragmentManager().beginTransaction().add(R.id.secondaryContainer, dashboardFragment).commit(); //adding loginFragment to container
 
-
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
             //making sure selection is highlighted in the bottom bar. navigation
             navigation.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
 
         }
+
     }
 
 
@@ -117,6 +122,7 @@ public class SecondaryActivity extends AppCompatActivity implements Navigation{
         editor.clear();
         editor.commit();
 
+        this.firebaseAuth.signOut();
         //Toast.makeText(this,"SHARED PREF CLEARED,Restart APP", Toast.LENGTH_LONG).show();
         System.out.println("===========DELETE SHARED PREF==========");
     }
