@@ -93,6 +93,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
         //region SET UserDetails like PIC, Name, Type using users node in firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference usersReference = firebaseDatabase.getReference("users");
+        usersReference.keepSynced(true);
 
         Query query = usersReference.orderByChild("UID").equalTo(chatRoomItems.get(i).getUID());        //to get relevant details, userID should match the one inside arraylist.
 

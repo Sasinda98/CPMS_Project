@@ -136,7 +136,7 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        testing2();
+
 
     }
 }

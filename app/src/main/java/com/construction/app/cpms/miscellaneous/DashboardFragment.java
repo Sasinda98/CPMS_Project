@@ -8,10 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +28,11 @@ import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
+import com.construction.app.cpms.glideModule.GlideApp;
 import com.construction.app.cpms.inventoryManagement.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +46,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class DashboardFragment extends Fragment {
+
+    private static final String TAG = "DashboardFragment";
 
     private CardView plansTile;
     private CardView inventoryTile;
@@ -59,6 +65,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.d(TAG, "onCreateView() Called");
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         setUpTopBar(view);
 
@@ -144,7 +152,7 @@ public class DashboardFragment extends Fragment {
      /*   Glide.with(getContext()).load("https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/user%2FJw405DV177dkOg2nBWAjsAERs8j1%2FprofilePic%2Funnamed.jpg?alt=media&token=3597b2d3-6a6c-4fb2-8449-0dbe8ca095bb")
                 .asBitmap().into(circleImageView);*/
         if(firebaseUser != null){
-            Uri profpic = firebaseUser.getPhotoUrl();
+            Log.d(TAG,"Firebase User != Null");
 
             circleImageView.setImageResource(R.drawable.ic_prof_pic);       //default profile pic, until one load from firebase.
 
@@ -157,21 +165,19 @@ public class DashboardFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String url = (String) dataSnapshot.getValue();
 
-                        if( ( url!= null ) && ( url != "" ) && getContext() != null ) {
+                        if( ( url!= null ) && ( url != "" ) && getContext() != null ) {/*
                             Glide.with(getContext()).asBitmap().load(url)
-                                    .into(circleImageView);
+                                    .into(circleImageView);*/
+                            //caches stuff better
+                            GlideApp.with(getContext()).asBitmap().load(url).into(circleImageView);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d(TAG,"onCancelled");
                     }
                 });
-
-
-
-
              //   circleImageView.setImageURI(firebaseUser.getPhotoUrl());
             }
 
