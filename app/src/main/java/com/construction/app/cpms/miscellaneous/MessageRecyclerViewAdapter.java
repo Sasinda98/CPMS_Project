@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
@@ -27,14 +38,20 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
 
     private ArrayList<FirebaseUserRoom> chatRoomItems = new ArrayList<FirebaseUserRoom>();
 
-
+    private  FirebaseUser loggedInAs;
     private Context context;
+
+    private String projectId;
+
     public static final String TAG = "MessageRecyViewAdapt";
+    public static final  int MAX_CHARS_LATEST_MSG = 30;
 
     //Constructor
-    public MessageRecyclerViewAdapter(ArrayList<FirebaseUserRoom> chatRoomItems, Context context) {
+    public MessageRecyclerViewAdapter(ArrayList<FirebaseUserRoom> chatRoomItems, Context context, FirebaseUser loggedInAs, String projectId) {
         this.chatRoomItems = chatRoomItems;
         this.context = context;
+        this.loggedInAs = loggedInAs;
+        this.projectId = projectId;
 
     }
 
@@ -51,14 +68,14 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
         //Setting the values of the widgets to match the ones passed in through the arraylist.
-        viewHolder.name.setText(chatRoomItems.get(i).getName());
-        viewHolder.role.setText(chatRoomItems.get(i).getType());
+     // Transfered to firebase   viewHolder.name.setText(chatRoomItems.get(i).getName());
+     //  Transfered to firebase    viewHolder.role.setText(chatRoomItems.get(i).getType());
         viewHolder.deliverStatus.setText("Delivered");
-        viewHolder.latestMessage.setText("To-be-implemented");
-        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
+   /*     viewHolder.latestMessage.setText("To-be-implemented");
+        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());*/
 
-        Glide.with(context).asBitmap().load(chatRoomItems.get(i).getPhotoUrl())
-                .into(viewHolder.profilePic);
+     /*   Glide.with(context).asBitmap().load(chatRoomItems.get(i).getPhotoUrl())
+                .into(viewHolder.profilePic);*/
 
         //onclick listener for when user selects the chatroom to go in to it
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +88,88 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
             }
         });
 
+        //_____________________________________________________________________ Firebase Queries to set views  ______________________________________\\
+
+        //region SET UserDetails like PIC, Name, Type using users node in firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference usersReference = firebaseDatabase.getReference("users");
+
+        Query query = usersReference.orderByChild("UID").equalTo(chatRoomItems.get(i).getUID());        //to get relevant details, userID should match the one inside arraylist.
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                if(dataSnapshot.exists()) {     //means user is actually there in the database
+                    for (DataSnapshot usernode : dataSnapshot.getChildren()) {//get to the user node that has user details as the value
+
+                        FirebaseUserDetails user = usernode.getValue(FirebaseUserDetails.class);
+
+                        Log.d(TAG, "Name = " + user.getName());
+                        Log.d(TAG, "UID = " + user.getUID());
+                        Log.d(TAG, "PhotoURl = " + user.getPhotoUrl());
+                        Log.d(TAG, "type = " + user.getType());
+
+                        //setting profile picture
+                        Glide.with(context).asBitmap().load(user.getPhotoUrl())
+                                .into(viewHolder.profilePic);
+                        //setting user's name
+                        viewHolder.name.setText(user.getName());
+                        //setting the role of user.
+                        viewHolder.role.setText(user.getType());
+
+
+                    }
+                }else{
+                    //if user given user doesnt exist
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //endregion
+
+        //region SETTING MESSAGE DETAILS LIKE LATEST MESSAGE IN CHATROOM AND TIMESTAMP
+
+        DatabaseReference chatroomRef = firebaseDatabase.getReference("ChatLogs")
+                .child(projectId)
+                .child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), chatRoomItems.get(i).getUID()));  //ref to chatroom
+
+        Query q =  chatroomRef.limitToLast(1);
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //get to the message id node by calling getChildren  {loops through message objects}
+                        FirebaseMessage message = snapshot.getValue(FirebaseMessage.class);      //populate details
+                        Log.d(TAG, "Send by UID = " + message.getSentBy());
+                        Log.d(TAG, "Body = " + message.getBody());
+                        Log.d(TAG, "Time stamp = " + message.getTimeStamp());
+
+
+                        viewHolder.latestMessage.setText(getFormattedBody(message));
+                        viewHolder.timeStamp.setText(message.getTimeStamp());
+                    }
+                }else {
+                    //what to do if messages dont exist for the chat. or chatroom unavail....       //FOR NOW DONT DO ANYTHING, LEAVE BLANK
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //endregion
+
     }
 
 
@@ -78,6 +177,27 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
     public int getItemCount() {
         return chatRoomItems.size();
     }
+
+    //HELPER METHODS TO PROCESS THE STRINGS IN THE onBindViewHolder() METHOD and makes it acceptable for UI render.
+    public String getFormattedBody(FirebaseMessage message){
+
+        String latestMsgBody = message.getBody();
+
+        if(message.getSentBy().equals(loggedInAs.getUid())){    //if message is sent by you
+            //append latest message view with  "You:" for the ui element.
+            latestMsgBody = "You : " + latestMsgBody;
+        }else {
+            //if not sent by you Dont append anything...
+        }
+
+        if(latestMsgBody.length() > MAX_CHARS_LATEST_MSG) {       //if length greater than allowed, cut it down, append with three dots.
+            latestMsgBody = latestMsgBody.substring(0, MAX_CHARS_LATEST_MSG) + "...";
+        }else {
+          //if message length is within the given limit, dont append anything...
+        }
+        return latestMsgBody;
+    }
+
 
     public class  ViewHolder extends RecyclerView.ViewHolder{
         //widgets in one single item which is refered to as a card here.

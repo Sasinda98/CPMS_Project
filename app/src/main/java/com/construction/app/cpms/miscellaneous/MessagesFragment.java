@@ -125,7 +125,9 @@ public class MessagesFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_messaging);
 
-        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext());
+
+                                                                                                                        //Careful when changing projectId
+        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, "Project-P1");
 
         recyclerView.setAdapter(messageRecyclerViewAdapter);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
@@ -331,7 +333,7 @@ public class MessagesFragment extends Fragment {
 
             }
         };
-        reference.addValueEventListener(valueEventListener);
+        reference.addValueEventListener(valueEventListener);            /*previously - : reference.addValueEventListener(valueEventListener);     */
     }
 
     public void populateArrayList(ArrayList<FirebaseUserRoom> firebaseUserRooms, ChatRoom chatRoom){
