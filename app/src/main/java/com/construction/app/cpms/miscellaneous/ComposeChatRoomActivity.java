@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
+
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.ObjectKey;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.glideModule.GlideApp;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,9 +32,13 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
         StorageReference gsReference = storage.getReferenceFromUrl("gs://cpms-4780c.appspot.com/users/Jw405DV177dkOg2nBWAjsAERs8j1/profilePicture");
 
 
-       /* Glide.with(getApplicationContext()).load(gsReference)
-                .into(circleImageView);*/
- /*       gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        GlideApp.with(this )
+                .load(gsReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(circleImageView);
+
+    /*    gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
             @Override
             public void onSuccess(Uri uri) {
 
@@ -43,6 +50,22 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
 
             }
         });*/
+    }
 
+
+    public void invalidateCache(){
+
+        //invlidate cache every 30mins.
+
+        StorageReference gsReference = FirebaseStorage.getInstance().getReference();
+        GlideApp.with(this )
+                .load(gsReference)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(circleImageView);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

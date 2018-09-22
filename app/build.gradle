@@ -52,6 +52,7 @@ dependencies {
     api 'com.google.firebase:firebase-database:16.0.2'
 
     api 'com.firebaseui:firebase-ui-database:3.3.1'
+    api 'com.firebaseui:firebase-ui-storage:3.3.1'
 
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'

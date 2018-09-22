@@ -157,7 +157,7 @@ public class DashboardFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String url = (String) dataSnapshot.getValue();
 
-                        if( ( url!= null ) && ( url != "" ) ) {
+                        if( ( url!= null ) && ( url != "" ) && getContext() != null ) {
                             Glide.with(getContext()).asBitmap().load(url)
                                     .into(circleImageView);
                         }

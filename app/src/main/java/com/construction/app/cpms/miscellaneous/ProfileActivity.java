@@ -46,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
     private final int requestCode = 44;     //picked random number to be 44, which will be the code to identify the intent
 
-    private CircleImageView imageView;
+    public CircleImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if ( ( url != null ) && ( url != "") ) {
                         //passing url and loading it in to circle image view.
                         Glide.with(getApplicationContext()).asBitmap().load(url)
-                                .into(circleImageView);
+                                .into(imageView);
                     }
                 }
 
