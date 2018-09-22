@@ -70,6 +70,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
                 Intent intent = new Intent(inventory_incoming_requests.this, inventory_inspect_request.class);
                 incoming_requests_bean requestBean = (incoming_requests_bean) listView.getItemAtPosition(i);
                 String itemName = requestBean.getItemName();
+                int reqID = requestBean.getReqID();
                 String subConName = requestBean.getSubConFName() + " " + requestBean.getSubConLname();
                 String category = requestBean.getItemCategory();
                 String message = requestBean.getMessage();
@@ -80,6 +81,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putDouble("itemQty", itemQty);
                 b.putDouble("reqQty", reqQty);
+                b.putInt("reqID", reqID);
                 System.out.println("=========================================================================================================================="+message);
 
                 intent.putExtra("itemName", itemName);

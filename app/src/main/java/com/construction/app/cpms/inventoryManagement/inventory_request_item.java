@@ -29,9 +29,11 @@ public class inventory_request_item extends AppCompatActivity {
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
     private String currentTime;
     private String itemName;
+    private String itemUnit;
     private double iQty;
     private int itemID;
-    private TextView reqItemTextView;
+    private TextView reqItemNameTextView;
+    private TextView reqItemUnitTextView;
     private TextInputEditText reqMessage = null;
     private TextInputEditText reqQty = null;
     private Button confirmBtn;
@@ -50,15 +52,19 @@ public class inventory_request_item extends AppCompatActivity {
         //We get the image id and the category name for the query from this
         Intent intent = getIntent();
         itemName = intent.getStringExtra("itemName");
+        itemUnit = intent.getStringExtra("itemUnit");
         itemID = intent.getIntExtra("itemID", 0);
+
 
         Bundle b = getIntent().getExtras();
         iQty = b.getDouble("itemQty");
     System.out.println("Testing================================================================================================ "+ iQty);
 
         //Initialising all the stuff on the xml
-        reqItemTextView = (TextView) findViewById(R.id.request_item_name);
-        reqItemTextView.setText(itemName);
+        reqItemNameTextView = (TextView) findViewById(R.id.request_item_name);
+        reqItemNameTextView.setText(itemName);
+        reqItemUnitTextView = (TextView) findViewById(R.id.request_item_unit);
+        reqItemUnitTextView.setText(itemUnit);
         confirmBtn = (Button) findViewById(R.id.request_item_confirm_btn);
         reqMessage = findViewById(R.id.inventory_request_message);
         reqQty = findViewById(R.id.inventory_request_qty);

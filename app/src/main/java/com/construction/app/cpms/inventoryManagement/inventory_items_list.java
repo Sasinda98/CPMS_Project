@@ -83,12 +83,14 @@ public class inventory_items_list extends AppCompatActivity {
                 Intent intent = new Intent(inventory_items_list.this, inventory_request_item.class);
                 inventory_item_Bean itemBean = (inventory_item_Bean) listView.getItemAtPosition(i);
                 String itemName = itemBean.getItemName();
+                String itemUnit = itemBean.getUnit();
                 int itemID = itemBean.getItemID();
                 Double itemQty = itemBean.getItemQuantity();
                 Bundle b = new Bundle();
                 b.putDouble("itemQty", itemQty);
 
                 intent.putExtra("itemName", itemName);
+                intent.putExtra("itemUnit", itemUnit);
                 intent.putExtra("itemID", itemID);
                 intent.putExtras(b);
                 startActivity(intent);
