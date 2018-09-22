@@ -96,6 +96,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
                 intent.putExtra("message", message);
 
                 intent.putExtras(b);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
             }
         });

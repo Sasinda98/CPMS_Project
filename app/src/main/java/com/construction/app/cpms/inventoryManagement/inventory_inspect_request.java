@@ -134,6 +134,8 @@ public class inventory_inspect_request extends AppCompatActivity {
                             params.put("rID", String.valueOf(rID));
                             params.put("rDate", currentTime);
                             params.put("rStat", stat);
+                            params.put("iID", String.valueOf(itemID));
+                            params.put("rBal", String.valueOf(bal));
 
                             System.out.println("=========================================================================");
                             System.out.println("=============================="+String.valueOf(rID)+"=====================================");
@@ -148,6 +150,8 @@ public class inventory_inspect_request extends AppCompatActivity {
 
                     CharSequence msg = "Approved";
                     Toast.makeText(inventory_inspect_request.this, msg, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(inventory_inspect_request.this, inventory_incoming_requests.class);
+                    startActivity(intent);
 
 
 
@@ -205,8 +209,10 @@ public class inventory_inspect_request extends AppCompatActivity {
 
                 requestQueue.add(request);
 
-                CharSequence msg = "Approved";
+                CharSequence msg = "Denied";
                 Toast.makeText(inventory_inspect_request.this, msg, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(inventory_inspect_request.this, inventory_incoming_requests.class);
+                startActivity(intent);
 
 
 

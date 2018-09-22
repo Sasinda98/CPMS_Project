@@ -94,10 +94,12 @@ public class inventory_items_list extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putDouble("itemQty", itemQty);
 
+                intent.putExtra("catName", catName);
                 intent.putExtra("itemName", itemName);
                 intent.putExtra("itemUnit", itemUnit);
                 intent.putExtra("itemID", itemID);
                 intent.putExtras(b);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
             }
         });

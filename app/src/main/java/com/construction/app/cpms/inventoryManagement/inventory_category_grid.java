@@ -40,6 +40,7 @@ public class inventory_category_grid extends AppCompatActivity {
             Intent intent = new Intent(inventory_category_grid.this, inventory_items_list.class);
             intent.putExtra("catName", catName);
             intent.putExtra("catImg",imgID);
+            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
             startActivity(intent);
 
         }

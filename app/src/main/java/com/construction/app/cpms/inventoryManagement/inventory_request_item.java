@@ -30,6 +30,7 @@ public class inventory_request_item extends AppCompatActivity {
     private String currentTime;
     private String itemName;
     private String itemUnit;
+    private String catName;
     private double iQty;
     private int itemID;
     private TextView reqItemNameTextView;
@@ -53,6 +54,7 @@ public class inventory_request_item extends AppCompatActivity {
         Intent intent = getIntent();
         itemName = intent.getStringExtra("itemName");
         itemUnit = intent.getStringExtra("itemUnit");
+        catName = intent.getStringExtra("catName");
         itemID = intent.getIntExtra("itemID", 0);
 
 
@@ -141,6 +143,10 @@ public class inventory_request_item extends AppCompatActivity {
 
                     CharSequence msg = "RequestSent";
                     Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(inventory_request_item.this, inventory_items_list.class);
+                    intent.putExtra("catName", catName);
+                    startActivity(intent);
+
 
 
                 }
