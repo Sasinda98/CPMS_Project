@@ -129,8 +129,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                     if ( ( url != null ) && ( url != "") ) {
                         //passing url and loading it in to circle image view.
-                        Glide.with(getApplicationContext()).load(url)
-                                .asBitmap().into(circleImageView);
+                        Glide.with(getApplicationContext()).asBitmap().load(url)
+                                .into(circleImageView);
                     }
                 }
 

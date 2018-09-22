@@ -28,14 +28,19 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
         // Create a reference to a file from a Google Cloud Storage URI
         StorageReference gsReference = storage.getReferenceFromUrl("gs://cpms-4780c.appspot.com/users/Jw405DV177dkOg2nBWAjsAERs8j1/profilePicture");
 
-        /*gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+       /* Glide.with(getApplicationContext()).load(gsReference)
+                .into(circleImageView);*/
+ /*       gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
-                *//*Glide.with(getApplicationContext()).load(uri)
-                        .asBitmap().into(circleImageView);
+                Glide.with(getApplicationContext()).load(uri)
+                        .into(circleImageView);
 
-                *//*
+
+
+
             }
         });*/
 

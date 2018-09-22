@@ -37,8 +37,8 @@ public class displayPlan extends AppCompatActivity {
 
         ImageView image = findViewById(R.id.d_image);
         Glide.with(this)
-                .load(Image)
                 .asBitmap()
+                .load(Image)
                 .into(image);
     }
 
