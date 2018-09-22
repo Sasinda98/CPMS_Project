@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class inventory_items_list extends AppCompatActivity {
     private String catName;
     private int imgID;
     private static ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
+    private android.support.v7.widget.Toolbar toolbar;
 
     inventory_item_row_adapter adapter;
     ListView listView;
@@ -62,6 +64,9 @@ public class inventory_items_list extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(inventory_items_list.this);
         itemArrayList = new ArrayList<inventory_item_Bean>();
+
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(catName);
 
 
 

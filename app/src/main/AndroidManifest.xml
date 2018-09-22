@@ -50,7 +50,8 @@
         <activity android:name=".miscellaneous.chatRoomActivity" />
         <activity android:name=".miscellaneous.ProfileActivity" />
         <activity android:name=".Plan.displayPlan" />
-        <activity android:name=".miscellaneous.ComposeChatRoomActivity"></activity>
+        <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
+        <activity android:name=".inventoryManagement.inventory_request_history"></activity>
     </application>
 
 </manifest>

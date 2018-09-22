@@ -46,7 +46,7 @@ public class inventory_manager_panel extends AppCompatActivity {
         requestHistoryCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(inventory_manager_panel.this, testingActivity.class);
+                Intent intent = new Intent(inventory_manager_panel.this, inventory_request_history.class);
                 startActivity(intent);
             }
         });

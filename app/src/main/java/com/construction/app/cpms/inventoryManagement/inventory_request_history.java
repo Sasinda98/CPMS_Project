@@ -1,5 +1,7 @@
 package com.construction.app.cpms.inventoryManagement;
 
+// Icons made by Freepik from www.flaticon.com (tick and cross)
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,42 +20,39 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.inventoryManagement.adapters.incoming_requests_adapter;
-import com.construction.app.cpms.inventoryManagement.beans.incoming_requests_bean;
-import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
-
+import com.construction.app.cpms.inventoryManagement.adapters.request_history_adapter;
+import com.construction.app.cpms.inventoryManagement.beans.request_history_bean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
-public class inventory_incoming_requests extends AppCompatActivity {
+public class inventory_request_history extends AppCompatActivity {
 
     /*Database Variables*/
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryRequests.php";
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchRequestHistory.php";
     private Toolbar toolbar;
 
-    private static ArrayList<incoming_requests_bean> requestArrayList;  // Forum class is a bean.
+    private static ArrayList<request_history_bean> requestHistoryArrayList;  // Forum class is a bean.
 
-    incoming_requests_adapter adapter;
+    request_history_adapter adapter;
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incoming_requests);
+        setContentView(R.layout.activity_inventory_request_history);
 
-        requestQueue = Volley.newRequestQueue(inventory_incoming_requests.this);
-        requestArrayList = new ArrayList<incoming_requests_bean>();
+        requestQueue = Volley.newRequestQueue(inventory_request_history.this);
+        requestHistoryArrayList = new ArrayList<>();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Pending Requests");
+        toolbar.setTitle("Requests History");
+
 
 
         fetchdata();
@@ -63,45 +61,12 @@ public class inventory_incoming_requests extends AppCompatActivity {
 //            System.out.println(itemB.getItemName());
 //        }
 
-        listView = (ListView) findViewById(R.id.requests_listView);
-        adapter = new incoming_requests_adapter(this, requestArrayList);
+        listView = (ListView) findViewById(R.id.request_history_listView);
+        adapter = new request_history_adapter(this, requestHistoryArrayList);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent intent = new Intent(inventory_incoming_requests.this, inventory_inspect_request.class);
-                incoming_requests_bean requestBean = (incoming_requests_bean) listView.getItemAtPosition(i);
-                String itemName = requestBean.getItemName();
-                int reqID = requestBean.getReqID();
-                String subConName = requestBean.getSubConFName() + " " + requestBean.getSubConLname();
-                String category = requestBean.getItemCategory();
-                String message = requestBean.getMessage();
-                Double reqQty = requestBean.getReqQty();
-                int itemID = requestBean.getItemID();
-                int subConID = requestBean.getSubConID();
-                Double itemQty = requestBean.getItemQty();
-                Bundle b = new Bundle();
-                b.putDouble("itemQty", itemQty);
-                b.putDouble("reqQty", reqQty);
-                b.putInt("reqID", reqID);
-                System.out.println("=========================================================================================================================="+message);
-
-                intent.putExtra("itemName", itemName);
-                intent.putExtra("itemID", itemID);
-                intent.putExtra("subConID", subConID);
-                intent.putExtra("subConName", subConName);
-                intent.putExtra("category", category);
-                intent.putExtra("message", message);
-
-                intent.putExtras(b);
-                startActivity(intent);
-            }
-        });
-
-
     }
+
 
     private void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -126,11 +91,12 @@ public class inventory_incoming_requests extends AppCompatActivity {
                                 int itemID = Integer.valueOf(object.getString("itemID"));
                                 double reqQty = Double.valueOf(object.getString("reqQty"));
                                 String reqDate = object.getString("reqDate");
+                                String valDate = object.getString("reqValiDate");
                                 String reqMessage = object.getString("reqMessage");
                                 String itemName = object.getString("itemName");
                                 String fName = object.getString("fName");
                                 String lName = object.getString("lName");
-                                double itemQty = Double.valueOf(object.getString("itemQty"));
+                                String reqStat = object.getString("reqStatus");
                                 String itemCategory = object.getString("itemCategory");
                                 String itemUnit = object.getString("itemUnit");
 
@@ -139,12 +105,12 @@ public class inventory_incoming_requests extends AppCompatActivity {
 
 
 
-                                incoming_requests_bean incoming_request = new incoming_requests_bean(reqID,subConID,itemID,reqQty,reqDate,reqMessage,itemName,fName,lName,itemQty,itemCategory,itemUnit);
+                                request_history_bean request_history = new request_history_bean(reqID,subConID,itemID,reqQty,reqDate, valDate, reqMessage,itemName,fName,lName,itemCategory,itemUnit, reqStat);
 
 
 
                                 //populate arraylist
-                                requestArrayList.add(incoming_request);
+                                requestHistoryArrayList.add(request_history);
                             }
                             adapter.notifyDataSetChanged();
 
@@ -173,7 +139,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_incoming_requests.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_request_history.this, "Loading Items", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };

@@ -55,6 +55,7 @@
     <string name="viewPlan">View Plans</string>
     <string name="view_current_plans">View Current Plans</string>
     <string name="upload_a_new_plan">Upload A New Plan</string>
+    <string name="inventoryManagerPanelPendingReqTitle">Pending Requests</string>
 
 
     //Array to get units for inventory units spinner

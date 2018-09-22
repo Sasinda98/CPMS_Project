@@ -63,7 +63,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="48dp"
-                android:text="Requests"
+                android:text="@string/inventoryManagerPanelPendingReqTitle"
                 android:textAllCaps="true"
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 android:textSize="20sp"

@@ -48,17 +48,37 @@ public class inventory_item_row_adapter extends BaseAdapter {
 
         final inventory_item_Bean item= (inventory_item_Bean) this.getItem(i);
 
+        String cat;
         ImageView image= (ImageView) view.findViewById(R.id.item_row_image);
         TextView name= (TextView) view.findViewById(R.id.item_row_name);
         TextView qty= (TextView) view.findViewById(R.id.item_row_qty);
         TextView unit= (TextView) view.findViewById(R.id.item_row_unit);
 
-
+        cat = item.getCategory();
         name.setText(item.getItemName());
         qty.setText (String.valueOf(item.getItemQuantity()));
         unit.setText(item.getUnit());
 
-        image.setImageResource(item.getImageID());
+
+
+        if(cat.equalsIgnoreCase("Common")){
+            image.setImageResource(R.drawable.toolbox);
+        }else if(cat.equalsIgnoreCase("Masonry")){
+            image.setImageResource(R.drawable.brickwall);
+        }else if(cat.equalsIgnoreCase("Carpentry")){
+            image.setImageResource(R.drawable.saw);
+        }else if(cat.equalsIgnoreCase("Plumbing")){
+            image.setImageResource(R.drawable.plumbing);
+        }else if(cat.equalsIgnoreCase("Flooring")){
+            image.setImageResource(R.drawable.floor);
+        }else if(cat.equalsIgnoreCase("Electrical")){
+            image.setImageResource(R.drawable.light_bulb);
+        }else if(cat.equalsIgnoreCase("Steel")){
+            image.setImageResource(R.drawable.crane);
+        }else if(cat.equalsIgnoreCase("Roofing")){
+            image.setImageResource(R.drawable.roof);
+        }
+
 
 //        view.setOnClickListener(new View.OnClickListener() {
 //            @Override
