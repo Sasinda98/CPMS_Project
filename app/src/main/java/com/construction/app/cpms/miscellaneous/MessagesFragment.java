@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -87,6 +88,11 @@ public class MessagesFragment extends Fragment {
     //store the stuff
     private ArrayList<FirebaseUserRoom> firebaseUserRooms = new ArrayList<>();
 
+
+    //UI element
+    private TextView messageTextView;
+    private RecyclerView chatRoomRecycView;
+
     //task1-: get the list of users relevant to current project from database, depends on Harshan's assigning users to relevant project func.
     //tasl2-: if the project doesnt have a project entry under messaging in firebase(Query to find out) add it
     // by creating relevant chatrooms for available users, if not don't. set it as root and continue to task3.
@@ -102,6 +108,9 @@ public class MessagesFragment extends Fragment {
 
         //region Initialization
         requestQueue = Volley.newRequestQueue(getContext());
+
+        chatRoomRecycView = (RecyclerView) view.findViewById(R.id.recyclerView_messaging);  // apart from usage inside this method, refer to method -: setVisibilityOfTextView();
+        messageTextView = view.findViewById(R.id.fm_emptyDataSetMessage);  //refer method -: setVisibilityOfTextView();
 
         //setting up progress dialog
         progressDialog = new ProgressDialog(getActivity());
@@ -123,15 +132,12 @@ public class MessagesFragment extends Fragment {
                 });
     //endregion
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_messaging);
-
-
                                                                                                                         //Careful when changing projectId
         messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, "Project-P1");
 
-        recyclerView.setAdapter(messageRecyclerViewAdapter);
+        chatRoomRecycView.setAdapter(messageRecyclerViewAdapter);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        chatRoomRecycView.setLayoutManager(gridLayoutManager);
 
         setUpTopBar(view);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
@@ -323,7 +329,7 @@ public class MessagesFragment extends Fragment {
                     }
 
                     messageRecyclerViewAdapter.notifyDataSetChanged();
-
+                    setVisibilityOfTextView();  //refer to method, it shows user message if no chatrooms are avail..
                 }
 
             }
@@ -353,12 +359,31 @@ public class MessagesFragment extends Fragment {
             Log.d(TAG,"User1 data added to arraylist");
         }else{
             Log.d(TAG,"USER ID's of objects from firebase doesnt match any!");
+            Log.d(TAG,"There is no chatroom available for this account right now.");
+
+            //show user a alert dialog box
+
+
         }
 
     }
 
+    //sets visibility of textview with a message to display when the array list is empty, meaning nothig to display
+    //this happens when logged in user is not involved in any conversation with anyother user.
+    //refered to -: https://stackoverflow.com/questions/47417645/empty-view-on-a-recyclerview
+    public void setVisibilityOfTextView(){
+        String message = "Press The + Button To Start A Conversation";
+        messageTextView.setText(message);
 
+        if( firebaseUserRooms.size() == 0 ){    //arraylist empty, meaning no chatroom to display for recyclerview
+            messageTextView.setVisibility(View.VISIBLE);    //enable visibility textview to see message.
+            chatRoomRecycView.setVisibility(View.GONE);     //visibily disable for recycler view as it has nothing to show
+        }else{                                  //arraylist is having items
+            messageTextView.setVisibility(View.GONE);    //disabe visibility textview to not see message.
+            chatRoomRecycView.setVisibility(View.VISIBLE);     //visibily enable for recycler view as it has stuff to show
+        }
 
+    }
 
 
 

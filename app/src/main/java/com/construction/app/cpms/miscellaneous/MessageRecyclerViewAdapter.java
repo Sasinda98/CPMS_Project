@@ -142,7 +142,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
                 .child(projectId)
                 .child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), chatRoomItems.get(i).getUID()));  //ref to chatroom
 
-        Query q =  chatroomRef.limitToLast(1);
+        Query q =  chatroomRef.limitToLast(1);         //critical in fetching latest, [Modifier needed here]...
         q.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
