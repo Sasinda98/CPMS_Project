@@ -3,6 +3,7 @@ package com.construction.app.cpms.miscellaneous.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
 import com.construction.app.cpms.miscellaneous.bean.User;
 import com.construction.app.cpms.miscellaneous.chatRoomActivity;
+import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
@@ -39,16 +41,18 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     private  FirebaseUser loggedInAs;
     private Context context;
     private String projectId;
+    private AppCompatActivity activity; //to call onBackPressed() need this.
 
     public static final String TAG = "MessageRecyViewAdapt";
     public static final  int MAX_CHARS_LATEST_MSG = 30;
 
     //Constructor
-    public MembersRecyclerViewAdapter( Context context, ArrayList<User> userDetailsArrayList, FirebaseUser loggedInAs, String projectId) {
+    public MembersRecyclerViewAdapter( AppCompatActivity activity, ArrayList<User> userDetailsArrayList, FirebaseUser loggedInAs, String projectId) {
         this.userDetailsArrayList = userDetailsArrayList;
-        this.context = context;
+        this.context = activity.getApplicationContext();
         this.loggedInAs = loggedInAs;
         this.projectId = projectId;
+        this.activity = activity;
 
     }
 
@@ -62,13 +66,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     }
 
     @Override   //everytime a new item gets added/created to the view, this method gets called.
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
-
-
-     //  Transfered to firebase    viewHolder.role.setText(chatRoomItems.get(i).getType());
-
-   /*     viewHolder.latestMessage.setText("To-be-implemented");
-        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());*/
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         //onclick listener for when user selects the chatroom to go in to it
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +74,10 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
             public void onClick(View view) {
                 Toast.makeText(context, "You clicked on item", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(context, chatRoomActivity.class);
-                context.startActivity(intent);
+                Log.d(TAG, "The i Value passed in to addChatroom = " + i );
+                addChatRoom(projectId, loggedInAs.getUid(), userDetailsArrayList.get(i).getFirebaseId());
+                activity.onBackPressed();   //Go back!
+
             }
         });
 
@@ -132,6 +132,26 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
 
 
     }
+
+
+    //region ADD CHATROOM method, Firebase
+    // creates chatroom for user to engage.
+    public void addChatRoom(String projectId, String loggedInUID, String receiverUID){
+        Log.d(TAG, "addChatRoom(String projectId) CALLED");
+        projectId = "Project-P" + projectId;       //database/./
+
+        String chatroomID = ChatRoomIDGenerator.getChatRoomID(loggedInUID, receiverUID);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Rooms");        //reference to node Rooms (Where chatrooms are there)
+
+        FirebaseUserRoom user1 = new FirebaseUserRoom(loggedInUID,"");
+        FirebaseUserRoom user2 = new FirebaseUserRoom(receiverUID,"");
+        ChatRoom chatRoom = new ChatRoom(user1,user2);
+        //                      Project-P{number}/{chatroomID}/{chatRoom Object}
+        databaseReference.child(projectId).child(chatroomID).setValue(chatRoom);
+    }
+    //endregion
 
 
     @Override   //return size of arraylist passed in....

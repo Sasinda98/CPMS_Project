@@ -62,6 +62,8 @@ public class MessagesFragment extends Fragment {
 
     public static final String TAG = "MessagesFragment";
 
+    public static final String KEY_INTENT = "com.construction.app.cpms.miscellaneous";
+
     /*STATIC fields are because we need to access them inside async task etc*/
     private static String projectId = "1";   //to be passed in from Harshan's createPlans and Harshan's user_plan
     private String userId;      //logged in user's userid.
@@ -89,7 +91,7 @@ public class MessagesFragment extends Fragment {
     private ArrayList<FirebaseUserRoom> firebaseUserRooms = new ArrayList<>();
 
 
-    //UI element
+    //UI elements
     private TextView messageTextView;
     private RecyclerView chatRoomRecycView;
 
@@ -133,7 +135,7 @@ public class MessagesFragment extends Fragment {
     //endregion
 
                                                                                                                         //Careful when changing projectId
-        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, "Project-P1");
+        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, projectId);
 
         chatRoomRecycView.setAdapter(messageRecyclerViewAdapter);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
@@ -173,7 +175,7 @@ public class MessagesFragment extends Fragment {
                 Toast toast = Toast.makeText(getContext(), "Compose Message", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getActivity(), ComposeChatRoomActivity.class);
-                intent.putExtra("projectId", projectId);
+                intent.putExtra(KEY_INTENT, projectId);
                 Log.d(TAG, "added Extra key = projectId value = " + projectId);
                 startActivity(intent);
 
@@ -241,8 +243,8 @@ public class MessagesFragment extends Fragment {
                     }
 
                     messageRecyclerViewAdapter.notifyDataSetChanged();
-                    setVisibilityOfTextView();  //refer to method, it shows user message if no chatrooms are avail..
                 }
+                setVisibilityOfTextView();  //refer to method, it shows user message if no chatrooms are avail..
 
             }
 
@@ -284,13 +286,17 @@ public class MessagesFragment extends Fragment {
     //this happens when logged in user is not involved in any conversation with anyother user.
     //refered to -: https://stackoverflow.com/questions/47417645/empty-view-on-a-recyclerview
     public void setVisibilityOfTextView(){
+        Log.d(TAG,"setVisibilityOfTextView() CALLED");
+
         String message = "Press The + Button To Start A Conversation";
         messageTextView.setText(message);
 
         if( firebaseUserRooms.size() == 0 ){    //arraylist empty, meaning no chatroom to display for recyclerview
+            Log.d(TAG,"arraylistSize ZERO");
             messageTextView.setVisibility(View.VISIBLE);    //enable visibility textview to see message.
             chatRoomRecycView.setVisibility(View.GONE);     //visibily disable for recycler view as it has nothing to show
-        }else{                                  //arraylist is having items
+        }else{//arraylist is having items
+            Log.d(TAG,"arraylistSize ZERO");
             messageTextView.setVisibility(View.GONE);    //disabe visibility textview to not see message.
             chatRoomRecycView.setVisibility(View.VISIBLE);     //visibily enable for recycler view as it has stuff to show
         }

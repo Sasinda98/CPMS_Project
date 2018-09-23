@@ -5,11 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".miscellaneous.chatRoomActivity">
+    tools:context=".miscellaneous.chatRoomActivity"
+
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
         <android.support.v7.widget.Toolbar
             android:id="@+id/cr_toolbar"
             android:layout_width="match_parent"
@@ -22,6 +26,13 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cr_chatLogRecycView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 

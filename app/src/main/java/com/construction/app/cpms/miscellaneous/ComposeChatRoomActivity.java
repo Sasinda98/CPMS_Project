@@ -61,7 +61,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ComposeChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ComposeChatRoomAct";
 
-    private static String projectId = "1";         //harshan's func should set the value (project creation)
+    private static String projectId;         //harshan's func should set the value (project creation)
 
     //Vars required to setup Top Toolbar
     private Toolbar toolbar;
@@ -91,6 +91,9 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose_chat_room);
         userArrayList = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
+
+        Bundle extras = getIntent().getExtras();
+        projectId = extras.getString(MessagesFragment.KEY_INTENT);  //get passed in project id from Messages Fragment;
 
 
     //region TESTING BUTTONS
@@ -129,7 +132,7 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
 
     }
 
-
+    //region TEST METHODS, IMPORTANT TO NOT DELETE EVEN THOUGH THEY ARE NOT USED HERE, but elsewhere
     // creates chatroom for user to engage.
     public void addChatRoom(String projectId, String loggedInUID, String receiverUID){
         Log.d(TAG, "addChatRoom(String projectId) CALLED");
@@ -148,6 +151,7 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
     }
 
 
+
     //For use with the chatroom itself,
     public void addMessage(String projectId, String loggedInUID, String receiverUID){
         Log.d(TAG, "addMessage(String projectId) CALLED");
@@ -162,6 +166,7 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
         //                      Project-P{number}/{chatroomID}/{FirebaseGeneratedVal}/{messageObject}
         databaseReference.child(projectId).child(chatroomID).push().setValue(messageBean);
     }
+    //endregion
 
     public void setUpToolbar(){
         toolbar = findViewById(R.id.ccr_toolbar);
