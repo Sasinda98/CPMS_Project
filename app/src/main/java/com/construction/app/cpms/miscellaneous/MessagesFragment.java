@@ -319,7 +319,7 @@ public class MessagesFragment extends Fragment {
                         ChatRoom c = ds.getValue(ChatRoom.class);
                         populateArrayList(firebaseUserRooms, c);
 
-                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getName() );
+                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getUID() );
                     }
 
                     messageRecyclerViewAdapter.notifyDataSetChanged();
@@ -336,6 +336,7 @@ public class MessagesFragment extends Fragment {
         reference.addValueEventListener(valueEventListener);            /*previously - : reference.addValueEventListener(valueEventListener);     */
     }
 
+    //Adds relevant user (based on user currently logged in) to arraylist used by recycler view
     public void populateArrayList(ArrayList<FirebaseUserRoom> firebaseUserRooms, ChatRoom chatRoom){
 
         FirebaseUser currentloggedin = fireBaseCurrentUser;

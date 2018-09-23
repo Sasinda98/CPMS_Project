@@ -156,7 +156,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
 
 
                         viewHolder.latestMessage.setText(getFormattedBody(message));
-                        viewHolder.timeStamp.setText(message.getTimeStamp());
+                       /* viewHolder.timeStamp.setText(message.getTimeStamp());*/
                     }
                 }else {
                     //what to do if messages dont exist for the chat. or chatroom unavail....       //FOR NOW DONT DO ANYTHING, LEAVE BLANK
@@ -168,6 +168,9 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
 
             }
         });
+
+        //setting timestamp
+        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
 
         //endregion
 
