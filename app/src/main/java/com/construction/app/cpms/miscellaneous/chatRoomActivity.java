@@ -4,6 +4,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,14 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
+import android.widget.TextView;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.adapters.ChatBubbleRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.adapters.MessageRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
-import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class chatRoomActivity extends AppCompatActivity {
     private static String TAG = "chatRoomActivity";
@@ -44,10 +46,13 @@ public class chatRoomActivity extends AppCompatActivity {
     private ImageButton sendBtn;
 
     //Firebase Related vars
-    private DatabaseReference chatnodeRef;
+    private DatabaseReference chatnodeRef = FirebaseDatabase.getInstance().getReference().getRoot();
     private FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
 
     private RecyclerView chatLogRecyc;
+    private ArrayList<FirebaseMessage> messageArrayList = new ArrayList<>();
+    private ChatBubbleRecyclerViewAdapter chatAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +65,6 @@ public class chatRoomActivity extends AppCompatActivity {
         RECEIVER_UID = extras.getString(MessageRecyclerViewAdapter.KEY_INTENT_UID);
         PROJECT_ID = extras.getString(MessageRecyclerViewAdapter.KEY_INTENT_ProjectId);
         setTitleBarName();
-
-        chatLogRecyc = findViewById(R.id.cr_chatLogRecycView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        chatLogRecyc.setHasFixedSize(true);
-        chatLogRecyc.setLayoutManager(linearLayoutManager);
-
-
 
         Log.d(TAG, "Intent passed in, receiver uid = " + RECEIVER_UID + "Project Id = " + PROJECT_ID);
         //endregion
@@ -86,6 +84,23 @@ public class chatRoomActivity extends AppCompatActivity {
                 addMessage(firebaseProjectNodeId, loggedInAs.getUid(), RECEIVER_UID);
             }
         });
+
+
+        //regionFIREBASE RECYCLERVIEW SETUP     HOW THE CHAT LOG IS DISPLAYED
+        chatLogRecyc = findViewById(R.id.cr_chatLogRecycView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager  gridLayoutManager = new GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false);
+        linearLayoutManager.setStackFromEnd(true);
+        chatLogRecyc.setLayoutManager(linearLayoutManager);
+
+        chatAdapter = new ChatBubbleRecyclerViewAdapter(messageArrayList,this,loggedInAs,PROJECT_ID);
+
+        chatLogRecyc.setAdapter(chatAdapter);
+
+        //listenToProjectNode(PROJECT_ID, loggedInAs.getUid(), RECEIVER_UID);
+
+        //endregion
+
 
 
     }
@@ -198,50 +213,39 @@ public class chatRoomActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-/*        FirebaseRecyclerAdapter<FirebaseMessage,MessageViewHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<FirebaseMessage, MessageViewHolder>(FirebaseMessage.class, ) {
-            @Override
-            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull FirebaseMessage model) {
 
-            }
-
-            @NonNull
-            @Override
-            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                return null;
-            }
-        };*/
 
     }
 
-  /*  //test method for listening for chatrooms.
-    public void listenToProjectNode(String projectId){
+
+    //test method for listening for chatrooms.
+    public void listenToProjectNode(String projectId, String loggedInAs, String receiver){
 
         Log.d(TAG, "listenToProjectNode(String projectId)  CALLED!");                       // /Rooms/Project-P1
 
-        reference = FirebaseDatabase.getInstance().getReference("ChatLogs").child("Project-P1").child("UID1-UID2");
-        reference.keepSynced(true);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference chatMessagesReference = firebaseDatabase.getReference("ChatLogs").child("Project-P1").child(ChatRoomIDGenerator.getChatRoomID(loggedInAs,receiver));
+        chatMessagesReference.keepSynced(true);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
 
-                firebaseUserRooms.clear();
+                messageArrayList.clear();
 
                 if(dataSnapshot.exists()){
 
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         Log.d(TAG, "DataSnapshot FOR LOOP = " + ds.toString());
-                        ChatRoom c = ds.getValue(ChatRoom.class);
-                        populateArrayList(firebaseUserRooms, c);
+                        FirebaseMessage message = ds.getValue(FirebaseMessage.class);
 
-                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getUID() );
+                        populateArrayList(message);
+                        Log.d(TAG, "Message Body 1 = " + message.getBody());
                     }
 
-                    messageRecyclerViewAdapter.notifyDataSetChanged();
                 }
-                setVisibilityOfTextView();  //refer to method, it shows user message if no chatrooms are avail..
+                chatAdapter.notifyDataSetChanged();
 
             }
 
@@ -250,9 +254,13 @@ public class chatRoomActivity extends AppCompatActivity {
 
             }
         };
-        reference.addValueEventListener(valueEventListener);            *//*previously - : reference.addValueEventListener(valueEventListener);     *//*
-    }*/
+        chatMessagesReference.addValueEventListener(valueEventListener);
+    }
 
+
+    public void populateArrayList(FirebaseMessage message){
+        messageArrayList.add(message);
+    }
 
     //endregion
 

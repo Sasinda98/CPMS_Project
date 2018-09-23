@@ -26,7 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.glideModule.GlideApp;
+
 import com.construction.app.cpms.miscellaneous.adapters.MembersRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;

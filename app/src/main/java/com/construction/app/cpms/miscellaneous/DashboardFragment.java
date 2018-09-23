@@ -28,7 +28,7 @@ import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
-import com.construction.app.cpms.glideModule.GlideApp;
+
 import com.construction.app.cpms.inventoryManagement.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -169,7 +169,7 @@ public class DashboardFragment extends Fragment {
                             Glide.with(getContext()).asBitmap().load(url)
                                     .into(circleImageView);*/
                             //caches stuff better
-                            GlideApp.with(getContext()).asBitmap().load(url).into(circleImageView);
+                            Glide.with(getContext()).asBitmap().load(url).into(circleImageView);
                         }
                     }
 

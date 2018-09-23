@@ -48,7 +48,8 @@
         <activity android:name=".inventoryManagement.inventory_incoming_requests" />
         <activity android:name=".inventoryManagement.inventory_inspect_request" />
         <activity android:name=".miscellaneous.chatRoomActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"  />    <!--Top bar kept hiding, this fixed it.-->
+            android:windowSoftInputMode="adjustPan"
+            />    <!--Top bar kept hiding, this fixed it.-->
         <activity android:name=".miscellaneous.ProfileActivity" />
         <activity android:name=".Plan.displayPlan" />
         <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
