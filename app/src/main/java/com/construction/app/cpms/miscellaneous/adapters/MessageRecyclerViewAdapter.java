@@ -1,4 +1,4 @@
-package com.construction.app.cpms.miscellaneous;
+package com.construction.app.cpms.miscellaneous.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
-import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
-import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.chatRoomActivity;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
