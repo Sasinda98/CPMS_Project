@@ -67,7 +67,6 @@ public class MessagesFragment extends Fragment {
     private String userId;      //logged in user's userid.
 
     private static ArrayList<ChatRoomMainItem> chatRoomMainArrayList = new ArrayList<ChatRoomMainItem>();
-    private static ArrayList<User> userArrayList = new ArrayList<User>();   //remoteDb
     private static MessageRecyclerViewAdapter messageRecyclerViewAdapter;
 
     /*Database stuff*/
@@ -174,6 +173,8 @@ public class MessagesFragment extends Fragment {
                 Toast toast = Toast.makeText(getContext(), "Compose Message", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getActivity(), ComposeChatRoomActivity.class);
+                intent.putExtra("projectId", projectId);
+                Log.d(TAG, "added Extra key = projectId value = " + projectId);
                 startActivity(intent);
 
 
@@ -188,100 +189,12 @@ public class MessagesFragment extends Fragment {
 
     //endregion
 
-    private static void fetchdata(){
-        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                System.out.println("Do backgorund func");
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-
-                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
-                                System.out.println("FOR LOOP");
-                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-
-                                //users involved in the project
-                                User user_Project = new User(object.getString("userId"), object.getString("firebaseId"),
-                                        object.getString("fName"), object.getString("lName"), object.getString("email"), object.getString("picUrl"), object.getString("type"));
-
-                                System.out.println("First Name Message Main = " + object.getString("fName").toString() + "Firebase ID = " + object.getString("firebaseId"));
-
-                                //populate arraylist
-                                userArrayList.add(user_Project);
-
-                                ChatRoomMainItem chatRoomMain1 = new ChatRoomMainItem( object.getString("fName"),"12:30pm", "Delivered",object.getString("type"),"Hello World" );
-                                chatRoomMainArrayList.add(chatRoomMain1);
-
-                            }
-                            messageRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
-
-                        } catch (JSONException e) {
-                           // e.printStackTrace();
-                            //occurs when no response comes up empty, meaning no users in the project you are searching for
-
-
-                    /*        builder.setMessage("Project has 0 users assigned, Therefore Messaging is currently disabled.");
-                            builder.setCancelable(true);
-
-                            builder.setPositiveButton(
-                                    "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                            ((Navigation)getActivity()).naviagateTo(new forgotPasswordFragment(), true);
-                                        }
-                                    });*/
-                            AlertDialog alert = builder.create();
-                            alert.show();
-
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> hashMap = new HashMap<String, String>();
-                        hashMap.put("projectId", projectId);        //sending project id to get the relevant user list
-                        return hashMap;
-                    }
-                };
-                requestQueue.add(stringRequest);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-               // forumRecyclerViewAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-            }
-
-            @Override
-            protected void onPreExecute() {
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
-            }
-        };
-
-        asyncTask.execute();
-    }
-
-
     @Override
     public void onStart() {
         super.onStart();
         chatRoomMainArrayList.clear();
-        userArrayList.clear();
         firebaseUserRooms.clear();
-        //fetchdata();
+
         //listenToNode(projectId);
 
         listenToProjectNode("Project-P1");
@@ -301,8 +214,6 @@ public class MessagesFragment extends Fragment {
         //endregion
     }
 
-
-    //method for checking for project node existence, if it is not there create it..
 
     //test method for listening for chatrooms.
     public void listenToProjectNode(String projectId){

@@ -2,6 +2,7 @@ package com.construction.app.cpms.miscellaneous;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -96,6 +97,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     private static void fetchdata(){
+
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -270,7 +272,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     //filter out post by who posted the post.
     private void filterByUserId(String userId, boolean doFilter){
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-
 
         ArrayList<ForumPost> container = new ArrayList<>();
         ArrayList<ForumPost> backupList = new ArrayList<>();

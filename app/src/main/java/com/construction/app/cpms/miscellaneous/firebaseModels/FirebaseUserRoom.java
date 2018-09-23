@@ -11,8 +11,9 @@ public class FirebaseUserRoom {
 
     }
 
-    public FirebaseUserRoom(String UID) {
+    public FirebaseUserRoom(String UID, String lastRead) {
         this.UID = UID;
+        this.lastRead = lastRead;
     }
 
     public String getLastRead() {
