@@ -31,13 +31,13 @@ public class actiExpenses extends AppCompatActivity {
         ListView mListView = findViewById(R.id.listView);
 
         //create sample expenses
-        Expense exp1 = new Expense("Labour Charges", "Direct", 50000);
-        Expense exp2 = new Expense("Supplier Payment", "Direct", 312000);
-        Expense exp3 = new Expense("Architect Fee", "Consultation", 50000);
-        Expense exp4 = new Expense("Transport", "Miscellaneous", 22000);
-        Expense exp5 = new Expense("Site Utilities", "Overheads", 18600);
-        Expense exp6 = new Expense("Labour Charges 2", "Direct", 60000);
-        Expense exp7 = new Expense("Labour Charges 3", "Direct", 100000);
+        Expense exp1 = new Expense("10","Labour Charges", "Direct", 50000);
+        Expense exp2 = new Expense("11","Supplier Payment", "Direct", 312000);
+        Expense exp3 = new Expense("12","Architect Fee", "Consultation", 50000);
+        Expense exp4 = new Expense("13","Transport", "Miscellaneous", 22000);
+        Expense exp5 = new Expense("14","Site Utilities", "Overheads", 18600);
+        Expense exp6 = new Expense("15","Labour Charges 2", "Direct", 60000);
+        Expense exp7 = new Expense("16","Labour Charges 3", "Direct", 100000);
 
         //Adding objects to ArrayList
         ArrayList<Expense> theList = new ArrayList<>();

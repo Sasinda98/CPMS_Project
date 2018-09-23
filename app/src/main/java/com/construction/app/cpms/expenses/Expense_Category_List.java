@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -35,8 +38,11 @@ public class Expense_Category_List extends AppCompatActivity {
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php";
+    private String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/deleteExpense.php";
+    private String expId;
     private String expCategory;
     private static ArrayList<Expense> expenseArrayList;
+    private static Expense sample;
 
     private ExpenseListAdapter adapter;
     private ListView listView;
@@ -60,6 +66,8 @@ public class Expense_Category_List extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.exp_listView);
         adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
         listView.setAdapter(adapter);
+
+        registerForContextMenu(listView);
 
 
 
@@ -111,6 +119,29 @@ public class Expense_Category_List extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.exp_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.deleteExp:
+                expenseArrayList.remove(info.position);
+                adapter.notifyDataSetChanged();
+                return true;
+                default:
+                    return super.onContextItemSelected(item);
+
+
+        }
+
+        //return super.onContextItemSelected(item);
+    }
 
     private void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -127,14 +158,15 @@ public class Expense_Category_List extends AppCompatActivity {
                                 JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
 
                                 //Getting all the attributes of the bean from the JSON object
+                                String expenseID = object.getString("expenseID");
                                 String description = object.getString("description");
                                 String category = object.getString("category");
                                 double amount = Double.valueOf(object.getString("Amount"));
 
 
-                                Expense expense = new Expense(description, category, amount);
+                                Expense expense = new Expense(expenseID, description, category, amount);
 
-                                System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category+"Amount= " + amount);
+                                System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
 
                                 //populate arraylist
                                 expenseArrayList.add(expense);
