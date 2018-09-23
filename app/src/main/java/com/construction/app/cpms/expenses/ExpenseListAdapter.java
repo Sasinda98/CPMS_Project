@@ -32,6 +32,7 @@ public class ExpenseListAdapter extends ArrayAdapter<Expense> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
     //get expense information
+        String expenseID = getItem(position).getExpenseID();
         String description = getItem(position).getDescription();
         String category = getItem(position).getCategory();
         double amount = getItem(position).getAmount();
@@ -39,7 +40,7 @@ public class ExpenseListAdapter extends ArrayAdapter<Expense> {
 
         //creating expense object with details
 
-        Expense exp = new Expense(description, category, amount);
+        Expense exp = new Expense(expenseID, description, category, amount);
 
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
