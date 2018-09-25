@@ -46,7 +46,7 @@ public class addPlan extends AppCompatActivity {
             }
         });
 
-        //upload button stuff
+        //database stuff
         Name = (EditText) findViewById(R.id.editText6);
         Image = (EditText) findViewById(R.id.editText3);
         Description = (EditText) findViewById(R.id.editText_1);

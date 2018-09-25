@@ -88,14 +88,15 @@ public class MainPlan extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         //as the user scrolls, a network request is requested.
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        //the plan reloading was fixed by not using this part, now it only displays once
+        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (gridLayoutManager.findLastCompletelyVisibleItemPosition() == data_list.size() - 1) {
                     load_data_from_server(data_list.get(data_list.size() - 1).getPid());
                 }
             }
-        });
+        });*/
     }
     //database part
     private void load_data_from_server(final int pID) {

@@ -55,6 +55,18 @@
             android:textColor="@color/cardText"
             android:layout_weight="20"
             />
+        <TextView
+            android:background="@color/backgroundW"
+            android:id="@+id/d_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/cardText"
+            android:layout_weight="20"
+            />
+
 
     <LinearLayout
         android:layout_marginTop="150dp"
@@ -64,12 +76,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/vUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
             android:text="Update" />
 
         <Button
+            android:id="@+id/vDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
