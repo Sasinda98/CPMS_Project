@@ -138,6 +138,15 @@ public class Expense_Category_List extends AppCompatActivity {
                 deleteExpense(expID);
                 adapter.notifyDataSetChanged();
                 return true;
+            case R.id.editExp:
+                index = info.position;
+                expID = expenseArrayList.get(index).getExpenseID();
+
+                Intent intent = new Intent(Expense_Category_List.this, editExpense.class);
+                intent.putExtra("expId", expID);
+
+                startActivity(intent);
+
                 default:
                     return super.onContextItemSelected(item);
 

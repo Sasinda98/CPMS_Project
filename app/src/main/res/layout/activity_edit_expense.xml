@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="8dp"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="Add Expense"
+            app:title="Edit Expense"
             app:titleTextColor="@color/primaryTextColor"/>
     </android.support.design.widget.AppBarLayout>
 
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/expense_description"
+            android:id="@+id/expense_description_e"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/descriptionExpense" />
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/expense_amount"
+            android:id="@+id/expense_amount_e"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Rs_Expense" />
@@ -88,20 +88,20 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/expense_category"
+            android:id="@+id/expense_category_e"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/category_expense" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/expense_submit_button"
+        android:id="@+id/expense_confirm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
         android:layout_marginStart="120dp"
         android:layout_marginTop="4dp"
-        android:text="@string/submit"
+        android:text="Confirm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/expense_category_layout" />
 

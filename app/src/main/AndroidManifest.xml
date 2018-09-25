@@ -47,13 +47,14 @@
         <activity android:name=".inventoryManagement.testingActivity" />
         <activity android:name=".inventoryManagement.inventory_incoming_requests" />
         <activity android:name=".inventoryManagement.inventory_inspect_request" />
-        <activity android:name=".miscellaneous.chatRoomActivity"
-            android:windowSoftInputMode="adjustPan"
-            />    <!--Top bar kept hiding, this fixed it.-->
+        <activity
+            android:name=".miscellaneous.chatRoomActivity"
+            android:windowSoftInputMode="adjustPan" /> <!-- Top bar kept hiding, this fixed it. -->
         <activity android:name=".miscellaneous.ProfileActivity" />
         <activity android:name=".Plan.displayPlan" />
         <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
-        <activity android:name=".inventoryManagement.inventory_request_history"></activity>
+        <activity android:name=".inventoryManagement.inventory_request_history" />
+        <activity android:name=".expenses.editExpense"></activity>
     </application>
 
 </manifest>
