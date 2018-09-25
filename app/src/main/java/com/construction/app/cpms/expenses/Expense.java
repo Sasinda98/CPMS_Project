@@ -13,6 +13,8 @@ public class Expense {
         this.amount = amount;
     }
 
+
+
     public void setExpenseID(String expenseID){this.expenseID = expenseID;    }
 
     public String getExpenseID(){return expenseID;}

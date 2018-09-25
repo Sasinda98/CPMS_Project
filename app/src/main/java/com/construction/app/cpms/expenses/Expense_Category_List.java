@@ -39,7 +39,6 @@ public class Expense_Category_List extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php";
     private String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/deleteExpense.php";
-    private String expId;
     private String expCategory;
     private static ArrayList<Expense> expenseArrayList;
     private static Expense sample;
@@ -131,7 +130,12 @@ public class Expense_Category_List extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
             case R.id.deleteExp:
+                int index = info.position;
+                System.out.println("===================================================================================================================================================="+index);
+                String expID = expenseArrayList.get(index).getExpenseID();
+                System.out.println("Expense ID ================================================================================"+expID);
                 expenseArrayList.remove(info.position);
+                deleteExpense(expID);
                 adapter.notifyDataSetChanged();
                 return true;
                 default:
@@ -142,6 +146,78 @@ public class Expense_Category_List extends AppCompatActivity {
 
         //return super.onContextItemSelected(item);
     }
+
+
+    private void deleteExpense(final String expId){
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                stringRequest = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                                JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
+
+                                //Getting all the attributes of the bean from the JSON object
+                                String expenseID = object.getString("expenseID");
+                                String description = object.getString("description");
+                                String category = object.getString("category");
+                                double amount = Double.valueOf(object.getString("Amount"));
+
+
+                                Expense expense = new Expense(expenseID, description, category, amount);
+
+                                System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
+
+                                //populate arraylist
+                                //expenseArrayList.add(expense);
+                            }
+                            adapter.notifyDataSetChanged();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("expId", expId);
+                        return params;
+                    }
+
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+        };
+
+        asyncTask.execute();
+    }
+
+
+    
 
     private void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
