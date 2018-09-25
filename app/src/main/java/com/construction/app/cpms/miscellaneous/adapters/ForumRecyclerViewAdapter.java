@@ -1,4 +1,4 @@
-package com.construction.app.cpms.miscellaneous;
+package com.construction.app.cpms.miscellaneous.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+import com.construction.app.cpms.miscellaneous.editForumPost;
 
 import java.util.ArrayList;
 import java.util.List;

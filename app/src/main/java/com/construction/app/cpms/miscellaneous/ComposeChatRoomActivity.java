@@ -1,21 +1,44 @@
 package com.construction.app.cpms.miscellaneous;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.glideModule.GlideApp;
+
+import com.construction.app.cpms.miscellaneous.adapters.MembersRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
+import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
+import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,48 +48,144 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ComposeChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ComposeChatRoomAct";
-    private CircleImageView circleImageView;
+
+    private static String projectId;         //harshan's func should set the value (project creation)
+
+    //Vars required to setup Top Toolbar
+    private Toolbar toolbar;
+    private AppCompatActivity appCompatActivity;
+
+    /*Remote Database stuff*/
+    private  static StringRequest stringRequest;
+    private  static RequestQueue requestQueue;
+    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchUserDetails.php";
+
+    /*RecyclerView related stuff*/
+    private ArrayList<User> userArrayList;
+    private RecyclerView memberRecycView;
+    private MembersRecyclerViewAdapter adapter;
+
+    /*Dialog to provide user some clues as to whats going onj*/
+    private static AlertDialog.Builder builder;
+
+    /*Firbase*/
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance(); //firebase
+    private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+    private FirebaseUser fireBaseCurrentUser = mAuth.getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_chat_room);
+        userArrayList = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(this);
 
-        circleImageView = findViewById(R.id.testProfilePic);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        // Create a reference to a file from a Google Cloud Storage URI
-        StorageReference gsReference = storage.getReferenceFromUrl("gs://cpms-4780c.appspot.com/users/Jw405DV177dkOg2nBWAjsAERs8j1/profilePicture");
+        Bundle extras = getIntent().getExtras();
+        projectId = extras.getString(MessagesFragment.KEY_INTENT);  //get passed in project id from Messages Fragment;
 
 
-        GlideApp.with(this )
+    //region TESTING BUTTONS
+/*        MaterialButton button1 = findViewById(R.id.ccm_addChatRoom1);
+        MaterialButton button2 = findViewById(R.id.ccm_addChatRoom2);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addChatRoom("1", "loggedinUID", "RUID");
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addMessage("1", "1 IN", "Rece2iver");
+            }
+        });*/
+
+
+
+        /*GlideApp.with(this )
                 .load(gsReference)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(circleImageView);
+                .into(circleImageView);*/
+        //endregion
+        setUpToolbar();
+
+        memberRecycView = findViewById(R.id.ccr_memberRecycView);   //reference to recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        memberRecycView.setLayoutManager(layoutManager);
+
+        adapter = new MembersRecyclerViewAdapter(this, userArrayList,fireBaseCurrentUser,projectId);
+        memberRecycView.setAdapter(adapter);
 
     }
 
+    //region TEST METHODS, IMPORTANT TO NOT DELETE EVEN THOUGH THEY ARE NOT USED HERE, but elsewhere
+    // creates chatroom for user to engage.
+    public void addChatRoom(String projectId, String loggedInUID, String receiverUID){
+        Log.d(TAG, "addChatRoom(String projectId) CALLED");
+        projectId = "Project-P" + projectId;       //database/./
 
-    public void invalidateCache(){
+        String chatroomID = ChatRoomIDGenerator.getChatRoomID(loggedInUID, receiverUID);
 
-        //invlidate cache every 30mins.
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Rooms");        //reference to node Rooms (Where chatrooms are there)
 
-        StorageReference gsReference = FirebaseStorage.getInstance().getReference();
-        GlideApp.with(this )
-                .load(gsReference)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(circleImageView);
+        FirebaseUserRoom user1 = new FirebaseUserRoom(loggedInUID,"");
+        FirebaseUserRoom user2 = new FirebaseUserRoom(receiverUID,"");
+        ChatRoom chatRoom = new ChatRoom(user1,user2);
+        //                      Project-P{number}/{chatroomID}/{chatRoom Object}
+        databaseReference.child(projectId).child(chatroomID).setValue(chatRoom);
     }
 
 
 
-    @Override
-    public void onBackPressed() {
-        finish();
+    //For use with the chatroom itself,
+    public void addMessage(String projectId, String loggedInUID, String receiverUID){
+        Log.d(TAG, "addMessage(String projectId) CALLED");
+        projectId = "Project-P" + projectId;       //database/./
+
+        String chatroomID = ChatRoomIDGenerator.getChatRoomID(loggedInUID,receiverUID);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("ChatLogs");        //reference to ChatLogs node on firebase (Where chat messages go to)
+
+        FirebaseMessage messageBean = new FirebaseMessage("This is body","12:40pm",loggedInUID);
+        //                      Project-P{number}/{chatroomID}/{FirebaseGeneratedVal}/{messageObject}
+        databaseReference.child(projectId).child(chatroomID).push().setValue(messageBean);
     }
+    //endregion
+
+    public void setUpToolbar(){
+        toolbar = findViewById(R.id.ccr_toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Select A Member");
+
+        toolbar.setNavigationIcon(R.drawable.ic_forum_down_arrow);
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.btm_navbar_item_notchecked));
+        appCompatActivity = this;
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //used stackoverflow forum to find this..
+                appCompatActivity.onBackPressed();
+            }
+        });
+    }
+
 
     public void testing(){
         Log.d(TAG, "testing() CALLED");
@@ -136,7 +255,90 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        userArrayList.clear();
+        fetchdata();
 
 
     }
+
+    private void fetchdata(){
+
+        Log.d(TAG, "fetchDataCalled");
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                System.out.println("Do backgorund func");
+                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                       Log.d(TAG, "ON RESPONSE");
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                                System.out.println("FOR LOOP");
+                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
+
+                                //users involved in the project
+                                User user_Project = new User(object.getString("userId"), object.getString("firebaseId"),
+                                     object.getString("type"));
+
+                                Log.d(TAG , "Remote db User id = " + object.getString("userId") + "Firebase ID = "
+                                        + object.getString("firebaseId") + "Type = " +  object.getString("type") );
+
+                                FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
+
+                                //if logged in user, dont add to arraylist
+                                if(!loggedInAs.getUid().equals(user_Project.getFirebaseId())){
+
+                                    //populate arraylist
+                                    userArrayList.add(user_Project);
+
+                                }
+
+                            }
+                            adapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> hashMap = new HashMap<String, String>();
+                        hashMap.put("projectId", projectId);        //sending project id to get the relevant user list
+                        return hashMap;
+                    }
+                };
+                requestQueue.add(stringRequest);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                // forumRecyclerViewAdapter.notifyDataSetChanged();
+             /*   progressDialog.dismiss();*/
+            }
+
+            @Override
+            protected void onPreExecute() {
+            /*    progressDialog.setMessage("Loading...");
+                progressDialog.show();*/
+            }
+        };
+
+        asyncTask.execute();
+    }
+
+
+
 }

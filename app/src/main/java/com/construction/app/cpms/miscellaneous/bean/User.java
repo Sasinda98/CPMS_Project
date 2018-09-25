@@ -17,38 +17,6 @@ public class User {
         this.firebaseId = firebaseId;
     }
 
-    public String getfName() {
-        return fName;
-    }
-
-    public void setfName(String fName) {
-        this.fName = fName;
-    }
-
-    public String getlName() {
-        return lName;
-    }
-
-    public void setlName(String lName) {
-        this.lName = lName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
     public String getType() {
         return type;
     }
@@ -58,21 +26,17 @@ public class User {
     }
 
 
-    private String userId;
-    private String firebaseId;
-    private String fName;
-    private String lName;
-    private String email;
-    private String picUrl; //profile pic url from firebase
-    private String type;
+    private String userId;  //needed
+    private String firebaseId;  //needed
+    //private String fName;
+   // private String lName;
+   // private String email;
+    //private String picUrl; //profile pic url from firebase
+    private String type;    //needed
 
-    public User(String userId, String firebaseId, String fName, String lName, String email, String picUrl, String type) {
+    public User(String userId, String firebaseId, String type) {
         this.userId = userId;
         this.firebaseId = firebaseId;
-        this.fName = fName;
-        this.lName = lName;
-        this.email = email;
-        this.picUrl = picUrl;
         this.type = type;
     }
 }

@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.Navigation;
 import com.construction.app.cpms.R;
 
+import com.construction.app.cpms.miscellaneous.adapters.MessageRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
 import com.construction.app.cpms.miscellaneous.bean.User;
 import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
@@ -60,12 +62,13 @@ public class MessagesFragment extends Fragment {
 
     public static final String TAG = "MessagesFragment";
 
+    public static final String KEY_INTENT = "com.construction.app.cpms.miscellaneous";
+
     /*STATIC fields are because we need to access them inside async task etc*/
     private static String projectId = "1";   //to be passed in from Harshan's createPlans and Harshan's user_plan
     private String userId;      //logged in user's userid.
 
     private static ArrayList<ChatRoomMainItem> chatRoomMainArrayList = new ArrayList<ChatRoomMainItem>();
-    private static ArrayList<User> userArrayList = new ArrayList<User>();   //remoteDb
     private static MessageRecyclerViewAdapter messageRecyclerViewAdapter;
 
     /*Database stuff*/
@@ -87,6 +90,11 @@ public class MessagesFragment extends Fragment {
     //store the stuff
     private ArrayList<FirebaseUserRoom> firebaseUserRooms = new ArrayList<>();
 
+
+    //UI elements
+    private TextView messageTextView;
+    private RecyclerView chatRoomRecycView;
+
     //task1-: get the list of users relevant to current project from database, depends on Harshan's assigning users to relevant project func.
     //tasl2-: if the project doesnt have a project entry under messaging in firebase(Query to find out) add it
     // by creating relevant chatrooms for available users, if not don't. set it as root and continue to task3.
@@ -102,6 +110,9 @@ public class MessagesFragment extends Fragment {
 
         //region Initialization
         requestQueue = Volley.newRequestQueue(getContext());
+
+        chatRoomRecycView = (RecyclerView) view.findViewById(R.id.recyclerView_messaging);  // apart from usage inside this method, refer to method -: setVisibilityOfTextView();
+        messageTextView = view.findViewById(R.id.fm_emptyDataSetMessage);  //refer method -: setVisibilityOfTextView();
 
         //setting up progress dialog
         progressDialog = new ProgressDialog(getActivity());
@@ -123,15 +134,12 @@ public class MessagesFragment extends Fragment {
                 });
     //endregion
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_messaging);
-
-
                                                                                                                         //Careful when changing projectId
-        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, "Project-P1");
+        messageRecyclerViewAdapter = new MessageRecyclerViewAdapter( firebaseUserRooms, getContext(), fireBaseCurrentUser, projectId);
 
-        recyclerView.setAdapter(messageRecyclerViewAdapter);
+        chatRoomRecycView.setAdapter(messageRecyclerViewAdapter);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        chatRoomRecycView.setLayoutManager(gridLayoutManager);
 
         setUpTopBar(view);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
@@ -167,6 +175,8 @@ public class MessagesFragment extends Fragment {
                 Toast toast = Toast.makeText(getContext(), "Compose Message", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getActivity(), ComposeChatRoomActivity.class);
+                intent.putExtra(KEY_INTENT, projectId);
+                Log.d(TAG, "added Extra key = projectId value = " + projectId);
                 startActivity(intent);
 
 
@@ -181,100 +191,12 @@ public class MessagesFragment extends Fragment {
 
     //endregion
 
-    private static void fetchdata(){
-        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                System.out.println("Do backgorund func");
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-
-                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
-                                System.out.println("FOR LOOP");
-                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-
-                                //users involved in the project
-                                User user_Project = new User(object.getString("userId"), object.getString("firebaseId"),
-                                        object.getString("fName"), object.getString("lName"), object.getString("email"), object.getString("picUrl"), object.getString("type"));
-
-                                System.out.println("First Name Message Main = " + object.getString("fName").toString() + "Firebase ID = " + object.getString("firebaseId"));
-
-                                //populate arraylist
-                                userArrayList.add(user_Project);
-
-                                ChatRoomMainItem chatRoomMain1 = new ChatRoomMainItem( object.getString("fName"),"12:30pm", "Delivered",object.getString("type"),"Hello World" );
-                                chatRoomMainArrayList.add(chatRoomMain1);
-
-                            }
-                            messageRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
-
-                        } catch (JSONException e) {
-                           // e.printStackTrace();
-                            //occurs when no response comes up empty, meaning no users in the project you are searching for
-
-
-                    /*        builder.setMessage("Project has 0 users assigned, Therefore Messaging is currently disabled.");
-                            builder.setCancelable(true);
-
-                            builder.setPositiveButton(
-                                    "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                            ((Navigation)getActivity()).naviagateTo(new forgotPasswordFragment(), true);
-                                        }
-                                    });*/
-                            AlertDialog alert = builder.create();
-                            alert.show();
-
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> hashMap = new HashMap<String, String>();
-                        hashMap.put("projectId", projectId);        //sending project id to get the relevant user list
-                        return hashMap;
-                    }
-                };
-                requestQueue.add(stringRequest);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-               // forumRecyclerViewAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-            }
-
-            @Override
-            protected void onPreExecute() {
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
-            }
-        };
-
-        asyncTask.execute();
-    }
-
-
     @Override
     public void onStart() {
         super.onStart();
         chatRoomMainArrayList.clear();
-        userArrayList.clear();
         firebaseUserRooms.clear();
-        //fetchdata();
+
         //listenToNode(projectId);
 
         listenToProjectNode("Project-P1");
@@ -294,8 +216,6 @@ public class MessagesFragment extends Fragment {
         //endregion
     }
 
-
-    //method for checking for project node existence, if it is not there create it..
 
     //test method for listening for chatrooms.
     public void listenToProjectNode(String projectId){
@@ -319,12 +239,12 @@ public class MessagesFragment extends Fragment {
                         ChatRoom c = ds.getValue(ChatRoom.class);
                         populateArrayList(firebaseUserRooms, c);
 
-                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getName() );
+                        Log.d(TAG, "CustoClass user name 1 = " + c.getUser1().getUID() );
                     }
 
                     messageRecyclerViewAdapter.notifyDataSetChanged();
-
                 }
+                setVisibilityOfTextView();  //refer to method, it shows user message if no chatrooms are avail..
 
             }
 
@@ -336,6 +256,7 @@ public class MessagesFragment extends Fragment {
         reference.addValueEventListener(valueEventListener);            /*previously - : reference.addValueEventListener(valueEventListener);     */
     }
 
+    //Adds relevant user (based on user currently logged in) to arraylist used by recycler view
     public void populateArrayList(ArrayList<FirebaseUserRoom> firebaseUserRooms, ChatRoom chatRoom){
 
         FirebaseUser currentloggedin = fireBaseCurrentUser;
@@ -352,12 +273,35 @@ public class MessagesFragment extends Fragment {
             Log.d(TAG,"User1 data added to arraylist");
         }else{
             Log.d(TAG,"USER ID's of objects from firebase doesnt match any!");
+            Log.d(TAG,"There is no chatroom available for this account right now.");
+
+            //show user a alert dialog box
+
+
         }
 
     }
 
+    //sets visibility of textview with a message to display when the array list is empty, meaning nothig to display
+    //this happens when logged in user is not involved in any conversation with anyother user.
+    //refered to -: https://stackoverflow.com/questions/47417645/empty-view-on-a-recyclerview
+    public void setVisibilityOfTextView(){
+        Log.d(TAG,"setVisibilityOfTextView() CALLED");
 
+        String message = "Press The + Button To Start A Conversation";
+        messageTextView.setText(message);
 
+        if( firebaseUserRooms.size() == 0 ){    //arraylist empty, meaning no chatroom to display for recyclerview
+            Log.d(TAG,"arraylistSize ZERO");
+            messageTextView.setVisibility(View.VISIBLE);    //enable visibility textview to see message.
+            chatRoomRecycView.setVisibility(View.GONE);     //visibily disable for recycler view as it has nothing to show
+        }else{//arraylist is having items
+            Log.d(TAG,"arraylistSize ZERO");
+            messageTextView.setVisibility(View.GONE);    //disabe visibility textview to not see message.
+            chatRoomRecycView.setVisibility(View.VISIBLE);     //visibily enable for recycler view as it has stuff to show
+        }
+
+    }
 
 
 

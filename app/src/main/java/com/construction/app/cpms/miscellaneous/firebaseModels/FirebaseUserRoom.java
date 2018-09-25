@@ -4,20 +4,16 @@ package com.construction.app.cpms.miscellaneous.firebaseModels;
 public class FirebaseUserRoom {
 
     private String UID;
-    private String name;
-    private String type;
-    private String photoUrl;
+    /*Type,name and photoUrl removed*/
     private String lastRead;
 
     public FirebaseUserRoom() { //For firebase specifically...
 
     }
 
-    public FirebaseUserRoom(String name, String type, String photoUrl, String UID) {
-        this.name = name;
-        this.type = type;
-        this.photoUrl = photoUrl;
+    public FirebaseUserRoom(String UID, String lastRead) {
         this.UID = UID;
+        this.lastRead = lastRead;
     }
 
     public String getLastRead() {
@@ -28,30 +24,6 @@ public class FirebaseUserRoom {
         this.lastRead = lastRead;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
     public String getUID() {
         return UID;
     }
@@ -59,6 +31,7 @@ public class FirebaseUserRoom {
     public void setUID(String UID) {
         this.UID = UID;
     }
+
 
 
 

@@ -1,10 +1,11 @@
-package com.construction.app.cpms.miscellaneous;
+package com.construction.app.cpms.miscellaneous.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
-import com.construction.app.cpms.miscellaneous.bean.ChatRoomMainItem;
-import com.construction.app.cpms.miscellaneous.bean.User;
+import com.construction.app.cpms.miscellaneous.chatRoomActivity;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserRoom;
@@ -35,16 +35,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 //Handles message cards
 public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder> {
+    public static final String TAG = "MessageRecyViewAdapt";
+    public static final String KEY_INTENT_ProjectId = "MessageRecycler-projectId";
+    public static final String KEY_INTENT_UID = "MessageRecyvler-uid";
+
+    private static final  int MAX_CHARS_LATEST_MSG = 30;
 
     private ArrayList<FirebaseUserRoom> chatRoomItems = new ArrayList<FirebaseUserRoom>();
-
     private  FirebaseUser loggedInAs;
     private Context context;
-
     private String projectId;
-
-    public static final String TAG = "MessageRecyViewAdapt";
-    public static final  int MAX_CHARS_LATEST_MSG = 30;
+    private String firebaseProjectId;
 
     //Constructor
     public MessageRecyclerViewAdapter(ArrayList<FirebaseUserRoom> chatRoomItems, Context context, FirebaseUser loggedInAs, String projectId) {
@@ -52,6 +53,8 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
         this.context = context;
         this.loggedInAs = loggedInAs;
         this.projectId = projectId;
+
+        firebaseProjectId = "Project-P" + projectId;        //project nodes are named with prefix Project-P# so to go along, this is done.
 
     }
 
@@ -65,29 +68,9 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
     }
 
     @Override   //everytime a new item gets added/created to the view, this method gets called.
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
-        //Setting the values of the widgets to match the ones passed in through the arraylist.
-     // Transfered to firebase   viewHolder.name.setText(chatRoomItems.get(i).getName());
-     //  Transfered to firebase    viewHolder.role.setText(chatRoomItems.get(i).getType());
         viewHolder.deliverStatus.setText("Delivered");
-   /*     viewHolder.latestMessage.setText("To-be-implemented");
-        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());*/
-
-     /*   Glide.with(context).asBitmap().load(chatRoomItems.get(i).getPhotoUrl())
-                .into(viewHolder.profilePic);*/
-
-        //onclick listener for when user selects the chatroom to go in to it
-        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "You clicked on item", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(context, chatRoomActivity.class);
-                context.startActivity(intent);
-            }
-        });
-
         //_____________________________________________________________________ Firebase Queries to set views  ______________________________________\\
 
         //region SET UserDetails like PIC, Name, Type using users node in firebase
@@ -119,8 +102,6 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
                         viewHolder.name.setText(user.getName());
                         //setting the role of user.
                         viewHolder.role.setText(user.getType());
-
-
                     }
                 }else{
                     //if user given user doesnt exist
@@ -138,11 +119,11 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
 
         //region SETTING MESSAGE DETAILS LIKE LATEST MESSAGE IN CHATROOM AND TIMESTAMP
 
-        DatabaseReference chatroomRef = firebaseDatabase.getReference("ChatLogs")
-                .child(projectId)
+        final DatabaseReference chatroomRef = firebaseDatabase.getReference("ChatLogs")
+                .child(firebaseProjectId)
                 .child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), chatRoomItems.get(i).getUID()));  //ref to chatroom
 
-        Query q =  chatroomRef.limitToLast(1);
+        Query q =  chatroomRef.limitToLast(1);         //critical in fetching latest, [Modifier needed here]...
         q.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -156,7 +137,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
 
 
                         viewHolder.latestMessage.setText(getFormattedBody(message));
-                        viewHolder.timeStamp.setText(message.getTimeStamp());
+                       /* viewHolder.timeStamp.setText(message.getTimeStamp());*/
                     }
                 }else {
                     //what to do if messages dont exist for the chat. or chatroom unavail....       //FOR NOW DONT DO ANYTHING, LEAVE BLANK
@@ -169,7 +150,27 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
             }
         });
 
+        //setting timestamp
+        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
+
         //endregion
+
+
+
+        //onclick listener for when user selects the chatroom to go in to it
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "You clicked on item", Toast.LENGTH_LONG).show();
+
+                //BE WARNED, values of the parcelable is set inside the firebase, so if datasnapshot goes missing, null pointer excp may occur
+
+                Intent intent = new Intent(context, chatRoomActivity.class);
+                intent.putExtra(KEY_INTENT_ProjectId, projectId);
+                intent.putExtra(KEY_INTENT_UID, chatRoomItems.get(i).getUID());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -210,6 +211,8 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
         TextView timeStamp;
         TextView deliverStatus;
 
+        String UID; //Stores UID of the displayed Viewholder
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //getting references to widgets/layout to manupulate them using adapter.
@@ -221,7 +224,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
             latestMessage = itemView.findViewById(R.id.lm_latestMessge);
             timeStamp = itemView.findViewById(R.id.lm_timeStamp);
             deliverStatus = itemView.findViewById(R.id.lm_deliverStatus);
-
+            UID = "";
         }
     }
 

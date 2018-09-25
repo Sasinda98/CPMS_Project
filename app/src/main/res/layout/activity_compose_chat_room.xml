@@ -7,10 +7,60 @@
     android:orientation="vertical"
     tools:context=".miscellaneous.ComposeChatRoomActivity">
 
+ <android.support.design.widget.AppBarLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/ccr_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:titleTextColor="@color/primaryTextColor"
+      android:elevation="8dp"
+      app:layout_scrollFlags="scroll|enterAlways|snap"
+      app:navigationIcon="@drawable/ic_back"
+      tools:ignore="UnusedAttribute">
+  </android.support.v7.widget.Toolbar>
+ </android.support.design.widget.AppBarLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/testProfilePic"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
+ <android.support.v7.widget.RecyclerView
+  android:id="@+id/ccr_memberRecycView"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+
+
+ </android.support.v7.widget.RecyclerView>
+
+
+
+
+
+
+ <!--   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DO NOT PRESS ANY OF THESE BUTTONS, they are for testing only, could make the entire database records vanish. dont play around.
+        -Gayal"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        />
+
+
+   <android.support.design.button.MaterialButton
+       android:id="@+id/ccm_addChatRoom1"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="AddchatRoom"
+
+       />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/ccm_addChatRoom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AddChatLog"
+        />
+-->
+
+
 
 </LinearLayout>

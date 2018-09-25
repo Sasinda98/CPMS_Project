@@ -46,6 +46,8 @@
     <string name="Rs_Expense">Rs.</string>
     <string name="category_expense">Category</string>
     <string name="submit">Submit</string>
+    <string name="deleteExp">Delete Expense</string>
+    <string name="editExp">Edit Expense</string>
 
     //Plan related strings
     <string name="newPlanTopBarTitle">Plan</string>

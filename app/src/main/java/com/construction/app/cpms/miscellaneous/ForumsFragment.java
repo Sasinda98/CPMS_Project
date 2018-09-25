@@ -2,6 +2,7 @@ package com.construction.app.cpms.miscellaneous;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,11 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,8 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.adapters.ForumRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
-import com.construction.app.cpms.miscellaneous.bean.Refresh;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,6 +97,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     private static void fetchdata(){
+
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -272,7 +272,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     //filter out post by who posted the post.
     private void filterByUserId(String userId, boolean doFilter){
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-
 
         ArrayList<ForumPost> container = new ArrayList<>();
         ArrayList<ForumPost> backupList = new ArrayList<>();
