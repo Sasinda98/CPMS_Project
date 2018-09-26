@@ -110,13 +110,11 @@ public class MainPlan extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
 
-                            for (int i = 0; i < jsonArray.length(); i++) { //loop through jsonarray(stores objects in each index) and put data to arraylist.
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 System.out.println("FOR LOOP");
-                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
+                                JSONObject object = jsonArray.getJSONObject(i);
                                 MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"), object.getString("Description"));
-                                /*System.out.println(object.getString("title")); */
-                                //populate arrayList
-                                data_list.add(data);
+                                data_list.add(data); //all objects are added to the arrayList
                             }
                             //notifies the adapter about updates to arrayList.
                             adapter.notifyDataSetChanged();
@@ -127,7 +125,7 @@ public class MainPlan extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        CharSequence message4 = "Error. Check INTERNET CONNECTION!";
+                        CharSequence message4 = "Error. No Internet Access!";
                         Toast.makeText(MainPlan.this, message4, Toast.LENGTH_LONG).show();
                     }
                 }) {

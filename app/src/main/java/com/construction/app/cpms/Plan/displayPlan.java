@@ -126,6 +126,8 @@ public class displayPlan extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.getStackTrace();
                 System.out.print("Error: " + error.getMessage());
+                CharSequence message4 = "Error. No Internet Access!";
+                Toast.makeText(displayPlan.this, message4, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -156,11 +158,10 @@ public class displayPlan extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println(response);
 
-
                         //fetchData();
                         finish();
-                        Toast.makeText(getApplicationContext(),"Plan Successfully Updated",Toast.LENGTH_SHORT);
-
+                        //Toast.makeText(getApplicationContext(),"Plan Successfully Updated",Toast.LENGTH_SHORT);
+                        Toast.makeText(getBaseContext(), "Plan Successfully Updated", Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
 
@@ -168,6 +169,8 @@ public class displayPlan extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.getStackTrace();
                 System.out.print("Error: "+error.getMessage());
+                CharSequence message4 = "Error. No Internet Access!";
+                Toast.makeText(displayPlan.this, message4, Toast.LENGTH_LONG).show();
             }
         }) {
 

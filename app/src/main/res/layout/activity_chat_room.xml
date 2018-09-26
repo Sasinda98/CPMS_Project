@@ -33,7 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="82dp"
+        android:layout_above="@id/parent_msgHolderLayout"
+        android:layout_marginBottom="10dp"
         >
 
     </android.support.v7.widget.RecyclerView>

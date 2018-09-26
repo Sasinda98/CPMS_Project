@@ -161,7 +161,6 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "You clicked on item", Toast.LENGTH_LONG).show();
 
                 //BE WARNED, values of the parcelable is set inside the firebase, so if datasnapshot goes missing, null pointer excp may occur
 
