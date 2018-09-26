@@ -27,16 +27,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class displayPlan extends AppCompatActivity {
 
     String Name, Image, Description, name;
     Button updateBn, deleteBn;
     RequestQueue requestQueue;
-    String showURL =   "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchPlans.php";
+    String showURL = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchSinglePlan.php";
     String updateURL = "https://projectcpms99.000webhostapp.com/scripts/Harshan/updatePlans.php";
     String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/Harshan/deletePlans.php";
     int planId;
@@ -44,7 +46,7 @@ public class displayPlan extends AppCompatActivity {
     EditText planName, planDescription;
     ImageView planImage;
     int iD;
-    private CustomAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,183 @@ public class displayPlan extends AppCompatActivity {
         setContentView(R.layout.activity_display_plan);
 
         getIncomingIntent();
+        System.out.println("======================================================================================================");
+
+        System.out.println("======================================================================================================"+planId);
+        //text fields and buttons
+        planName = (EditText) findViewById(R.id.d_name);
+        planDescription = (EditText) findViewById(R.id.d_description);
+        planImage = (ImageView) findViewById(R.id.d_image);
+        updateBn = (Button) findViewById(R.id.vUpdate);
+        deleteBn = (Button) findViewById(R.id.vDelete);
+
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        planName = (EditText) findViewById(R.id.d_name);
+        planDescription = (EditText) findViewById(R.id.d_description);
+        planImage = (ImageView) findViewById(R.id.d_image);
+        updateBn = findViewById(R.id.vUpdate);
+
+        planId = getIntent().getIntExtra("pID", 0);
+        System.out.println("\n"+planId+"\n");
+
+        deleteBn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
+        updateBn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update();
+            }
+        });
+
+    }
+    private void getIncomingIntent() {
+        if (getIntent().hasExtra("name") && getIntent().hasExtra("image") && getIntent().hasExtra("description")) {
+            Name = getIntent().getStringExtra("name");
+            Image = getIntent().getStringExtra("image");
+            Description = getIntent().getStringExtra("description");
+            planId = getIntent().getIntExtra("pID", 0);
+            setImage(Name, Image, Description);
+        }
+    }
+
+    private void setImage(String Name, String Image, String description) {
+        EditText name = findViewById(R.id.d_name);
+        name.setText(Name);
+
+        EditText des = findViewById(R.id.d_description);
+        des.setText(description);
+
+        ImageView image = findViewById(R.id.d_image);
+        Glide.with(this)
+                .asBitmap()
+                .load(Image)
+                .into(image);
+    }
+
+    public void delete() {
+        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //the finish() here return the activity to the view plans
+                finish();
+                Toast.makeText(getBaseContext(), "Plan Successfully Deleted", Toast.LENGTH_LONG).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.getStackTrace();
+                System.out.print("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> postParams = new HashMap<String, String>();
+                postParams.put("pID", String.valueOf(planId));
+
+                return postParams;
+            }
+        };
+        requestQueue.add(jsonObjRequest);
+    }
+
+    public void update() {
+        final String name = planName.getText().toString();
+        final String description = planDescription.getText().toString();
+
+        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+                updateURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+
+                        //fetchData();
+                        finish();
+                        Toast.makeText(getApplicationContext(),"Plan Successfully Updated",Toast.LENGTH_SHORT);
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.getStackTrace();
+                System.out.print("Error: "+error.getMessage());
+            }
+        }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                Map<String, String> postParam = new HashMap<String, String>();
+
+
+                postParam.put("name", name);
+                postParam.put("description", description);
+                postParam.put("pID", String.valueOf(planId));
+
+                System.out.print(name + description);
+
+                return postParam;
+            }
+
+        };
+
+        requestQueue.add(jsonObjRequest);
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /* getIncomingIntent();
         System.out.println("======================================================================================================");
 
         System.out.println("======================================================================================================"+planId);
@@ -79,7 +258,7 @@ public class displayPlan extends AppCompatActivity {
             public void onClick(View view) {
                 update();
             }
-        });
+        }); */
 
         /*fetchData();*/
 
@@ -119,7 +298,7 @@ public class displayPlan extends AppCompatActivity {
                 requestQueue.add(jsonObjRequest);
             }
         });*/
-    }
+
   /*  public void fetchData(){
         StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
                 showURL,
@@ -169,7 +348,7 @@ public class displayPlan extends AppCompatActivity {
         requestQueue.add(jsonObjRequest);
     } */
 
-    public void delete() {
+   /* public void delete() {
         StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, deleteURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

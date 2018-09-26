@@ -40,6 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             holder.name.setText(my_data.get(position).getName());
             holder.description.setText(my_data.get(position).getDecript());
             holder.pID.setText(Integer.toString(my_data.get(position).getPid()));
+
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
 
             //opens the plan when clicked

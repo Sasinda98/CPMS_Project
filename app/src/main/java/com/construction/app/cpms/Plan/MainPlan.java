@@ -81,6 +81,7 @@ public class MainPlan extends AppCompatActivity {
         data_list = new ArrayList<>();
         load_data_from_server(0);
 
+
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
