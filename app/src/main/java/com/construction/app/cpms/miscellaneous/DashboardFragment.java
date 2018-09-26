@@ -163,13 +163,21 @@ public class DashboardFragment extends Fragment {
             ValueEventListener profilePictureListener = reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String url = (String) dataSnapshot.getValue();
 
-                        if( ( url!= null ) && ( url != "" ) && getContext() != null ) {/*
+                        if(dataSnapshot.exists()) {
+
+                            Log.d(TAG, "DATASNAPSHOT EXISTS = " + dataSnapshot.toString());
+                            String url = (String) dataSnapshot.getValue();
+                            url = url.trim();
+                            Log.d(TAG, "URL = " + url.toString());
+
+                            if ((url != null) && (url != "") && getContext() != null) {/*
                             Glide.with(getContext()).asBitmap().load(url)
                                     .into(circleImageView);*/
-                            //caches stuff better
-                            Glide.with(getContext()).asBitmap().load(url).into(circleImageView);
+                                //caches stuff better
+                                Log.d(TAG, "URL = " + url.toString());
+                                Glide.with(getContext()).asBitmap().load(url).into(circleImageView);
+                            }
                         }
                     }
 

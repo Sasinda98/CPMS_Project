@@ -124,14 +124,20 @@ public class ProfileActivity extends AppCompatActivity {
            profilePictureListener = reference.child("users").child(firebaseUser.getUid()).child("photoUrl").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //getting download url of prof pic
-                    String url = (String) dataSnapshot.getValue();
 
-                    if ( ( url != null ) && ( url != "") ) {
-                        //passing url and loading it in to circle image view.
-                        Glide.with(getApplicationContext()).asBitmap().load(url)
-                                .into(imageView);
-                    }
+
+                   if(dataSnapshot.exists()) {
+                       //getting download url of prof pic
+                       String url = (String) dataSnapshot.getValue();
+
+                       url = url.trim();
+                       if ((url != null) && (url != "")) {
+                           //passing url and loading it in to circle image view.
+                           Glide.with(getApplicationContext()).asBitmap().load(url)
+                                   .into(imageView);
+                       }
+
+                   }
                 }
 
                 @Override
