@@ -102,6 +102,15 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
                         //setting user's name
                         viewHolder.sentBy.setText(user.getName());
 
+
+                        if(viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));
+                        }
+                        if(!viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));
+                        }
+
+
                         //setting the role of user.
                         /*viewHolder.role.setText(user.getType());*/
                     }

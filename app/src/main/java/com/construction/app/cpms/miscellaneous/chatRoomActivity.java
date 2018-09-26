@@ -90,7 +90,8 @@ public class chatRoomActivity extends AppCompatActivity {
         chatLogRecyc = findViewById(R.id.cr_chatLogRecycView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false);
-        linearLayoutManager.setStackFromEnd(true);
+
+
         chatLogRecyc.setLayoutManager(linearLayoutManager);
 
         chatAdapter = new ChatBubbleRecyclerViewAdapter(messageArrayList,this,loggedInAs,PROJECT_ID);
@@ -146,14 +147,25 @@ public class chatRoomActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("ChatLogs");        //reference to ChatLogs node on firebase (Where chat messages go to)
 
         FirebaseMessage messageBean = processMessageForSending(loggedInUID);
-        //                      Project-P{number}/{chatroomID}/{FirebaseGeneratedVal}/{messageObject}
-        databaseReference.child(projectId).child(chatroomID).push().setValue(messageBean);
+
+        if(messageBean != null ){
+            //                      Project-P{number}/{chatroomID}/{FirebaseGeneratedVal}/{messageObject}
+            databaseReference.child(projectId).child(chatroomID).push().setValue(messageBean);
+        }else {
+            Log.d(TAG, "Message not getting added, because it is empty...");
+        }
+
+
     }
 
     public FirebaseMessage processMessageForSending(String senderUID){
         Log.d(TAG, "processMessageForSending(String senderUID)  CALLED");
         //take the user input
         String msg_body = messageWritePad.getText().toString().trim();  //remove white spaces either end.       /
+
+        if(msg_body.equals("")){
+            return null;
+        }
 
         FirebaseMessage messageBean = new FirebaseMessage(msg_body,"9:03pm", senderUID);
 
@@ -246,6 +258,7 @@ public class chatRoomActivity extends AppCompatActivity {
 
                 }
                 chatAdapter.notifyDataSetChanged();
+                chatLogRecyc.smoothScrollToPosition(chatLogRecyc.getAdapter().getItemCount());
 
             }
 

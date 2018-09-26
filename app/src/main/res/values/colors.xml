@@ -24,4 +24,7 @@
     <color name="greenPlus">#43b05c</color>
     <color name="chandula_yellow">#f1d03b</color>
   <color name="tweakedRed">#fc4c3a</color>
+
+
+  <color name="messageBackgroundTitle">#5F5F5F</color>
 </resources>
