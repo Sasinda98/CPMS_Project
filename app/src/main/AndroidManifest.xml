@@ -54,7 +54,9 @@
         <activity android:name=".Plan.displayPlan" />
         <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
         <activity android:name=".inventoryManagement.inventory_request_history" />
-        <activity android:name=".expenses.editExpense"></activity>
+        <activity android:name=".expenses.editExpense" />
+        <activity android:name=".inventoryManagement.inventory_edit_list" />
+        <activity android:name=".inventoryManagement.inventory_edit_item"></activity>
     </application>
 
 </manifest>

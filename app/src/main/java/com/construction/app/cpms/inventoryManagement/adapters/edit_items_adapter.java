@@ -1,6 +1,6 @@
 package com.construction.app.cpms.inventoryManagement.adapters;
-// http://camposha.info/source/android-custom-cardview-listview-source
-//above used as examples
+
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +14,24 @@ import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
 
 import java.util.ArrayList;
 
-public class inventory_item_row_adapter extends BaseAdapter {
 
+public class edit_items_adapter extends BaseAdapter{
     Context c;
-    ArrayList<inventory_item_Bean> inventoryItems;
+    ArrayList<inventory_item_Bean> editItems;
 
-    public inventory_item_row_adapter(Context c, ArrayList<inventory_item_Bean> inventoryItems) {
+    public edit_items_adapter(Context c, ArrayList<inventory_item_Bean> editItems) {
         this.c = c;
-        this.inventoryItems = inventoryItems;
+        this.editItems = editItems;
     }
 
     @Override
     public int getCount() {
-        return inventoryItems.size();
+        return editItems.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return inventoryItems.get(i);
+        return editItems.get(i);
     }
 
     @Override
@@ -43,23 +43,18 @@ public class inventory_item_row_adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view==null)
         {
-            view= LayoutInflater.from(c).inflate(R.layout.inventory_items_list_row,viewGroup,false);
+            view= LayoutInflater.from(c).inflate(R.layout.inventory_edit_list_row,viewGroup,false);
         }
 
         final inventory_item_Bean item= (inventory_item_Bean) this.getItem(i);
 
         String cat;
         ImageView image= (ImageView) view.findViewById(R.id.edit_item_row_image);
-        TextView name= (TextView) view.findViewById(R.id.item_row_name);
-        TextView qty= (TextView) view.findViewById(R.id.item_row_qty);
-        TextView unit= (TextView) view.findViewById(R.id.item_row_unit);
+        TextView name= (TextView) view.findViewById(R.id.edit_item_row_name);
+
 
         cat = item.getCategory();
         name.setText(item.getItemName());
-        qty.setText (String.valueOf(item.getItemQuantity()));
-        unit.setText(item.getUnit());
-
-
 
         if(cat.equalsIgnoreCase("Common")){
             image.setImageResource(R.drawable.toolbox);
@@ -79,13 +74,6 @@ public class inventory_item_row_adapter extends BaseAdapter {
             image.setImageResource(R.drawable.roof);
         }
 
-
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(c, item.getItemName(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         return view;
     }

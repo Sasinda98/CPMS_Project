@@ -58,6 +58,7 @@
     <string name="view_current_plans">View Current Plans</string>
     <string name="upload_a_new_plan">Upload A New Plan</string>
     <string name="inventoryManagerPanelPendingReqTitle">Pending Requests</string>
+    <string name="edit_inventory_delete_menu_text">Delete</string>
 
 
     //Array to get units for inventory units spinner
