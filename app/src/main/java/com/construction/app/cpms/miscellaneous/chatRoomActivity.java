@@ -97,7 +97,7 @@ public class chatRoomActivity extends AppCompatActivity {
 
         chatLogRecyc.setAdapter(chatAdapter);
 
-        //listenToProjectNode(PROJECT_ID, loggedInAs.getUid(), RECEIVER_UID);
+        listenToChatRoomNode(PROJECT_ID, loggedInAs.getUid(), RECEIVER_UID);
 
         //endregion
 
@@ -218,8 +218,8 @@ public class chatRoomActivity extends AppCompatActivity {
     }
 
 
-    //test method for listening for chatrooms.
-    public void listenToProjectNode(String projectId, String loggedInAs, String receiver){
+    //test method for listening for chatrooms to get messages...
+    public void listenToChatRoomNode(String projectId, String loggedInAs, String receiver){
 
         Log.d(TAG, "listenToProjectNode(String projectId)  CALLED!");                       // /Rooms/Project-P1
 
