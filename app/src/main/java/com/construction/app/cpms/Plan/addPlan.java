@@ -65,7 +65,7 @@ public class addPlan extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        CharSequence message3 = "Plan Upload Unsuccessful. Check INTERNET CONNECTION!";
+                        CharSequence message3 = "Plan Upload Unsuccessful. No Internet Access!";
                         Toast.makeText(addPlan.this, message3, Toast.LENGTH_LONG).show();
                     }
                 }){

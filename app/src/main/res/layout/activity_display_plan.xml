@@ -34,7 +34,7 @@
             android:scaleType="centerCrop" />
 
         <EditText
-            android:background="@color/backgroundW"
+            android:background="@color/backgroundDark"
             android:id="@+id/d_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,9 +45,9 @@
             android:layout_weight="5"/>
 
         <EditText
-            android:background="@color/backgroundW"
+            android:background="@color/backgroundDark"
             android:id="@+id/d_description"
-            android:layout_width="wrap_content"
+            android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
