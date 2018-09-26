@@ -64,7 +64,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="#ffffff"
                 android:text="id"
                 android:layout_below="@id/des_d"
                 android:textSize="12sp"
