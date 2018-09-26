@@ -68,7 +68,7 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
     @Override   //everytime a new item gets added/created to the view, this method gets called.
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.body.setText(messageArrayList.get(i).getBody());
-        viewHolder.sentBy.setText(messageArrayList.get(i).getSentBy());
+       // viewHolder.sentBy.setText(messageArrayList.get(i).getSentBy());
         viewHolder.timeStamp.setText(messageArrayList.get(i).getTimeStamp());
 
 
@@ -104,11 +104,17 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
 
 
                         if(viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
-                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));    //sender color
+                            viewHolder.relativeLayout.setGravity(Gravity.RIGHT);        //if logged in user, chatbubble send to right
                         }
                         if(!viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
-                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));      //receiver color
+                            viewHolder.relativeLayout.setGravity(Gravity.LEFT);         //if its the persom you are chatting with, chatbubble send to left
                         }
+
+
+
+
 
 
                         //setting the role of user.
