@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.Gravity.LEFT;
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 //Handles message cards
 public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubbleRecyclerViewAdapter.ViewHolder> {
@@ -72,6 +73,17 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
         viewHolder.timeStamp.setText(messageArrayList.get(i).getTimeStamp());
 
 
+        if(messageArrayList.get(i).getSentBy().equals(loggedInAs.getUid())){
+
+            Log.d(TAG, "sentby = ");
+            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));    //sender color
+            viewHolder.relativeLayout.setGravity(Gravity.RIGHT);        //if logged in user, chatbubble send to right
+        }else if(!messageArrayList.get(i).getSentBy().equals(loggedInAs.getUid())){
+            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));      //receiver color
+            viewHolder.relativeLayout.setGravity(Gravity.LEFT);         //if its the persom you are chatting with, chatbubble send to left
+        }
+
+
 
         //region SET UserDetails like PIC, Name, Type using users node in firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -102,15 +114,16 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
                         //setting user's name
                         viewHolder.sentBy.setText(user.getName());
 
-
+/*
                         if(viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+
+                            Log.d(TAG, "sentby");
                             viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));    //sender color
                             viewHolder.relativeLayout.setGravity(Gravity.RIGHT);        //if logged in user, chatbubble send to right
-                        }
-                        if(!viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+                        }else if(!viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
                             viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));      //receiver color
                             viewHolder.relativeLayout.setGravity(Gravity.LEFT);         //if its the persom you are chatting with, chatbubble send to left
-                        }
+                        }*/
 
 
 
