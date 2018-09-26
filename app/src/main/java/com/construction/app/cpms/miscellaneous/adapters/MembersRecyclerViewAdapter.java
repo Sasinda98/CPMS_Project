@@ -72,8 +72,6 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "You clicked on item", Toast.LENGTH_LONG).show();
-
                 Log.d(TAG, "The i Value passed in to addChatroom = " + i );
                 addChatRoom(projectId, loggedInAs.getUid(), userDetailsArrayList.get(i).getFirebaseId());
                 activity.onBackPressed();   //Go back!
