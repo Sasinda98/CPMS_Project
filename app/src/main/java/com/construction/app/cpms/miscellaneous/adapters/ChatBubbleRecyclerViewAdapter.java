@@ -143,7 +143,7 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
 
     public class  ViewHolder extends RecyclerView.ViewHolder{
         //widgets in one single item which is refered to as a card here.
-        RelativeLayout linearLayout;  //parentlayout that holds all the widgets listed below
+        RelativeLayout relativeLayout;  //parentlayout that holds all the widgets listed below
         TextView body;
         TextView sentBy;
         TextView timeStamp;
@@ -152,7 +152,7 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //getting references to widgets/layout to manupulate them using adapter.
-            linearLayout = itemView.findViewById(R.id.bubble_parentlayout);
+            relativeLayout = itemView.findViewById(R.id.bubble_parentlayout);
             timeStamp = itemView.findViewById(R.id.mb_timeStamp);
             sentBy = itemView.findViewById(R.id.mb_senderName);
             body = itemView.findViewById(R.id.mb_messageBody);
