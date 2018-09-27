@@ -156,8 +156,6 @@ public class chatRoomActivity extends AppCompatActivity {
         }else {
             Log.d(TAG, "Message not getting added, because it is empty...");
         }
-
-
     }
 
     //this message returns current time, and also gets used inside processMessageForSending() method, line # 176
