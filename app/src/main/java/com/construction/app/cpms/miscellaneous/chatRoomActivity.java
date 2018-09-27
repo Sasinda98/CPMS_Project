@@ -89,9 +89,7 @@ public class chatRoomActivity extends AppCompatActivity {
         //regionFIREBASE RECYCLERVIEW SETUP     HOW THE CHAT LOG IS DISPLAYED
         chatLogRecyc = findViewById(R.id.cr_chatLogRecycView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        GridLayoutManager  gridLayoutManager = new GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false);
-
-
+     
         chatLogRecyc.setLayoutManager(linearLayoutManager);
 
         chatAdapter = new ChatBubbleRecyclerViewAdapter(messageArrayList,this,loggedInAs,PROJECT_ID);
