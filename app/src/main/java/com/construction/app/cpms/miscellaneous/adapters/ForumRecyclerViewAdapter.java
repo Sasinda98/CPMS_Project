@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +22,14 @@ import com.construction.app.cpms.miscellaneous.editForumPost;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 //Used a lot of tutorials as reference to put this code together...
 
 public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<ForumPost>  forumPostArrayList = new ArrayList<ForumPost>();
+    private static final String TAG = "FORUMRECYC";
 
 
     public ForumRecyclerViewAdapter(Context context, ArrayList<ForumPost> forumPostArrayList) {
@@ -43,8 +47,9 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
     @Override   //manipulation of elements in the card
     public void onBindViewHolder( final ViewHolder viewHolder,final int i) {
 
-        final ForumPost forumPost = forumPostArrayList.get(i);
+        ForumPost forumPost = forumPostArrayList.get(i);
 
+        Log.d(TAG, "post id = " + forumPost.getForumId());
         //extracting the values from the arraylist and setting individual card view's ui components to match...
         viewHolder.forumTitle.setText(forumPost.getTitle());
         viewHolder.postedBy.setText("Posted By : " + forumPost.getPostedBy());
@@ -66,14 +71,15 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                         switch (menuItem.getItemId()){
                             case R.id.edit : message = "Edit selected";
                                 Intent intent =  new Intent(view.getContext(), editForumPost.class);
-                                intent.putExtra("forumId",forumPost.getForumId().toString());        /*Improve later*/
+                                intent.putExtra("forumId", forumPostArrayList.get(i).getForumId().toString());        /*Improve later*/
                                 view.getContext().startActivity(intent);
 
                                             break;
-                            case R.id.delete : ForumPost.deletePost(context,"5", forumPost);
+                            case R.id.delete : ForumPost.deletePost(context,  forumPostArrayList.get(i));
+                                                Log.d(TAG, "Delete the post with id = " +  forumPostArrayList.get(i).getForumId());
                                                 message = "Delete selected";
-                                                System.out.println("=======DELETE fid = " + forumPost.getForumId());
-                                                System.out.println("=======DELETE title = " + forumPost.getTitle());
+                                                Log.d(TAG,"=======DELETE fid = " +  forumPostArrayList.get(i).getForumId());
+                                                Log.d(TAG,"=======DELETE title = " +  forumPostArrayList.get(i).getTitle());
                                                 forumPostArrayList.remove(i);
                                                 notifyDataSetChanged();
                                                 break;

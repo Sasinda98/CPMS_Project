@@ -206,8 +206,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.searchPost :
-                Toast toast = Toast.makeText(getContext(), "Search Selected", Toast.LENGTH_SHORT);
-                toast.show();
+
                 break;
             case R.id.addPost :
              /*   Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
@@ -217,13 +216,9 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
                 break;
             case R.id.allPosts :
-                Toast toast2 = Toast.makeText(getContext(), "AllPOSTS Submenu Selected", Toast.LENGTH_SHORT);
-                toast2.show();
                 filterByUserId(getLoggedInUserId(), false);    //false loads all posts
                 break;
             case R.id.myPosts :
-                Toast toast3 = Toast.makeText(getContext(), "MYPOSTS Submenu Selected", Toast.LENGTH_SHORT);
-                toast3.show();
                 filterByUserId(getLoggedInUserId(), true);     //true filters
                 break;
         }

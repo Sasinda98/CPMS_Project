@@ -173,7 +173,9 @@ public class signupFragment extends Fragment {
                                         //Updating firebase Database with user info... (apart from Authentication part...)
                                         HashMap<String,Object> hashMap = new HashMap<>();
                                         hashMap.put("name", fNameEntry.getText() + " " + lNameEntry.getText());
-                                        hashMap.put("type", "firebase-not-set");
+                                        hashMap.put("type", "Role Not Set");
+                                        hashMap.put("UID", user.getUid());
+                                        hashMap.put("photoUrl","https://firebasestorage.googleapis.com/v0/b/cpms-4780c.appspot.com/o/users%2Fdefault%2Fic_prof_pic.png?alt=media&token=af66e10d-1f1e-4de1-a8ee-ae3b02980058");
                                         FirebaseDatabase.getInstance().getReference().getRoot().child("users").child(user.getUid()).updateChildren(hashMap);
 
                                         //Navigate to sign in page if sign up is successful.
