@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CPMS</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--User managemnet -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in_heading">Sign In</string>
     <string name="construction_project_management_SubHeading">Construction Project Management</string>
@@ -24,6 +24,8 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="dashboard">Dashboard</string>
     <string name="work_in_progress">Work In Progress</string>
+
+    <!--Miscellaneous-->
     <string name="title_activity_secondary">SecondaryActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

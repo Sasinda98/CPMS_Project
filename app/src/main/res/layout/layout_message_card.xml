@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/backgroundLight"
-        app:cardElevation="8dp"
+        app:cardElevation="@dimen/um_shadow_elevation"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,8 +88,8 @@
 
             android:textColor="#757575"
             android:layout_gravity="right|top"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/margins_eight"
+            android:layout_marginTop="@dimen/margins_eight"
             />
 
         <!--deliver status stamp-->
@@ -101,8 +101,8 @@
 
             android:textColor="#757575"
             android:layout_gravity="right|bottom"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginRight="@dimen/margins_eight"
+            android:layout_marginBottom="@dimen/margins_eight"
             />
 
 
