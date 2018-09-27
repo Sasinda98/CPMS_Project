@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,10 +38,10 @@ public class Expense_Category_List extends AppCompatActivity {
     /*Database Variables*/
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php";
-    private String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/deleteExpense.php";
-    private String expCategory;
-    private static ArrayList<Expense> expenseArrayList;
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php"; //script to retrieve data
+    private String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/deleteExpense.php";//script to delete data
+    private String expCategory;//variable to retrieve selected category from intent
+    private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
     private static Expense sample;
 
     private ExpenseListAdapter adapter;
@@ -57,9 +58,6 @@ public class Expense_Category_List extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(Expense_Category_List.this);
         expenseArrayList = new ArrayList<Expense>();
 
-
-
-
         fetchdata();
 
         listView = (ListView) findViewById(R.id.exp_listView);
@@ -67,54 +65,6 @@ public class Expense_Category_List extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
-
-
-
-
-        /**Log.d(TAG, "onCreate: Started");
-        ListView mListView = findViewById(R.id.exp_listView);
-
-        //create sample expenses
-        Expense exp1 = new Expense("Labour Charges", "Direct", 50000);
-        Expense exp2 = new Expense("Supplier Payment", "Direct", 312000);
-        Expense exp3 = new Expense("Tile Purchase", "Direct", 50000);
-        Expense exp4 = new Expense("Supplier Payment 01", "Direct", 500000);
-        Expense exp5 = new Expense("Raw Material Purchase", "Direct", 845000);
-        Expense exp6 = new Expense("Labour Charges 2", "Direct", 60000);
-        Expense exp7 = new Expense("Labour Charges 3", "Direct", 100000);
-        Expense exp8 = new Expense("Labour Charges 4", "Direct", 100000);
-        Expense exp9 = new Expense("Labour Charges 5", "Direct", 100000);
-        Expense exp10 = new Expense("Labour Charges 6", "Direct", 100000);
-        Expense exp11 = new Expense("Labour Charges 7", "Direct", 100000);
-        Expense exp12 = new Expense("Labour Charges 8", "Direct", 100000);
-        Expense exp13 = new Expense("Labour Charges 9", "Direct", 100000);
-        Expense exp14 = new Expense("Labour Charges 10", "Direct", 100000);
-
-        //Adding objects to ArrayList
-        ArrayList<Expense> theList = new ArrayList<>();
-        theList.add(exp1);
-        theList.add(exp2);
-        theList.add(exp3);
-        theList.add(exp4);
-        theList.add(exp5);
-        theList.add(exp6);
-        theList.add(exp7);
-        theList.add(exp8);
-        theList.add(exp9);
-        theList.add(exp10);
-        theList.add(exp11);
-        theList.add(exp12);
-        theList.add(exp13);
-        theList.add(exp14);
-
-
-
-        ExpenseListAdapter adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, theList);
-        mListView.setAdapter(adapter);
-
-        **/
-
-
 
     }
 
@@ -182,8 +132,6 @@ public class Expense_Category_List extends AppCompatActivity {
 
                                 System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
 
-                                //populate arraylist
-                                //expenseArrayList.add(expense);
                             }
                             adapter.notifyDataSetChanged();
 
@@ -213,6 +161,8 @@ public class Expense_Category_List extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void aVoid) {
+                CharSequence msg = "Successfully Deleted Expense" + expId;
+                Toast.makeText(Expense_Category_List.this, msg, Toast.LENGTH_LONG).show();
 
             }
 
@@ -290,6 +240,8 @@ public class Expense_Category_List extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                CharSequence msg = "Loading...";
+                Toast.makeText(Expense_Category_List.this, msg, Toast.LENGTH_LONG).show();
             }
         };
 

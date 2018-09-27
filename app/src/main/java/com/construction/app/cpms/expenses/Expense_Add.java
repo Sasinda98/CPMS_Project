@@ -1,5 +1,6 @@
 package com.construction.app.cpms.expenses;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class Expense_Add extends AppCompatActivity {
     private TextInputEditText category = null;
     private TextInputEditText amount = null;
     private Button submit = null;
-    private Spinner spinner = null;
+    private String expCategory = null;
 
     //Database
     private RequestQueue requestQueue;
@@ -55,35 +56,11 @@ public class Expense_Add extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                addData();
+                Intent intent = new Intent(Expense_Add.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", expCategory);
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("descr", description.getText().toString());
-                        params.put("catg", category.getText().toString());
-                        params.put("amt", amount.getText().toString());
-
-                        return params;
-                    }
-                };
-
-                requestQueue.add(request);
-
-                CharSequence msg = "Successfully Added Expense";
-                Toast.makeText(Expense_Add.this, msg, Toast.LENGTH_LONG).show();
-
-
-
+                startActivity(intent);
 
             }
         });
@@ -91,5 +68,35 @@ public class Expense_Add extends AppCompatActivity {
 
 
 
+    }
+
+    private void addData(){
+
+        StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> params = new HashMap<>();
+                params.put("descr", description.getText().toString());
+                params.put("catg", category.getText().toString());
+                params.put("amt", amount.getText().toString());
+
+                return params;
+            }
+        };
+        expCategory = category.getText().toString();
+        requestQueue.add(request);
+
+        //CharSequence msg = "Successfully Added Expense";
+        //Toast.makeText(Expense_Add.this, msg, Toast.LENGTH_LONG).show();
     }
 }

@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,14 +32,15 @@ public class editExpense extends AppCompatActivity {
 
     private  static StringRequest stringRequest;
     private  static RequestQueue requestQueue;
-    Expense expense;
-    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchExpense.php";
-    private  static String URL_PHP_SCRIPT_2 = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/editExpense.php";
+    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchExpense.php"; //script for retrieving expense to be edited
+    private  static String URL_PHP_SCRIPT_2 = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/editExpense.php";//script to update the expense
     private TextInputEditText description = null;
     private TextInputEditText category = null;
     private TextInputEditText amount = null;
-    private String expId;
+    private String expId = null;
+    private String expCategory = null;
     private Button confirm = null;
+    Expense expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class editExpense extends AppCompatActivity {
             expId = extras.getString("expId"); // retrieve the data using keyName
             System.out.println("Expense ID TO EDIT=========================================" +expId);
             Toast.makeText(this,expId,Toast.LENGTH_LONG).show();
-            fetchdata(expId); //populate edit activity with ui elements with their respective text values
+            fetchData(expId); //populate edit activity with ui elements with their respective text values
         }
         description = findViewById(R.id.expense_description_e);
         category = findViewById(R.id.expense_category_e);
@@ -66,36 +67,11 @@ public class editExpense extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                StringRequest request = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT_2, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                updateData(expId);
+                Intent intent = new Intent(editExpense.this, Expense_Category_List.class);
+                intent.putExtra("expCategory", expCategory);
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("expId", expId);
-                        params.put("descr", description.getText().toString());
-                        params.put("catg", category.getText().toString());
-                        params.put("amt", amount.getText().toString());
-
-                        return params;
-                    }
-                };
-
-                requestQueue.add(request);
-
-                CharSequence msg = "Successfully Edited Expense";
-                Toast.makeText(editExpense.this, msg, Toast.LENGTH_LONG).show();
-
-
-
+                startActivity(intent);
 
             }
         });
@@ -104,7 +80,7 @@ public class editExpense extends AppCompatActivity {
 
     }
 
-    private void fetchdata(final String expId){
+    private void fetchData(final String expId){
 
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
@@ -175,4 +151,41 @@ public class editExpense extends AppCompatActivity {
         asyncTask.execute();
     }
 
+    private void updateData(final String expId){
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT_2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> params = new HashMap<>();
+                params.put("expId", expId);
+                params.put("descr", description.getText().toString());
+                params.put("catg", category.getText().toString());
+                params.put("amt", amount.getText().toString());
+
+                return params;
+            }
+
+
+        };
+
+        expCategory = category.getText().toString();
+        requestQueue.add(request);
+
+
+
+
+    }
+
 }
+
+
