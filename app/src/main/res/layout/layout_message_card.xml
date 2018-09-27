@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
+    android:paddingTop="@dimen/margins_four"
+    android:paddingBottom="@dimen/margins_four"
     android:id="@+id/parentMessageCardLayout"
     >
 
@@ -20,18 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/mc_layout_margin"
             android:orientation="horizontal"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/lm_row_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="@dimen/mc_profpic_size"
+                android:layout_height="@dimen/mc_profpic_size"
 
                 android:elevation="4dp"
 
-                app:civ_border_color="#BDBDBD"
+                app:civ_border_color="@color/profilepic_border_col"
                 app:civ_border_width="1dp"
 
                 />
@@ -46,31 +46,31 @@
                     android:id="@+id/lm_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="25sp"
+                    android:layout_marginLeft="@dimen/mc_layout_margin"
+                    android:textSize="@dimen/mc_name_textSize"
 
-                    android:textColor="#212121"
+                    android:textColor="@color/black_text"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/lm_role"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="12sp"
+                    android:layout_marginLeft="@dimen/mc_layout_margin"
+                    android:textSize="@dimen/mc_role_text_size"
 
                     android:textColor="#616161"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/lm_latestMessge"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/mc_margin_latestmsg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="14sp"
+                    android:layout_marginLeft="@dimen/mc_layout_margin"
+                    android:textSize="@dimen/mc_latestmessage_text_size"
 
-                    android:textColor="#424242"
+                    android:textColor="@color/mc_rolecolor_lightblack"
                     android:textAlignment="center" />
 
 
@@ -84,9 +84,9 @@
             android:id="@+id/lm_timeStamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="@dimen/mc_stats_textsize"
 
-            android:textColor="#757575"
+            android:textColor="@color/mc_grey"
             android:layout_gravity="right|top"
             android:layout_marginRight="@dimen/margins_eight"
             android:layout_marginTop="@dimen/margins_eight"
@@ -97,9 +97,9 @@
             android:id="@+id/lm_deliverStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="@dimen/mc_stats_textsize"
 
-            android:textColor="#757575"
+            android:textColor="@color/mc_grey"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="@dimen/margins_eight"
             android:layout_marginBottom="@dimen/margins_eight"

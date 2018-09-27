@@ -8,6 +8,7 @@
     <dimen name="margins_four">4dp</dimen>
     <dimen name="margins_eight">8dp</dimen>
 
+
     <!--common-->
     <dimen name="um_subheading_spacing_top">-3dp</dimen>
     <dimen name="um_padding_shadow">5dp</dimen>
@@ -33,19 +34,41 @@
     <dimen name="message_bubble_width">220dp</dimen>
     <dimen name="message_bubble_sidemargin">10dp</dimen>
     <dimen name="message_bubble_top_spacer">12dp</dimen>
+    <dimen name="mc_layout_margin">16dp</dimen>
+    <dimen name="mc_profpic_size">70dp</dimen>
+    <dimen name="msg_errormessage_text_size">25sp</dimen>
+    <dimen name="chatlog_reycl_spacing_btm">10dp</dimen>
+    <dimen name="message_writepad_width">353dp</dimen>
 
     <!--MessageBubble TextSized-->
     <dimen name="message_body_textsize">15sp</dimen>
     <dimen name="message_sender_textsize">14sp</dimen>
     <dimen name="message_timestamp_textsize">10sp</dimen>
 
+    <dimen name="mc_name_textSize">25sp</dimen>
+    <dimen name="mc_role_text_size">12sp</dimen>
+    <dimen name="mc_latestmessage_text_size">14sp</dimen>
+    <dimen name="mc_margin_latestmsg">12dp</dimen>
+    <dimen name="mc_stats_textsize">12sp</dimen>
+
+    <!--Forum Func Related-->
+    <dimen name="forum_post_title_text_size">23sp</dimen>
+    <dimen name="forum_post_postedby_text_size">12sp</dimen>
+    <dimen name="forum_post_body_text_size">15sp</dimen>
+    <dimen name="forum_post_btn_text_size">16sp</dimen>
+    <dimen name="forum_timestamp_text_size">12sp</dimen>
+    <dimen name="forum_popupmenu_width">15dp</dimen>
+    <dimen name="forum_popupmenu_height">25dp</dimen>
+    <dimen name="forum_body_top_margin">12dp</dimen>
+    <dimen name="forum_postedby_spacer_left">2dp</dimen>
+    <dimen name="add_forum_post_margin_top">32dp</dimen>
+    <dimen name="add_forum_textbox_min_height">250dp</dimen>
+
+
     <!--dashboard test screen-->
     <dimen name="gl_padding">20dp</dimen>
     <dimen name="card_size">170dp</dimen>
     <dimen name="cornerRadius">4dp</dimen>
-
-
-
 
 
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -55,7 +78,6 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="listitem_height">30dp</dimen>
-
 
 
     <!--expenses homescreen-->

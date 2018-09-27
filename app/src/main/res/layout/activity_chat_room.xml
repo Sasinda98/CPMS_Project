@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
-            android:elevation="8dp"
+            android:elevation="@dimen/um_shadow_elevation"
             app:layout_scrollFlags="scroll|enterAlways|snap"
 
             tools:ignore="UnusedAttribute">
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_above="@id/parent_msgHolderLayout"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/chatlog_reycl_spacing_btm"
         >
 
     </android.support.v7.widget.RecyclerView>
@@ -48,21 +48,21 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:background="@color/backgroundDark"
-        android:elevation="8dp"
+        android:elevation="@dimen/um_shadow_elevation"
         >
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/cr_messageTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="353dp"
+            android:layout_width="@dimen/message_writepad_width"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:hint="Aa"
+            android:layout_marginBottom="@dimen/margins_eight"
+            android:layout_marginEnd="@dimen/margins_eight"
+            android:layout_marginLeft="@dimen/margins_eight"
+            android:layout_marginRight="@dimen/margins_eight"
+            android:layout_marginStart="@dimen/margins_eight"
+            android:layout_marginTop="@dimen/margins_eight"
+            android:hint="@string/message_writepad_placeholder_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cr_sendbtn"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +80,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/margins_eight"
+            android:layout_marginEnd="@dimen/margins_eight"
+            android:layout_marginRight="@dimen/margins_eight"
+            android:layout_marginTop="@dimen/margins_eight"
             android:src="@drawable/ic_cr_send_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

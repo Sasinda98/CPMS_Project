@@ -25,6 +25,12 @@
     <color name="chandula_yellow">#f1d03b</color>
   <color name="tweakedRed">#fc4c3a</color>
 
-
+<!--Messaging func, and etc.-->
   <color name="messageBackgroundTitle">#5F5F5F</color>
+  <color name="black_text">#212121</color>
+  <color name="mc_rolecolor_lightblack">#424242</color>
+  <color name="mc_grey">#757575</color>
+  <color name="profilepic_border_col">#BDBDBD</color>
+  <color name="latestmsg_col">#424242</color>
+  <color name="forum_postedby_color">#616161</color>
 </resources>

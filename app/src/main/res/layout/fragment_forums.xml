@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
-            android:elevation="8dp"
+            android:elevation="@dimen/um_shadow_elevation"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/ic_back"
             tools:ignore="UnusedAttribute">

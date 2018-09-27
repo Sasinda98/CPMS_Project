@@ -85,8 +85,6 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                                                 break;
                         }
 
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
                         return false;
                     }
                 });
