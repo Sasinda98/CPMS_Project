@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="8dp"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="Direct Costs"
+            app:title="List by Category"
             app:titleTextColor="@color/primaryTextColor"/>
     </android.support.design.widget.AppBarLayout>
 
