@@ -29,7 +29,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class chatRoomActivity extends AppCompatActivity {
     private static String TAG = "chatRoomActivity";
@@ -156,6 +160,19 @@ public class chatRoomActivity extends AppCompatActivity {
 
     }
 
+    //this message returns current time, and also gets used inside processMessageForSending() method, line # 176
+    public String getCurrentTime(){
+        Date date = new Date();
+        String timeFormat = "hh:mm a";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(timeFormat);
+        String timeStamp = simpleDateFormat.format(date);
+
+        Log.d(TAG, "TimeStamp = " + timeStamp);
+
+        return timeStamp;
+
+    }
+
     public FirebaseMessage processMessageForSending(String senderUID){
         Log.d(TAG, "processMessageForSending(String senderUID)  CALLED");
         //take the user input
@@ -165,7 +182,7 @@ public class chatRoomActivity extends AppCompatActivity {
             return null;
         }
 
-        FirebaseMessage messageBean = new FirebaseMessage(msg_body,"9:03pm", senderUID);
+        FirebaseMessage messageBean = new FirebaseMessage(msg_body,getCurrentTime(), senderUID);
 
         messageWritePad.setText("");    //clear out the text..
 
