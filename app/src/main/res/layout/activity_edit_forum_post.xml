@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
-            android:elevation="8dp"
+            android:elevation="@dimen/um_shadow_elevation"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/ic_back"
             tools:ignore="UnusedAttribute">
@@ -27,9 +27,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title Of The Post"
-        app:helperText="Type In The Forum Title"
-        android:layout_marginTop="32dp"
+        android:hint="@string/title_of_the_post_hint"
+        app:helperText="@string/helpertext_forum"
+        android:layout_marginTop="@dimen/add_forum_post_margin_top"
 
         >
 
@@ -47,16 +47,16 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Description"
+        android:hint="@string/forum_description_hint"
         app:helperText="Type In The Description"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/add_forum_post_margin_top"
         >
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/ep_forumDescription_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="250dp"
+            android:minHeight="@dimen/add_forum_textbox_min_height"
             android:includeFontPadding="false"
             android:gravity="top"
             tools:ignore="RtlHardcoded" />

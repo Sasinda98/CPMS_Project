@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.construction.app.cpms.userManagement.loginFragment;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements Navigation {
 
         if((email.equalsIgnoreCase("notFound"))&&(password.equalsIgnoreCase("notFound"))){ //check if they are set...
            // Toast.makeText(this,"Details Main act em " + email + " " + password, Toast.LENGTH_LONG).show();
-            System.out.println("==============isLoggedin EXECUTED Mainactivity=====================");
             return false;
         }
         return true;

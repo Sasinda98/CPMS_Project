@@ -53,8 +53,7 @@ public class editForumPost extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if(extras != null) {
             String forumId = extras.getString("forumId"); // retrieve the data using keyName
-            System.out.println("FORUM ID TO EDIT=========================================" +forumId);
-            Toast.makeText(this,forumId,Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,forumId,Toast.LENGTH_LONG).show();
             fetchdata(forumId); //populate edit activity with ui elements with their respective text values
         }
 

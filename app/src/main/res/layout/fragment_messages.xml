@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/primaryTextColor"
             app:title="@string/Messages"
-            android:elevation="8dp"
+            android:elevation="@dimen/um_shadow_elevation"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             >
         </android.support.v7.widget.Toolbar>
@@ -44,7 +44,7 @@
         android:id="@+id/fm_emptyDataSetMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="@dimen/msg_errormessage_text_size"
         android:layout_gravity="center"
         android:textAlignment="center"
         android:visibility="gone"

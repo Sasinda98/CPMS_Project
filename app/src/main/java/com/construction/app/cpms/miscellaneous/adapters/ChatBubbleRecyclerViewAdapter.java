@@ -3,8 +3,10 @@ package com.construction.app.cpms.miscellaneous.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.view.Gravity.LEFT;
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 //Handles message cards
 public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubbleRecyclerViewAdapter.ViewHolder> {
@@ -62,10 +67,89 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
     }
 
     @Override   //everytime a new item gets added/created to the view, this method gets called.
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.body.setText(messageArrayList.get(i).getBody());
-        viewHolder.sentBy.setText(messageArrayList.get(i).getSentBy());
+       // viewHolder.sentBy.setText(messageArrayList.get(i).getSentBy());
         viewHolder.timeStamp.setText(messageArrayList.get(i).getTimeStamp());
+
+
+        if(messageArrayList.get(i).getSentBy().equals(loggedInAs.getUid())){
+
+            Log.d(TAG, "sentby = ");
+            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));    //sender color
+            viewHolder.relativeLayout.setGravity(Gravity.RIGHT);        //if logged in user, chatbubble send to right
+        }else if(!messageArrayList.get(i).getSentBy().equals(loggedInAs.getUid())){
+            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));      //receiver color
+            viewHolder.relativeLayout.setGravity(Gravity.LEFT);         //if its the persom you are chatting with, chatbubble send to left
+        }
+
+
+
+        //region SET UserDetails like PIC, Name, Type using users node in firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference usersReference = firebaseDatabase.getReference("users");
+        usersReference.keepSynced(true);
+
+        Query query = usersReference.orderByChild("UID").equalTo(messageArrayList.get(i).getSentBy());        //to get relevant details, userID should match the one inside arraylist.
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                if(dataSnapshot.exists()) {     //means user is actually there in the database
+                    for (DataSnapshot usernode : dataSnapshot.getChildren()) {//get to the user node that has user details as the value
+
+                        FirebaseUserDetails user = usernode.getValue(FirebaseUserDetails.class);
+
+                        Log.d(TAG, "Name = " + user.getName());
+                        Log.d(TAG, "UID = " + user.getUID());
+                        Log.d(TAG, "PhotoURl = " + user.getPhotoUrl());
+                        Log.d(TAG, "type = " + user.getType());
+
+                        //setting profile picture
+                    /*    Glide.with(context).asBitmap().load(user.getPhotoUrl())
+                                .into(viewHolder.profilePic);*/
+
+                        //setting user's name
+                        viewHolder.sentBy.setText(user.getName());
+
+/*
+                        if(viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+
+                            Log.d(TAG, "sentby");
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.secondaryColor));    //sender color
+                            viewHolder.relativeLayout.setGravity(Gravity.RIGHT);        //if logged in user, chatbubble send to right
+                        }else if(!viewHolder.sentBy.getText().equals(loggedInAs.getUid())){
+                            viewHolder.sentBy.setTextColor(context.getResources().getColor(R.color.primaryDarkColor));      //receiver color
+                            viewHolder.relativeLayout.setGravity(Gravity.LEFT);         //if its the persom you are chatting with, chatbubble send to left
+                        }*/
+
+
+
+
+
+
+                        //setting the role of user.
+                        /*viewHolder.role.setText(user.getType());*/
+                    }
+                }else{
+                    //if user given user doesnt exist
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //endregion
+
+
+
+
     }
 
 
@@ -78,7 +162,7 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
 
     public class  ViewHolder extends RecyclerView.ViewHolder{
         //widgets in one single item which is refered to as a card here.
-        RelativeLayout linearLayout;  //parentlayout that holds all the widgets listed below
+        RelativeLayout relativeLayout;  //parentlayout that holds all the widgets listed below
         TextView body;
         TextView sentBy;
         TextView timeStamp;
@@ -87,7 +171,7 @@ public class ChatBubbleRecyclerViewAdapter extends RecyclerView.Adapter<ChatBubb
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //getting references to widgets/layout to manupulate them using adapter.
-            linearLayout = itemView.findViewById(R.id.bubble_parentlayout);
+            relativeLayout = itemView.findViewById(R.id.bubble_parentlayout);
             timeStamp = itemView.findViewById(R.id.mb_timeStamp);
             sentBy = itemView.findViewById(R.id.mb_senderName);
             body = itemView.findViewById(R.id.mb_messageBody);

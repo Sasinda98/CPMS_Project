@@ -39,13 +39,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
             holder.name.setText(my_data.get(position).getName());
             holder.description.setText(my_data.get(position).getDecript());
+            holder.pID.setText(Integer.toString(my_data.get(position).getPid()));
+
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
 
             //opens the plan when clicked
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int pID = my_data.get(position).getPid();
                     Intent intent = new Intent(context, displayPlan.class);
+                    intent.putExtra("pID", pID);
                     intent.putExtra("name",my_data.get(position).getName());
                     intent.putExtra("image",my_data.get(position).getImage_link());
                     intent.putExtra("description",my_data.get(position).getDecript());
@@ -63,6 +67,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public TextView name;
         public ImageView imageView;
         public TextView description;
+        public TextView pID;
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView){
@@ -70,6 +75,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             name = (TextView) itemView.findViewById(R.id.name_n);
             description = (TextView) itemView.findViewById(R.id.des_d);
             imageView = (ImageView) itemView.findViewById(R.id.image_i);
+            pID = (TextView) itemView.findViewById(R.id.id_id);
+
         }
 
     }

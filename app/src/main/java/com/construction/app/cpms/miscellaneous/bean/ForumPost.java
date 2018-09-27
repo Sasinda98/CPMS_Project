@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +33,7 @@ import java.util.Map;
 //form represents class in java, that could hold a single forum database record.
 public class ForumPost {
 
+    private static final String TAG = "ForumPostClass";
     private String forumId;
     private String title;
     private String postedBy;
@@ -85,15 +87,16 @@ public class ForumPost {
     private static ForumPost forumPost_p;
     private static String loggedInUID_p;
 
-    public static void deletePost(Context context, final String loggedInUID, ForumPost forumPost){
+    public static void deletePost(final Context context, ForumPost forumPost){
         System.out.println(" DELETE func");
         /*Database stuff*/
+
         requestQueue = Volley.newRequestQueue(context);
 
         forumPost_p = forumPost;
-        loggedInUID_p = loggedInUID;
+     /*   loggedInUID_p = loggedInUID;*/
 
-        System.out.println("FORUM ID =========== " + forumPost_p.getForumId());
+        Log.d(TAG,"FORUM ID =========== " + forumPost_p.getForumId());
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
@@ -102,7 +105,18 @@ public class ForumPost {
                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("ON RESPONSE DELETE======================");
+                        Log.d(TAG,"ON RESPONSE = DELETE POST");
+
+                        System.out.println(TAG + "ON RESPONSE DELETE======================");
+
+                        try {
+                            JSONObject jsonArray = new JSONObject(response);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -114,10 +128,11 @@ public class ForumPost {
 
                    @Override
                    protected Map<String, String> getParams() throws AuthFailureError {
-                       HashMap<String,String> hashMap = new HashMap<>();
-                       hashMap.put("forumId", forumPost_p.getForumId());
-                       hashMap.put("userId", loggedInUID_p);
-                       return hashMap;
+                       HashMap<String,String> params = new HashMap<>();
+                       params.put("forumId", forumPost_p.getForumId().toString().trim());
+                       Log.d(TAG, "Forum Id getParams = " + forumPost_p.forumId.toString());
+                      /* hashMap.put("userId", loggedInUID_p);*/
+                       return params;
                    }
                };
                 requestQueue.add(stringRequest);
@@ -156,7 +171,7 @@ public class ForumPost {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
+                        Log.d(TAG,"ON RESPONSE = InsertPost");
 
 
                         try {

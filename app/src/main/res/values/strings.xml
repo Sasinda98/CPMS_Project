@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CPMS</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--User managemnet -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in_heading">Sign In</string>
     <string name="construction_project_management_SubHeading">Construction Project Management</string>
@@ -24,12 +24,26 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="dashboard">Dashboard</string>
     <string name="work_in_progress">Work In Progress</string>
+
+    <!--Miscellaneous-->
     <string name="title_activity_secondary">SecondaryActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="Messages">Messages</string>
     <string name="Forums">Forums</string>
+
+
+    <!--Messaging func-->
+    <string name="message_writepad_placeholder_text">Aa</string>
+
+    <!--Forum Func-->
+    <string name="title_of_the_post_hint">Title Of The Post</string>
+    <string name="forum_description_hint">Description</string>
+    <string name="helpertext_forum">Type In The Forum Title</string>
+    <string name="descr_forum_helpertext">Type In The Description</string>
+
+
 
     <string name="amount_listadapter">Amount</string>
     <string name="expenses">Expenses</string>
@@ -58,6 +72,8 @@
     <string name="view_current_plans">View Current Plans</string>
     <string name="upload_a_new_plan">Upload A New Plan</string>
     <string name="inventoryManagerPanelPendingReqTitle">Pending Requests</string>
+    <string name="edit_inventory_delete_menu_text">Delete</string>
+
 
 
     //Array to get units for inventory units spinner

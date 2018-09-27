@@ -5,23 +5,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundDark"
     android:id="@+id/forumCardParentLayout"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:paddingRight="8dp"
-    android:paddingLeft="8dp"
+    android:paddingTop="@dimen/margins_four"
+    android:paddingBottom="@dimen/margins_four"
+    android:paddingRight="@dimen/margins_eight"
+    android:paddingLeft="@dimen/margins_eight"
     >
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/backgroundLight"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="4dp"
+        app:cardElevation="@dimen/um_shadow_elevation"
+        app:cardCornerRadius="@dimen/cornerRadius"
         >
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/margins_eight"
             >
 
             <!--Title-->
@@ -29,29 +29,29 @@
                 android:id="@+id/postTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:textColor="#212121"
+                android:textSize="@dimen/forum_post_title_text_size"
+                android:textColor="@color/black_text"
                 android:textAlignment="center" />
             <!--Post tag-->
             <TextView
                 android:id="@+id/postedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="#616161"
+                android:textSize="@dimen/forum_post_postedby_text_size"
+                android:textColor="@color/forum_postedby_color"
                 android:textAlignment="center"
                 android:layout_below="@id/postTitle"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="@dimen/forum_postedby_spacer_left"
                 />
 
             <!--Body-->
             <TextView
                 android:id="@+id/body"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/forum_body_top_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="#424242"
+                android:textSize="@dimen/forum_post_body_text_size"
+                android:textColor="@color/mc_rolecolor_lightblack"
                 android:layout_below="@id/postedBy"
 
                 />
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/body"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="@dimen/margins_eight">
 
                 <!--Track btn-->
                 <TextView
@@ -69,14 +69,14 @@
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/margins_eight"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margins_eight"
 
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margins_eight"
                     android:text="Track"
                     android:textColor="@color/secondaryColor"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/forum_post_btn_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -88,14 +88,14 @@
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginLeft="@dimen/margins_eight"
+                    android:layout_marginStart="@dimen/margins_eight"
 
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margins_eight"
                     android:text="View More"
                     android:textColor="@color/secondaryColor"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/forum_post_btn_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/track"
@@ -105,15 +105,15 @@
                     android:id="@+id/lm_timeStamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginEnd="@dimen/margins_eight"
+                    android:layout_marginRight="@dimen/margins_eight"
+                    android:layout_marginTop="@dimen/margins_eight"
                     android:gravity="right"
 
                     android:text="12:30pm"
-                    android:textColor="#757575"
-                    android:textSize="12sp"
+                    android:textColor="@color/mc_grey"
+                    android:textSize="@dimen/forum_timestamp_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -132,10 +132,10 @@
 
             <ImageButton
                 android:id="@+id/popMenu"
-                android:layout_width="15dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/forum_popupmenu_width"
+                android:layout_height="@dimen/forum_popupmenu_height"
                 android:src="@drawable/ic_more_popup"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margins_four"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:background="@null"/>
