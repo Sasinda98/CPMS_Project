@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".inventoryManagement.inventory_edit_item">
+
+    <!--top appbar-->
+    <Button
+        android:id="@+id/edit_item_confirm_btm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="112dp"
+        android:text="Confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_item_qty_layout" />
+
+    <Button
+        android:id="@+id/edit_item_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp"
+        android:text="Cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_item_confirm_btm"
+        app:layout_constraintStart_toEndOf="@+id/edit_item_confirm_btm" />
+
+    <TextView
+        android:id="@+id/edit_item_qty_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Change the item quantity below"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_item_name" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_item_qty_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_item_qty_title">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_item_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/edit_item_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="84dp"
+        android:elevation="4dp"
+        android:src="@drawable/brickwall"
+        app:civ_border_color="#BDBDBD"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/edit_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
+        android:text="@string/inventory_item_name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/edit_item_image"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/edit_item_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:text="UNIT"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/edit_item_qty_layout"
+        app:layout_constraintTop_toBottomOf="@+id/edit_item_qty_title" />
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:title="Add Item"
+            app:titleTextColor="@color/primaryTextColor"></android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <!--bottom navbar-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@color/primaryColor"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bttm_navbar_tab_colors"
+        app:itemTextColor="@color/bttm_navbar_tab_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" /><![CDATA[
+
+
+
+
+
+    />
+
+
+]]>
+</android.support.constraint.ConstraintLayout>
