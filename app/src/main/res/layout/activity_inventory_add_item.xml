@@ -8,6 +8,25 @@
 
 
     <!--top appbar-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/add_item_lowTh_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_add_item_lowTH_title">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/add_item_lowTh_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Low Threshold"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -94,11 +113,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Categories"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_item_qty_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/add_item_lowTh_layout" />
 
     <Button
         android:id="@+id/add_item_confirm_btn"
@@ -106,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="12dp"
         android:text="Continue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_items_radio_group" />
@@ -188,5 +207,16 @@
             android:layout_weight="1"
             android:text="Roofing" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/inventory_add_item_lowTH_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Threshold to Notify when stock low"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_item_qty_layout" />
 
 </android.support.constraint.ConstraintLayout>

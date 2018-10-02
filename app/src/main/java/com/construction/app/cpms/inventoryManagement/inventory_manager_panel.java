@@ -39,7 +39,6 @@ public class inventory_manager_panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(inventory_manager_panel.this, inventory_incoming_requests.class);
-                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
             }
         });
@@ -55,7 +54,7 @@ public class inventory_manager_panel extends AppCompatActivity {
         stockLowCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(inventory_manager_panel.this, testingActivity.class);
+                Intent intent = new Intent(inventory_manager_panel.this, inventory_stock_low.class);
                 startActivity(intent);
             }
         });

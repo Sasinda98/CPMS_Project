@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.inventoryManagement.adapters.inventory_item_row_adapter;
+import com.construction.app.cpms.inventoryManagement.adapters.stockLowAdapter;
 import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
 
 import android.os.Bundle;
@@ -32,72 +32,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class inventory_items_list extends AppCompatActivity {
-    //Getting category object from category grid activity.
-    //We get the image id and the category name for the query from this
-
-
-
+public class inventory_stock_low extends AppCompatActivity {
 
 
     /*Database Variables*/
     private  StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchAllStockLow.php";
     private String catName;
     private int imgID;
-    private static ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
+    private static ArrayList<inventory_item_Bean> stockLowArrayList;  // Forum class is a bean.
     private android.support.v7.widget.Toolbar toolbar;
 
-    inventory_item_row_adapter adapter;
+    stockLowAdapter adapter;
     ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory_items_list);
+        setContentView(R.layout.activity_inventory_stock_low);
 
-        Intent intent = getIntent();
 
-        catName = intent.getStringExtra("catName");
-        imgID = intent.getIntExtra("imgID", 0);
 
-        requestQueue = Volley.newRequestQueue(inventory_items_list.this);
-        itemArrayList = new ArrayList<inventory_item_Bean>();
+        requestQueue = Volley.newRequestQueue(inventory_stock_low.this);
+        stockLowArrayList = new ArrayList<inventory_item_Bean>();
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(catName);
+        toolbar.setTitle("Stock Low");
+
 
         fetchdata();
 
-        listView = (ListView) findViewById(R.id.items_listView);
-        adapter = new inventory_item_row_adapter(this, itemArrayList);
+//        for(inventory_item_Bean itemB : itemArrayList) {
+//            System.out.println(itemB.getItemName());
+//        }
+
+        listView = (ListView) findViewById(R.id.items_stockLow_listView);
+        adapter = new stockLowAdapter(this, stockLowArrayList);
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent intent = new Intent(inventory_items_list.this, inventory_request_item.class);
-                inventory_item_Bean itemBean = (inventory_item_Bean) listView.getItemAtPosition(i);
-                String itemName = itemBean.getItemName();
-                String itemUnit = itemBean.getUnit();
-                int itemID = itemBean.getItemID();
-                Double itemQty = itemBean.getItemQuantity();
-                Bundle b = new Bundle();
-                b.putDouble("itemQty", itemQty);
-
-                intent.putExtra("catName", catName);
-                intent.putExtra("itemName", itemName);
-                intent.putExtra("itemUnit", itemUnit);
-                intent.putExtra("itemID", itemID);
-                intent.putExtras(b);
-                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
-                startActivity(intent);
-            }
-        });
-
-
     }
 
 
@@ -131,7 +102,7 @@ public class inventory_items_list extends AppCompatActivity {
                                 System.out.println("ITEM NAME= " + inventoryItem.getItemName()+"ITEM Qty= " + itemQty+"ITEM Cat= " + itemCat+"ITEM Unit= " + itemUnit);
 
                                 //populate arraylist
-                                itemArrayList.add(inventoryItem);
+                                stockLowArrayList.add(inventoryItem);
                             }
                             adapter.notifyDataSetChanged();
 
@@ -146,13 +117,12 @@ public class inventory_items_list extends AppCompatActivity {
 
                     }
                 }){
-                    //send email and password to post...
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> params = new HashMap<>();
-                        params.put("iCat", catName);
-                        return params;
-                    }
+//                    @Override
+//                    protected Map<String, String> getParams() throws AuthFailureError {
+//                        HashMap<String, String> params = new HashMap<>();
+//                        params.put("iCat", catName);
+//                        return params;
+//                    }
 
                 };
                 requestQueue.add(stringRequest);
@@ -167,14 +137,11 @@ public class inventory_items_list extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_items_list.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_stock_low.this, "Loading Items", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };
 
         asyncTask.execute();
     }
-
-
-
 }

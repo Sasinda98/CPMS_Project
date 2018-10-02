@@ -1,5 +1,6 @@
 package com.construction.app.cpms.inventoryManagement;
 // Used as tutorial -->  https://www.mkyong.com/android/android-radio-buttons-example/
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 
@@ -34,6 +35,7 @@ public class inventory_add_item extends AppCompatActivity {
     private Button btnCancel = null;
     private TextInputEditText itemName = null;
     private TextInputEditText itemQty = null;
+    private TextInputEditText lowTh = null;
     private Spinner spinner = null;
 
 
@@ -49,6 +51,7 @@ public class inventory_add_item extends AppCompatActivity {
 
         itemName = findViewById(R.id.add_item_name_editText);
         itemQty = findViewById(R.id.add_item_qty_editText);
+        lowTh = findViewById(R.id.add_item_lowTh_editText);
         radioCatGroup = (RadioGroup) findViewById(R.id.add_items_radio_group);
         btnConfirm = (Button) findViewById(R.id.add_item_confirm_btn);
         btnCancel = (Button) findViewById(R.id.add_item_cancel_btn);
@@ -85,6 +88,8 @@ public class inventory_add_item extends AppCompatActivity {
 
                 CharSequence msg = "Cancelled";
                 Toast.makeText(inventory_add_item.this, msg, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(inventory_add_item.this, inventory_category_grid.class);
+                startActivity(intent);
             }
         });
 
@@ -132,6 +137,7 @@ public class inventory_add_item extends AppCompatActivity {
                         params.put("iCat", radioText);
                         params.put("iQty", itemQty.getText().toString());
                         params.put("iUnit", spinnerText);
+                        params.put("iLTh", lowTh.getText().toString());
                         return params;
                     }
                 };

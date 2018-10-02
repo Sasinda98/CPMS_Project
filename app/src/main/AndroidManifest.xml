@@ -25,13 +25,17 @@
             android:label="@string/title_activity_secondary"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".expenses.actiExpenses" />
-        <activity android:name=".inventoryManagement.inventory_items_list" />
+        <activity
+            android:name=".inventoryManagement.inventory_items_list"
+            android:parentActivityName=".inventoryManagement.inventory_category_grid" />
         <activity android:name=".inventoryManagement.inventory_category_grid" />
         <activity
             android:name=".inventoryManagement.inventory_add_item"
+            android:parentActivityName=".inventoryManagement.inventory_category_grid"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".inventoryManagement.inventory_request_item"
+            android:parentActivityName=".inventoryManagement.inventory_items_list"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Plan.MainPlan" />
         <activity android:name=".Plan.addPlan" />
@@ -45,18 +49,25 @@
         <activity android:name=".miscellaneous.editForumPost" />
         <activity android:name=".inventoryManagement.inventory_manager_panel" />
         <activity android:name=".inventoryManagement.testingActivity" />
-        <activity android:name=".inventoryManagement.inventory_incoming_requests" />
-        <activity android:name=".inventoryManagement.inventory_inspect_request" />
         <activity
-            android:name=".miscellaneous.chatRoomActivity"
-             /> <!-- Top bar kept hiding, this fixed it. -->
+            android:name=".inventoryManagement.inventory_incoming_requests"
+            android:parentActivityName=".inventoryManagement.inventory_manager_panel" />
+        <activity
+            android:name=".inventoryManagement.inventory_inspect_request"
+            android:parentActivityName=".inventoryManagement.inventory_incoming_requests" />
+        <activity android:name=".miscellaneous.chatRoomActivity" /> <!-- Top bar kept hiding, this fixed it. -->
         <activity android:name=".miscellaneous.ProfileActivity" />
         <activity android:name=".Plan.displayPlan" />
         <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
         <activity android:name=".inventoryManagement.inventory_request_history" />
         <activity android:name=".expenses.editExpense" />
-        <activity android:name=".inventoryManagement.inventory_edit_list" />
-        <activity android:name=".inventoryManagement.inventory_edit_item"></activity>
+        <activity
+            android:name=".inventoryManagement.inventory_edit_list"
+            android:parentActivityName=".inventoryManagement.inventory_manager_panel" />
+        <activity
+            android:name=".inventoryManagement.inventory_edit_item"
+            android:parentActivityName=".inventoryManagement.inventory_edit_list" />
+        <activity android:name=".inventoryManagement.inventory_stock_low"></activity>
     </application>
 
 </manifest>

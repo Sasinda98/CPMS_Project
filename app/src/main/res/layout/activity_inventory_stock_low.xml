@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundDark"
-    tools:context=".inventoryManagement.inventory_items_list">
+    tools:context=".inventoryManagement.inventory_stock_low">
 
     <!--top appbar-->
     <android.support.design.widget.AppBarLayout
@@ -42,7 +42,7 @@
         />
 
     <ListView
-        android:id="@+id/items_listView"
+        android:id="@+id/items_stockLow_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
@@ -51,4 +51,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

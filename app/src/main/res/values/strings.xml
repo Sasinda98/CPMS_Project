@@ -44,7 +44,6 @@
     <string name="descr_forum_helpertext">Type In The Description</string>
 
 
-
     <string name="amount_listadapter">Amount</string>
     <string name="expenses">Expenses</string>
     <string name="directCost">Direct Costs</string>
@@ -73,7 +72,6 @@
     <string name="upload_a_new_plan">Upload A New Plan</string>
     <string name="inventoryManagerPanelPendingReqTitle">Pending Requests</string>
     <string name="edit_inventory_delete_menu_text">Delete</string>
-
 
 
     //Array to get units for inventory units spinner
