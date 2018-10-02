@@ -1,6 +1,7 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 
@@ -33,6 +34,7 @@ public class inventory_request_item extends AppCompatActivity {
     private String catName;
     private double iQty;
     private int itemID;
+    private String userID;
     private TextView reqItemNameTextView;
     private TextView reqItemUnitTextView;
     private TextInputEditText reqMessage = null;
@@ -49,6 +51,13 @@ public class inventory_request_item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_request_item);
 
+        //Getting UserID from sharedPreference
+        SharedPreferences preferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+        userID = preferences.getString("userId","");
+
+        System.out.println("UserID =========================================================================================== "+ userID);
+
+
         //Getting category object from category grid activity.
         //We get the image id and the category name for the query from this
         Intent intent = getIntent();
@@ -60,7 +69,7 @@ public class inventory_request_item extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         iQty = b.getDouble("itemQty");
-    System.out.println("Testing================================================================================================ "+ iQty);
+        System.out.println("Testing =============================================================================================== "+ iQty);
 
         //Initialising all the stuff on the xml
         reqItemNameTextView = (TextView) findViewById(R.id.request_item_name);
@@ -135,6 +144,7 @@ public class inventory_request_item extends AppCompatActivity {
                             params.put("rQty", reqQty.getText().toString());
                             params.put("rMsg", reqMessage.getText().toString());
                             params.put("rDate", currentTime);
+                            params.put("uID", userID.toString());
                             return params;
                         }
                     };

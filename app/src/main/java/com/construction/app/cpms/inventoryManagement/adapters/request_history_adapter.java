@@ -53,11 +53,16 @@ public class request_history_adapter extends BaseAdapter {
         TextView subConName= (TextView) view.findViewById(R.id.req_history_row_con_name);
         TextView itemName= (TextView) view.findViewById(R.id.req_history_row_item_name);
         TextView dateTextView = (TextView) view.findViewById(R.id.req_history_row_date_display);
+        TextView qty= (TextView) view.findViewById(R.id.req_history_row_item_qty);
+        TextView unit= (TextView) view.findViewById(R.id.req_history_row_item_unit);
+
 
         String conName = item.getSubConFName() + " " + item.getSubConLname();
         String date = item.getValDate().substring(0,10);
         subConName.setText(conName);
         itemName.setText(item.getItemName());
+        qty.setText(String.valueOf(item.getReqQty()));
+        unit.setText(item.getItemUnit());
         dateTextView.setText(date);
         String stat = item.getReqStatus();
 
