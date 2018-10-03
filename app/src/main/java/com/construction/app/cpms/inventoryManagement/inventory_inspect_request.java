@@ -148,7 +148,7 @@ public class inventory_inspect_request extends AppCompatActivity {
 
                     requestQueue.add(request);
 
-                    CharSequence msg = "Approved";
+                    CharSequence msg = "Approved ";
                     Toast.makeText(inventory_inspect_request.this, msg, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(inventory_inspect_request.this, inventory_incoming_requests.class);
                     startActivity(intent);

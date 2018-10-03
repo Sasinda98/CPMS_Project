@@ -174,7 +174,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_incoming_requests.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_incoming_requests.this, "Loading Items ", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };

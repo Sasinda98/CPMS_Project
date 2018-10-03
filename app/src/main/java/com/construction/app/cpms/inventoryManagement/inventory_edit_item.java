@@ -114,7 +114,7 @@ public class inventory_edit_item extends AppCompatActivity {
 
                     requestQueue.add(request);
 
-                    CharSequence msg = "Item Edited";
+                    CharSequence msg = "Item Edited ";
                     Toast.makeText(inventory_edit_item.this, msg, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(inventory_edit_item.this, inventory_edit_list.class);
                     startActivity(intent);

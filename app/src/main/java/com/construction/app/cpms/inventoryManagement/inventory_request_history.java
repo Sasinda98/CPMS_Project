@@ -139,7 +139,7 @@ public class inventory_request_history extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_request_history.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_request_history.this, "Loading Items ", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };

@@ -201,7 +201,7 @@ public class inventory_edit_list extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_edit_list.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_edit_list.this, "Loading Items ", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };
@@ -275,7 +275,7 @@ public class inventory_edit_list extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast toast = Toast.makeText(inventory_edit_list.this, "Loading Items", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(inventory_edit_list.this, "Loading Items ", Toast.LENGTH_SHORT);
                 toast.show();
             }
         };
