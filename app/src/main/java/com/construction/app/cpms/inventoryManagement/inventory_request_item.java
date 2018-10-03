@@ -40,6 +40,8 @@ public class inventory_request_item extends AppCompatActivity {
     private TextInputEditText reqMessage = null;
     private TextInputEditText reqQty = null;
     private Button confirmBtn;
+    private Button denyBtn;
+
 
     private RequestQueue requestQueue;
     private String insertUrl = "https://projectcpms99.000webhostapp.com/scripts/chandula/insertInventoryRequest.php";
@@ -77,11 +79,13 @@ public class inventory_request_item extends AppCompatActivity {
         reqItemUnitTextView = (TextView) findViewById(R.id.request_item_unit);
         reqItemUnitTextView.setText(itemUnit);
         confirmBtn = (Button) findViewById(R.id.request_item_confirm_btn);
+        denyBtn = (Button) findViewById(R.id.request_item_cancel_btn);
         reqMessage = findViewById(R.id.inventory_request_message);
         reqQty = findViewById(R.id.inventory_request_qty);
 
 
         addListenerOnConfirm();
+        addListenerOnDeny();
 
 
         //Getting current time to pass to script
@@ -154,6 +158,7 @@ public class inventory_request_item extends AppCompatActivity {
                     CharSequence msg = "RequestSent";
                     Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(inventory_request_item.this, inventory_items_list.class);
+                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                     intent.putExtra("catName", catName);
                     startActivity(intent);
 
@@ -169,6 +174,24 @@ public class inventory_request_item extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void addListenerOnDeny() {
+
+        denyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence msg = "Cancelled";
+                Toast.makeText(inventory_request_item.this, msg, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(inventory_request_item.this, inventory_items_list.class);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
+                intent.putExtra("catName", catName);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 

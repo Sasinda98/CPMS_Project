@@ -172,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:hint="@string/total_expense"
+        android:hint="Total Expense"
         android:textColor="@color/primaryDarkColor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
