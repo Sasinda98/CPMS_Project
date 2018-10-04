@@ -2,6 +2,7 @@ package com.construction.app.cpms.miscellaneous.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,6 +72,10 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         viewHolder.deliverStatus.setText("Delivered");
+
+    //    viewHolder.timeStamp.setText("123");
+
+
         //_____________________________________________________________________ Firebase Queries to set views  ______________________________________\\
 
         //region SET UserDetails like PIC, Name, Type using users node in firebase
@@ -150,8 +155,36 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
             }
         });
 
-        //setting timestamp
-        viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
+        //setting LASTREAD
+
+        DatabaseReference reference = firebaseDatabase.getReference("Rooms")
+                .child(firebaseProjectId)
+                .child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), chatRoomItems.get(i).getUID()))
+                .child("lastRead")
+                .child(chatRoomItems.get(i).getUID());
+        final String TAG = "timestamp";
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()) {     //to avoid casting related exceptions at getValue
+                    Log.d(TAG, "Datasnapshot time = " + dataSnapshot.toString());
+                    String time = dataSnapshot.child("lastRead").getValue(String.class);
+                    Log.d(TAG, "TIME STRING = " + time);
+
+                    viewHolder.timeStamp.setText(time);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+       // viewHolder.timeStamp.setText(chatRoomItems.get(i).getLastRead());
 
         //endregion
 
@@ -221,7 +254,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<MessageRecy
             name = itemView.findViewById(R.id.lm_name);
             role = itemView.findViewById(R.id.lm_role);
             latestMessage = itemView.findViewById(R.id.lm_latestMessge);
-            timeStamp = itemView.findViewById(R.id.lm_timeStamp);
+            timeStamp = itemView.findViewById(R.id.lms_timeStamp);
             deliverStatus = itemView.findViewById(R.id.lm_deliverStatus);
             UID = "";
         }

@@ -145,7 +145,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
 
         FirebaseUserRoom user1 = new FirebaseUserRoom(loggedInUID,"");
         FirebaseUserRoom user2 = new FirebaseUserRoom(receiverUID,"");
-        ChatRoom chatRoom = new ChatRoom(user1,user2);
+        ChatRoom chatRoom = new ChatRoom(user1,user2, null);
         //                      Project-P{number}/{chatroomID}/{chatRoom Object}
         databaseReference.child(projectId).child(chatroomID).setValue(chatRoom);
     }
