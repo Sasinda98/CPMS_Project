@@ -6,10 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,7 +64,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     /*FIREBASE vars*/
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference reference;
+    private DatabaseReference databaseReference;
 
 
     private GridLayoutManager gridLayoutManager;
@@ -156,7 +158,24 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         inflater.inflate(R.menu.menu_toolbar,menu);
         menuItem = menu.findItem(R.id.searchPost);      //getting reference
         SearchView searchView = (SearchView) menuItem.getActionView();
+
         searchView.setOnQueryTextListener(this);
+
+        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+
+                Log.d(TAG,"Searchview close");
+                populateView(projectId);    //firebase query to restore view.
+                return true;
+            }
+        });
+
 
     }
 
@@ -193,21 +212,37 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     //Search function specific method, corresponds to the user input when you tap on the search icon in toolbar
     //whenever text in search box changes, it is passed in to 's' as param.
+    private ArrayList<FirebaseForumPost> backupSearchList = new ArrayList<>();
     @Override
     public boolean onQueryTextChange(String input) {
 
+        if(listenerMain != null)        //checking for null, just in case.
+            databaseReference.removeEventListener(listenerMain);        //stop listening to changes... To avoid unexpected behavior.
+
+
+        Log.d(TAG, "Backup size = " + backupSearchList.size());
+        if(backupSearchList.size() == 0 ){
+            backupSearchList.addAll(postArrayList);
+        }
+
+
+
         ArrayList<FirebaseForumPost> filtered = new ArrayList<>();
 
-        for (FirebaseForumPost f:postArrayList) {
+        for (FirebaseForumPost f:backupSearchList) {
             if(f.getTitle().toLowerCase().contains(input.toLowerCase())){
                 filtered.add(f);
             }
         }
-        forumRecyclerViewAdapter.setFilterList(filtered);
+
+        postArrayList.clear();
+        postArrayList.addAll(filtered);
         forumRecyclerViewAdapter.notifyDataSetChanged();
+
 
         return true;
     }
+
 
     public String getLoggedInUserId(){
         /*Stackoverflow used as reference for use of sharepref in fragment*/
@@ -234,7 +269,10 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         Log.d(TAG, "SIZE POST BACKUP = " + postArrayList.size());
 
         if(doFilter == true) {
-            reference.removeEventListener(listener);    //stop listening for chages for the node when you do client side filtering
+            if(listenerMain != null)        //checking for null, just in case.
+                databaseReference.removeEventListener(listenerMain);  //stop listening for changes for the posts node when you do client side filtering as doing so will interfere
+                                                        //with the filter user is trying to do. (new post in to db while user filters the results will cause unexpected behavior)
+                                                            //removing the listener prior to filtering the dataset retrieved solves this bug.
 
             activity.getSupportActionBar().setSubtitle("My Posts");
 
@@ -267,22 +305,23 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     //region FIREBASE STUFF!!
 
-    private ValueEventListener listener;
+    private ValueEventListener listenerMain;        //needed to remove the listener when performing filtering on the arraylist, to keep data consistent.
 
     private void populateView(String projectId){
-        reference = database.getReference().getRoot()
+        databaseReference = database.getReference().getRoot()
                 .child("ForumPosts")            /*Make modular!*/
                 .child("Project-P" + projectId );
 
-                reference.keepSynced(true);     //offline capabilities
+        databaseReference.keepSynced(true);     //offline capabilities
 
-                listener =  new ValueEventListener() {
+                 listenerMain =  new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
 
                         if(dataSnapshot.exists()){
                             postArrayList.clear();
+                            backupSearchList.clear();           //refer onQueryTextChange() method... relevant for searchfunc.
                             for(DataSnapshot ds : dataSnapshot.getChildren()){
                                 //Log.d(TAG, "Datasnapshot for loop " + ds.toString());
 
@@ -304,7 +343,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                     }
                 };
 
-         reference.addValueEventListener(listener);
+        databaseReference.addValueEventListener(listenerMain);
 
     }
 

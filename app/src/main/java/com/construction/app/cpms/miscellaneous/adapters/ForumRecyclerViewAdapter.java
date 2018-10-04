@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.support.v7.widget.PopupMenu;
@@ -35,16 +37,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> {
+//using filterable interface to support the search function to view posts.
+public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> implements Filterable {
     private Context context;
     FirebaseUser loggedInAs;
     private ArrayList<FirebaseForumPost>  forumPostArrayList = new ArrayList<FirebaseForumPost>();
+    private ArrayList<FirebaseForumPost>  forumPostsArrayListCopy;
     private static final String TAG = "FORUMRECYC";
 
 
     public ForumRecyclerViewAdapter(Context context, ArrayList<FirebaseForumPost> forumPostArrayList, FirebaseUser loggedInAs) {
         this.context = context;
         this.forumPostArrayList = forumPostArrayList;
+        this.forumPostsArrayListCopy = new ArrayList<>(); //copy the contents of main list.
+        this.forumPostsArrayListCopy.addAll(forumPostArrayList);
         this.loggedInAs = loggedInAs;
     }
 
@@ -207,6 +213,47 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
     public int getItemCount() {
         return this.forumPostArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    //For the search function in searchview in the forum fragemnt
+    //runs in background thread...
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<FirebaseForumPost> filteredPosts = new ArrayList<>();
+            final String TAG = "FILTER";
+            Log.d(TAG, "CharSeq = "  + charSequence.toString());
+            Log.d(TAG, "arraylist size = "  + forumPostsArrayListCopy.size());
+
+            if(charSequence == null || charSequence.length() == 0){ //if input is empty, meaning empty searchview
+                filteredPosts.addAll(forumPostsArrayListCopy);   //insert all the elements of postarraylist on to the filtered post, because if nothing is in
+                                                            //searchview field we have to display all the results.
+            }else{
+                String searchFor = charSequence.toString().toLowerCase().trim();    //remove whitespaces and tolowercase to avoid case sensitive search
+
+                for (FirebaseForumPost post : forumPostsArrayListCopy){
+                    if(post.getTitle().toLowerCase().contains(searchFor)){
+                        filteredPosts.add(post);        //fill the filteredposts arraylist with relevant posts.
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredPosts;
+            return results;
+        }
+
+        @Override       //ui thread, pass results
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            forumPostArrayList.clear();
+            forumPostArrayList.addAll((ArrayList<FirebaseForumPost>)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     //search func specific method
     public void setFilterList(List<FirebaseForumPost> list){
