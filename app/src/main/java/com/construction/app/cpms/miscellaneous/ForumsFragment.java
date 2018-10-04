@@ -228,27 +228,36 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         ArrayList<FirebaseForumPost> container = new ArrayList<>();
+        ArrayList<FirebaseForumPost> backup = new ArrayList<>();
+
+        backup.addAll(postArrayList);
+        Log.d(TAG, "SIZE POST BACKUP = " + postArrayList.size());
 
         if(doFilter == true) {
+            reference.removeEventListener(listener);    //stop listening for chages for the node when you do client side filtering
 
             activity.getSupportActionBar().setSubtitle("My Posts");
 
-            for (FirebaseForumPost post : postArrayList) {
-                System.out.println(post.getPostedByUID());
+            postArrayList.clear();
+
+            for (FirebaseForumPost post : backup) {
 
                 if (post.getPostedByUID().equals(loggedInAs.getUid())) {    //if posted by logged in user populate container
 
-                    container.add(post);
+                        //container.add(post);
+                        postArrayList.add(post);
                 }
             }
 
-            forumRecyclerViewAdapter.setFilterList(container);
+            forumRecyclerViewAdapter.notifyDataSetChanged();
+
+
         }
         else if(doFilter == false){
 
             activity.getSupportActionBar().setSubtitle("All Posts");
             //restore
-            forumRecyclerViewAdapter.setFilterList(postArrayList);
+            populateView(projectId);
 
         }
 
@@ -258,6 +267,8 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     //region FIREBASE STUFF!!
 
+    private ValueEventListener listener;
+
     private void populateView(String projectId){
         reference = database.getReference().getRoot()
                 .child("ForumPosts")            /*Make modular!*/
@@ -265,7 +276,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
                 reference.keepSynced(true);     //offline capabilities
 
-                reference.addValueEventListener(new ValueEventListener() {
+                listener =  new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
@@ -291,8 +302,9 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                };
 
+         reference.addValueEventListener(listener);
 
     }
 
