@@ -104,6 +104,7 @@ public class chatRoomActivity extends AppCompatActivity {
 
         listenToChatRoomNode(PROJECT_ID, loggedInAs.getUid(), RECEIVER_UID);
 
+       //sets last read time of the logged in user for the relevant chatroom.
         setLastRead(PROJECT_ID, loggedInAs.getUid(),RECEIVER_UID);
 
         //endregion
@@ -162,7 +163,7 @@ public class chatRoomActivity extends AppCompatActivity {
         }
     }
 
-    //this message returns current time, and also gets used inside processMessageForSending() method, line # 176
+    //this method returns current time, and also gets used inside processMessageForSending() method, line # 176
     public String getCurrentTime(){
         Date date = new Date();
         String timeFormat = "hh:mm a";

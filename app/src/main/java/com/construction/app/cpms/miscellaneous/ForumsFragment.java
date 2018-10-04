@@ -15,6 +15,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,14 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.adapters.ForumRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseForumPost;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,17 +54,21 @@ import java.util.ArrayList;
  */
 public class ForumsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
+    final public String TAG = "ForumsFragment";
     private Toolbar toolbar;
 
-    /*Database stuff*/
-    private  static StringRequest stringRequest;
-    private  static RequestQueue requestQueue;
-    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchForumPosts.php";
+    private String projectId = "1";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+
+    /*FIREBASE vars*/
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference reference;
+
 
     private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
-    private static ArrayList<ForumPost> postArrayList;  // Forum class is a bean.
-    private static ForumRecyclerViewAdapter forumRecyclerViewAdapter;
+    private ArrayList<FirebaseForumPost> postArrayList;  // Forum class is a bean.
+    private ForumRecyclerViewAdapter forumRecyclerViewAdapter;
 
     private MenuItem menuItem;  //search func specific
 
@@ -72,10 +85,9 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         View view = inflater.inflate(R.layout.fragment_forums, container, false);
        // View view = inflater.inflate(R.layout.layout_forum_card, container, false);
 
-        requestQueue = Volley.newRequestQueue(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        postArrayList = new ArrayList<ForumPost>();
+        postArrayList = new ArrayList<FirebaseForumPost>();
 
 
         //fetchdata();
@@ -86,69 +98,17 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList);    //create adaoter
+        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList, loggedInAs);    //create adaoter
         recyclerView.setAdapter(forumRecyclerViewAdapter);  //set adapter
 
         //top bar setting..
         setUpTopBar(view);
 
+        populateView(projectId);
 
         return view;
     }
 
-    private static void fetchdata(){
-
-        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                    System.out.println("Do backgorund func");
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
-                        try {
-                             JSONArray jsonArray = new JSONArray(response);
-
-                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
-                                System.out.println("FOR LOOP");
-                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-
-                                ForumPost forumPost = new ForumPost(object.getString("forumId"), object.getString("title"),
-                                        object.getString("postedBy"), object.getString("body"));
-                                System.out.println(object.getString("title"));
-                                //populate arraylist
-                                postArrayList.add(forumPost);
-                            }
-                            forumRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-
-                };
-                requestQueue.add(stringRequest);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                forumRecyclerViewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-        };
-
-        asyncTask.execute();
-    }
 
 
     @Override
@@ -160,8 +120,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onStart() {
         super.onStart();
-        postArrayList.clear();
-        fetchdata();
+      //  postArrayList.clear();
 
     }
 
@@ -216,10 +175,10 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
                 break;
             case R.id.allPosts :
-                filterByUserId(getLoggedInUserId(), false);    //false loads all posts
+                filterByUserId( false);    //false loads all posts
                 break;
             case R.id.myPosts :
-                filterByUserId(getLoggedInUserId(), true);     //true filters
+                filterByUserId( true);     //true filters
                 break;
         }
 
@@ -237,9 +196,9 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public boolean onQueryTextChange(String input) {
 
-        ArrayList<ForumPost> filtered = new ArrayList<>();
+        ArrayList<FirebaseForumPost> filtered = new ArrayList<>();
 
-        for (ForumPost f:postArrayList) {
+        for (FirebaseForumPost f:postArrayList) {
             if(f.getTitle().toLowerCase().contains(input.toLowerCase())){
                 filtered.add(f);
             }
@@ -265,36 +224,81 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     //filter out post by who posted the post.
-    private void filterByUserId(String userId, boolean doFilter){
+    private void filterByUserId(boolean doFilter){
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        ArrayList<ForumPost> container = new ArrayList<>();
-        ArrayList<ForumPost> backupList = new ArrayList<>();
-        backupList = postArrayList;
+        ArrayList<FirebaseForumPost> container = new ArrayList<>();
 
         if(doFilter == true) {
 
             activity.getSupportActionBar().setSubtitle("My Posts");
 
-            for (ForumPost f : postArrayList) {
-                System.out.println(f.getPostedBy());
+            for (FirebaseForumPost post : postArrayList) {
+                System.out.println(post.getPostedByUID());
 
-                if (Integer.parseInt(f.getPostedBy().toString()) == Integer.parseInt(userId)) {
-                    System.out.println("Inner FOR LOOOP RUNS!");
-                    container.add(f);
+                if (post.getPostedByUID().equals(loggedInAs.getUid())) {    //if posted by logged in user populate container
+
+                    container.add(post);
                 }
             }
-            System.out.println("CONTAINER SIZE==============================" + container.size());
+
             forumRecyclerViewAdapter.setFilterList(container);
         }
         else if(doFilter == false){
 
             activity.getSupportActionBar().setSubtitle("All Posts");
             //restore
-            forumRecyclerViewAdapter.setFilterList(backupList);
+            forumRecyclerViewAdapter.setFilterList(postArrayList);
+
         }
 
     }
+
+
+
+    //region FIREBASE STUFF!!
+
+    private void populateView(String projectId){
+        reference = database.getReference().getRoot()
+                .child("ForumPosts")            /*Make modular!*/
+                .child("Project-P" + projectId );
+
+                reference.keepSynced(true);     //offline capabilities
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                        if(dataSnapshot.exists()){
+                            postArrayList.clear();
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                //Log.d(TAG, "Datasnapshot for loop " + ds.toString());
+
+                                FirebaseForumPost post = ds.getValue(FirebaseForumPost.class);
+
+                                Log.d(TAG, "posted by = " + post.getPostedByUID());
+                                Log.d(TAG, "posted title = " + post.getTitle());
+
+                                postArrayList.add(post);
+                            }
+                            forumRecyclerViewAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+    }
+
+    //endregion
+
+
 
 
 

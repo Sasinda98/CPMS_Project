@@ -111,7 +111,6 @@
                     android:layout_marginTop="@dimen/margins_eight"
                     android:gravity="right"
 
-                    android:text="12:30pm"
                     android:textColor="@color/mc_grey"
                     android:textSize="@dimen/forum_timestamp_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
