@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,6 +46,8 @@ public class Expense_Category_List extends AppCompatActivity {
 
     private ExpenseListAdapter adapter;
     private ListView listView;
+    private double sum;
+    TextView textView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +135,7 @@ public class Expense_Category_List extends AppCompatActivity {
                                 System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
 
                             }
-                            adapter.notifyDataSetChanged();
+
 
 
                         } catch (JSONException e) {
@@ -247,5 +249,6 @@ public class Expense_Category_List extends AppCompatActivity {
 
         asyncTask.execute();
     }
+
 
 }

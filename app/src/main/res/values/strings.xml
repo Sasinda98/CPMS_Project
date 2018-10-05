@@ -43,7 +43,7 @@
     <string name="helpertext_forum">Type In The Forum Title</string>
     <string name="descr_forum_helpertext">Type In The Description</string>
 
-
+    <!--Expenses-->
     <string name="amount_listadapter">Amount</string>
     <string name="expenses">Expenses</string>
     <string name="directCost">Direct Costs</string>
@@ -61,6 +61,8 @@
     <string name="submit">Submit</string>
     <string name="deleteExp">Delete Expense</string>
     <string name="editExp">Edit Expense</string>
+    <string name="total_expense">Total Expense</string>
+    <string name="exp_report">Report</string>
 
     //Plan related strings
     <string name="newPlanTopBarTitle">Plan</string>
@@ -73,6 +75,7 @@
 
     <string name="inventoryManagerPanelPendingReqTitle">Pending Requests</string>
     <string name="edit_inventory_delete_menu_text">Delete</string>
+
 
 
     //Array to get units for inventory units spinner

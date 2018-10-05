@@ -1,15 +1,22 @@
 package com.construction.app.cpms.expenses;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +36,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +65,10 @@ public class actiExpenses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_expenses);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
+        }
 
         requestQueue = Volley.newRequestQueue(actiExpenses.this);
         expenseArrayList = new ArrayList<>();
@@ -98,8 +114,16 @@ public class actiExpenses extends AppCompatActivity {
         });
 
 
+        Button button = findViewById(R.id.report);
+        button.setOnClickListener(new View.OnClickListener(){
 
-        System.out.println("*******************************************************************************************" +sum);
+            @Override
+            public void onClick(View view){
+                saveTextAsFile(expenseArrayList);
+            }
+
+        });
+        //System.out.println("*******************************************************************************************" +sum);
 
 
 
@@ -109,6 +133,64 @@ public class actiExpenses extends AppCompatActivity {
 
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void saveTextAsFile(ArrayList<Expense> expenseReport){
+
+        String trial = "sample.txt";
+        String testing = "Trying to write text to a file on Android";
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), trial);
+
+
+        try {
+            //FileOutputStream fos = new FileOutputStream(file);
+            FileOutputStream fos = openFileOutput(trial, Context.MODE_APPEND);
+            int size = expenseReport.size();
+            for(int i = 0; i < size; i++){
+                String str = expenseReport.get(i).toString();
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +str);
+                fos.write(str.getBytes());
+                /*if (i < size - 1) {
+                    fos.write("/n");
+                }*/
+            }
+            fos.write(testing.getBytes());
+            fos.close();
+
+
+
+
+            Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            Toast.makeText(this, "File Not Found!", Toast.LENGTH_SHORT).show();
+        }catch(IOException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Error Saving File", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1000:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+        }
     }
 
     private void buttonPress(ImageButton img, final String catg){
@@ -159,6 +241,7 @@ public class actiExpenses extends AppCompatActivity {
                             sum = totalExp(expenseArrayList);
                             textView.setText("LKR  " + Double.toString(sum));
                             adapter.notifyDataSetChanged();
+
 
 
 

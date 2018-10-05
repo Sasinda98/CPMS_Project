@@ -6,21 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".expenses.Expense_Category_List">
 
-    <!--top appbar-->
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="8dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="List by Category"
-            app:titleTextColor="@color/primaryTextColor"/>
-    </android.support.design.widget.AppBarLayout>
 
     <!--bottom navbar-->
     <android.support.design.widget.BottomNavigationView
@@ -39,6 +25,61 @@
         android:elevation="8dp"
         />
 
+    <LinearLayout android:id="@+id/expLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="?attr/actionBarSize"
+        >
+
+
+        <TextView
+            android:id="@+id/expHeader1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/desc_listadapter"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:fontFamily="serif" />
+
+        <TextView
+            android:id="@+id/expHeader2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.25"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/category_listadapter"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="18sp"
+            app:fontFamily="serif" />
+
+        <TextView
+            android:id="@+id/expHeader3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.25"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/amount_listadapter"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="18sp"
+            app:fontFamily="serif" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/exp_listView"
         android:layout_width="match_parent"
@@ -48,7 +89,9 @@
         app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expLayout1"/>
+
 
 
 </android.support.constraint.ConstraintLayout>
