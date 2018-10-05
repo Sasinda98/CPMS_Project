@@ -39,12 +39,15 @@ import java.util.List;
 
 //using filterable interface to support the search function to view posts.
 public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecyclerViewAdapter.ViewHolder> implements Filterable {
+
+    private static final String TAG = "FORUMRECYC";
+
     private Context context;
     private FirebaseUser loggedInAs;
     private ArrayList<FirebaseForumPost>  forumPostArrayList = new ArrayList<FirebaseForumPost>();
     private ArrayList<FirebaseForumPost>  forumPostsArrayListCopy;
     private String projectId;
-    private static final String TAG = "FORUMRECYC";
+
 
 
     public ForumRecyclerViewAdapter(Context context, ArrayList<FirebaseForumPost> forumPostArrayList, FirebaseUser loggedInAs, String projectId) {
@@ -111,6 +114,16 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                                 case R.id.delete:
                                     // Log.d(TAG, "Delete the post with id = " +  forumPostArrayList.get(i).getForumId());
                                     //notifyDataSetChanged();
+
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                                    DatabaseReference postRef = database.getReference().getRoot()     //references relevant post.
+                                            .child("ForumPosts")            //Make modular!
+                                            .child("Project-P" + projectId )  //project ID is given prefix Project-P, Naming convention in the database.
+                                            .child(forumPostArrayList.get(i).getPostId().toString());
+
+                                    postRef.removeValue();
+                                    
                                     break;
                             }
 
