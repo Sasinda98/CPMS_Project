@@ -72,7 +72,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     private ArrayList<FirebaseForumPost> postArrayList;  // Forum class is a bean.
     private ForumRecyclerViewAdapter forumRecyclerViewAdapter;
 
-    private MenuItem menuItem;  //search func specific
+    private MenuItem searchMenuItem;  //search func specific
 
 
     public ForumsFragment() {
@@ -100,7 +100,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList, loggedInAs);    //create adaoter
+        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList, loggedInAs, projectId);    //create adaoter
         recyclerView.setAdapter(forumRecyclerViewAdapter);  //set adapter
 
         //top bar setting..
@@ -116,7 +116,10 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onResume() {
         super.onResume();
-        //fetchdata();
+        if (searchMenuItem != null) {   /*part of bug fix, view not updating when post searched for and edited. fixed using this code.*/
+            searchMenuItem.collapseActionView();        //making sure searchview closes after navigating to another activity and back, also update view.
+            populateView(projectId);                    //update the view.
+        }
     }
 
     @Override
@@ -156,12 +159,13 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         menu.clear();
         //getActivity().getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         inflater.inflate(R.menu.menu_toolbar,menu);
-        menuItem = menu.findItem(R.id.searchPost);      //getting reference
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchMenuItem = menu.findItem(R.id.searchPost);      //getting reference
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setOnQueryTextListener(this);
+        searchView.clearFocus();
 
-        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
                 return true;
@@ -176,7 +180,6 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
             }
         });
 
-
     }
 
     //called when user taps on option menu
@@ -184,21 +187,21 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.searchPost :
-
                 break;
+
             case R.id.addPost :
-             /*   Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
-                toast1.show();*/
                 Intent intent = new Intent(getActivity(), addForumPost.class);
                 startActivity(intent);
-
                 break;
+
             case R.id.allPosts :
                 filterByUserId( false);    //false loads all posts
                 break;
+
             case R.id.myPosts :
                 filterByUserId( true);     //true filters
                 break;
+
         }
 
         return super.onOptionsItemSelected(item);
