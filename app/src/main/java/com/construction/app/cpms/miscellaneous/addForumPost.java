@@ -121,10 +121,13 @@ public class addForumPost extends AppCompatActivity {
                 .child("ForumPosts")            /*Make modular!*/
                 .child("Project-P" + projectId );
 
-                FirebaseForumPost post = preparePost();     //prepare post is a helper method for post object creation and user input handling.
+                String postId = reference.push().getKey();      //gets unique identifier from firebase.
+                Log.d(TAG, "POST ID FIREBASE GEN = " + postId);
 
-                if(post != null){       //if post object is non null, add it to firebase database
-                    reference.push().setValue(post);
+                FirebaseForumPost post = preparePost(postId);     //prepare post is a helper method for post object creation and user input handling.
+
+                 if(post != null){       //if post object is non null, add it to firebase database
+                    reference.child(postId).setValue(post);
                 }else{
                     Toast.makeText(this, "Fill the relevant fields", Toast.LENGTH_SHORT);
                 }
@@ -133,7 +136,7 @@ public class addForumPost extends AppCompatActivity {
 
     //returns post that need to be posted. if unsuccessful it will return null.
     //also Toast message will be shown to alert the user.
-    public FirebaseForumPost preparePost(){
+    public FirebaseForumPost preparePost(String postIdFirebase){
         Log.d(TAG, "processMessageForSending(String senderUID)  CALLED");
 
         //take the user input from EditTEXTS
@@ -152,7 +155,7 @@ public class addForumPost extends AppCompatActivity {
         }
 
 
-        FirebaseForumPost forumPost = new FirebaseForumPost(postTitle,postBody, loggedInAs.getUid(), getCurrentDateTime());
+        FirebaseForumPost forumPost = new FirebaseForumPost(postIdFirebase, postTitle, postBody, loggedInAs.getUid(), getCurrentDateTime());
 
         return forumPost;
     }
