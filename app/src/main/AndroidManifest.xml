@@ -3,7 +3,7 @@
     package="com.construction.app.cpms">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -68,7 +68,8 @@
         <activity
             android:name=".inventoryManagement.inventory_edit_item"
             android:parentActivityName=".inventoryManagement.inventory_edit_list" />
-        <activity android:name=".inventoryManagement.inventory_stock_low"></activity>
+        <activity android:name=".inventoryManagement.inventory_stock_low" />
+        <activity android:name=".expenses.expenseReport"></activity>
     </application>
 
 </manifest>

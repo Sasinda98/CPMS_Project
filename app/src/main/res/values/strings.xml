@@ -77,7 +77,6 @@
     <string name="edit_inventory_delete_menu_text">Delete</string>
 
 
-
     //Array to get units for inventory units spinner
 
     <string-array name="inventory_units_array">

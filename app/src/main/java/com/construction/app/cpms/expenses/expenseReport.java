@@ -1,26 +1,14 @@
 package com.construction.app.cpms.expenses;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,134 +19,49 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+public class expenseReport extends AppCompatActivity {
 
-public class actiExpenses extends AppCompatActivity {
-
-    private static final String TAG = "ExpensesActivity";
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php"; //script to retrieve data
-    private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
-    private static Expense sample;
+    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php";
+    private static ArrayList<Expense> expenseArrayList;
     private ExpenseListAdapter adapter;
+    private ListView listView;
     private String val = "1";
     private String totalExp;
-
-
-
+    private TextView textView;
+    private double sum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acti_expenses);
+        setContentView(R.layout.activity_expense_report);
 
 
-        requestQueue = Volley.newRequestQueue(actiExpenses.this);
-        expenseArrayList = new ArrayList<>();
+        textView = findViewById(R.id.reportTotalValue);
 
+
+
+        requestQueue = Volley.newRequestQueue(expenseReport.this);
+        expenseArrayList = new ArrayList<Expense>();
 
         fetchdata();
-
-        Log.d(TAG, "onCreate: Started");
-        ListView mListView = findViewById(R.id.listView);
-
-
+        ListView mListView = findViewById(R.id.exp_listView);
 
         adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
         mListView.setAdapter(adapter);
 
 
-        mListView.setBackgroundColor(Color.WHITE);
 
 
 
-        ImageButton directButt = findViewById(R.id.directButt);
-        buttonPress(directButt, "Direct");
-
-        ImageButton mButt = findViewById(R.id.miscellaneousButt);
-        buttonPress(mButt, "Miscell");
-
-        ImageButton cButt = findViewById(R.id.consultationButt);
-        buttonPress(cButt, "Consult");
-
-        ImageButton overButt = findViewById(R.id.overButt);
-        buttonPress(overButt, "Overheads");
-
-
-        FloatingActionButton add = findViewById(R.id.addExpenses);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(actiExpenses.this, Expense_Add.class);
-
-                startActivity(intent);
-            }
-        });
-
-
-        Button button = findViewById(R.id.report);
-        button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view){
-
-                Intent intent = new Intent(actiExpenses.this, expenseReport.class);
-
-                startActivity(intent);
-
-
-
-            }
-
-        });
-        //System.out.println("*******************************************************************************************" +sum);
-
-
-
-
-
-
-
-
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
-
-
-
-    private void buttonPress(ImageButton img, final String catg){
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
-                intent.putExtra("expCategory", catg);
-
-                startActivity(intent);
-            }
-
-        });
     }
 
     private void fetchdata(){
@@ -170,6 +73,7 @@ public class actiExpenses extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            sum = 0;
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
                                 JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
@@ -182,14 +86,13 @@ public class actiExpenses extends AppCompatActivity {
 
 
                                 Expense expense = new Expense(expenseID, description, category, amount);
-                                //sum = sum + expense.getAmount();
-                                //System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+sum);
-                                //System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
 
                                 //populate arraylist
                                 expenseArrayList.add(expense);
 
                             }
+                            sum = totalExp(expenseArrayList);
+                            textView.setText("LKR  " + Double.toString(sum));
                             adapter.notifyDataSetChanged();
 
 
@@ -227,13 +130,19 @@ public class actiExpenses extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 CharSequence msg = "Loading...";
-                Toast.makeText(actiExpenses.this, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(expenseReport.this, msg, Toast.LENGTH_LONG).show();
             }
         };
 
         asyncTask.execute();
     }
 
-
-
+    private double totalExp(ArrayList<Expense> newList) {
+        double sum = 0;
+        for (int i = 0; i < newList.size(); i++) {
+            Expense expense = newList.get(i);
+            sum += expense.getAmount();
+        }
+        return sum;
+    }
 }
