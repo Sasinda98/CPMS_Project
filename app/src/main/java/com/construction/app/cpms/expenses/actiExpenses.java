@@ -53,10 +53,11 @@ public class actiExpenses extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php"; //script to retrieve data
     private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
+    private static ArrayList<Expense> recentExpenses;
     private static Expense sample;
     private ExpenseListAdapter adapter;
     private String val = "1";
-    private String totalExp;
+
 
 
 
@@ -68,6 +69,7 @@ public class actiExpenses extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(actiExpenses.this);
         expenseArrayList = new ArrayList<>();
+        recentExpenses = new ArrayList<>();
 
 
         fetchdata();
@@ -77,7 +79,7 @@ public class actiExpenses extends AppCompatActivity {
 
 
 
-        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
+        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, recentExpenses);
         mListView.setAdapter(adapter);
 
 
@@ -190,6 +192,7 @@ public class actiExpenses extends AppCompatActivity {
                                 expenseArrayList.add(expense);
 
                             }
+                            addRecents(expenseArrayList);
                             adapter.notifyDataSetChanged();
 
 
@@ -232,6 +235,24 @@ public class actiExpenses extends AppCompatActivity {
         };
 
         asyncTask.execute();
+    }
+
+    private void addRecents(ArrayList<Expense> arrIn){
+        if (arrIn.size() >= 10) // Make sure you really have 10 elements
+        {
+            recentExpenses.add(arrIn.get(arrIn.size()-1));
+            recentExpenses.add(arrIn.get(arrIn.size()-2));
+            recentExpenses.add(arrIn.get(arrIn.size()-3));
+            recentExpenses.add(arrIn.get(arrIn.size()-4));
+            recentExpenses.add(arrIn.get(arrIn.size()-5));
+            recentExpenses.add(arrIn.get(arrIn.size()-6));
+            recentExpenses.add(arrIn.get(arrIn.size()-7));
+            recentExpenses.add(arrIn.get(arrIn.size()-8));
+            recentExpenses.add(arrIn.get(arrIn.size()-9));
+            recentExpenses.add(arrIn.get(arrIn.size()-10)); // The last
+
+
+        }
     }
 
 
