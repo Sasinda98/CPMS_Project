@@ -6,15 +6,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +36,14 @@ import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.adapters.ForumRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseForumPost;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,19 +56,23 @@ import java.util.ArrayList;
  */
 public class ForumsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
+    final public String TAG = "ForumsFragment";
     private Toolbar toolbar;
 
-    /*Database stuff*/
-    private  static StringRequest stringRequest;
-    private  static RequestQueue requestQueue;
-    private  static String URL_PHP_SCRIPT = "http://projectcpms99.000webhostapp.com/scripts/gayal/fetchForumPosts.php";
+    private String projectId = "1";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+
+    /*FIREBASE vars*/
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference databaseReference;
+
 
     private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
-    private static ArrayList<ForumPost> postArrayList;  // Forum class is a bean.
-    private static ForumRecyclerViewAdapter forumRecyclerViewAdapter;
+    private ArrayList<FirebaseForumPost> postArrayList;  // Forum class is a bean.
+    private ForumRecyclerViewAdapter forumRecyclerViewAdapter;
 
-    private MenuItem menuItem;  //search func specific
+    private MenuItem searchMenuItem;  //search func specific
 
 
     public ForumsFragment() {
@@ -72,10 +87,9 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         View view = inflater.inflate(R.layout.fragment_forums, container, false);
        // View view = inflater.inflate(R.layout.layout_forum_card, container, false);
 
-        requestQueue = Volley.newRequestQueue(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        postArrayList = new ArrayList<ForumPost>();
+        postArrayList = new ArrayList<FirebaseForumPost>();
 
 
         //fetchdata();
@@ -86,82 +100,32 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList);    //create adaoter
+        forumRecyclerViewAdapter = new ForumRecyclerViewAdapter(getContext(),postArrayList, loggedInAs, projectId);    //create adaoter
         recyclerView.setAdapter(forumRecyclerViewAdapter);  //set adapter
 
         //top bar setting..
         setUpTopBar(view);
 
+        populateView(projectId);
 
         return view;
     }
 
-    private static void fetchdata(){
-
-        @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                    System.out.println("Do backgorund func");
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("ON RESPONSE");
-                        try {
-                             JSONArray jsonArray = new JSONArray(response);
-
-                            for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
-                                System.out.println("FOR LOOP");
-                                JSONObject object = jsonArray.getJSONObject(i);     //get the JSON object at index i
-
-                                ForumPost forumPost = new ForumPost(object.getString("forumId"), object.getString("title"),
-                                        object.getString("postedBy"), object.getString("body"));
-                                System.out.println(object.getString("title"));
-                                //populate arraylist
-                                postArrayList.add(forumPost);
-                            }
-                            forumRecyclerViewAdapter.notifyDataSetChanged();    //if you dont notify adapter about updates to arraylist so recycler view can load them up.
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-
-                };
-                requestQueue.add(stringRequest);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                forumRecyclerViewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-        };
-
-        asyncTask.execute();
-    }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        //fetchdata();
+        if (searchMenuItem != null) {   /*part of bug fix, view not updating when post searched for and edited. fixed using this code.*/
+            searchMenuItem.collapseActionView();        //making sure searchview closes after navigating to another activity and back, also update view.
+            populateView(projectId);                    //update the view.
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        postArrayList.clear();
-        fetchdata();
+      //  postArrayList.clear();
 
     }
 
@@ -195,9 +159,26 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         menu.clear();
         //getActivity().getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         inflater.inflate(R.menu.menu_toolbar,menu);
-        menuItem = menu.findItem(R.id.searchPost);      //getting reference
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchMenuItem = menu.findItem(R.id.searchPost);      //getting reference
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
         searchView.setOnQueryTextListener(this);
+        searchView.clearFocus();
+
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+
+                Log.d(TAG,"Searchview close");
+                populateView(projectId);    //firebase query to restore view.
+                return true;
+            }
+        });
 
     }
 
@@ -206,21 +187,21 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.searchPost :
-
                 break;
+
             case R.id.addPost :
-             /*   Toast toast1 = Toast.makeText(getContext(), "Add Post Selected", Toast.LENGTH_SHORT);
-                toast1.show();*/
                 Intent intent = new Intent(getActivity(), addForumPost.class);
                 startActivity(intent);
+                break;
 
-                break;
             case R.id.allPosts :
-                filterByUserId(getLoggedInUserId(), false);    //false loads all posts
+                filterByUserId( false);    //false loads all posts
                 break;
+
             case R.id.myPosts :
-                filterByUserId(getLoggedInUserId(), true);     //true filters
+                filterByUserId( true);     //true filters
                 break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -234,21 +215,37 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     //Search function specific method, corresponds to the user input when you tap on the search icon in toolbar
     //whenever text in search box changes, it is passed in to 's' as param.
+    private ArrayList<FirebaseForumPost> backupSearchList = new ArrayList<>();
     @Override
     public boolean onQueryTextChange(String input) {
 
-        ArrayList<ForumPost> filtered = new ArrayList<>();
+        if(listenerMain != null)        //checking for null, just in case.
+            databaseReference.removeEventListener(listenerMain);        //stop listening to changes... To avoid unexpected behavior.
 
-        for (ForumPost f:postArrayList) {
+
+        Log.d(TAG, "Backup size = " + backupSearchList.size());
+        if(backupSearchList.size() == 0 ){
+            backupSearchList.addAll(postArrayList);
+        }
+
+
+
+        ArrayList<FirebaseForumPost> filtered = new ArrayList<>();
+
+        for (FirebaseForumPost f:backupSearchList) {
             if(f.getTitle().toLowerCase().contains(input.toLowerCase())){
                 filtered.add(f);
             }
         }
-        forumRecyclerViewAdapter.setFilterList(filtered);
+
+        postArrayList.clear();
+        postArrayList.addAll(filtered);
         forumRecyclerViewAdapter.notifyDataSetChanged();
+
 
         return true;
     }
+
 
     public String getLoggedInUserId(){
         /*Stackoverflow used as reference for use of sharepref in fragment*/
@@ -265,36 +262,97 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     //filter out post by who posted the post.
-    private void filterByUserId(String userId, boolean doFilter){
+    private void filterByUserId(boolean doFilter){
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        ArrayList<ForumPost> container = new ArrayList<>();
-        ArrayList<ForumPost> backupList = new ArrayList<>();
-        backupList = postArrayList;
+        ArrayList<FirebaseForumPost> container = new ArrayList<>();
+        ArrayList<FirebaseForumPost> backup = new ArrayList<>();
+
+        backup.addAll(postArrayList);
+        Log.d(TAG, "SIZE POST BACKUP = " + postArrayList.size());
 
         if(doFilter == true) {
+            if(listenerMain != null)        //checking for null, just in case.
+                databaseReference.removeEventListener(listenerMain);  //stop listening for changes for the posts node when you do client side filtering as doing so will interfere
+                                                        //with the filter user is trying to do. (new post in to db while user filters the results will cause unexpected behavior)
+                                                            //removing the listener prior to filtering the dataset retrieved solves this bug.
 
             activity.getSupportActionBar().setSubtitle("My Posts");
 
-            for (ForumPost f : postArrayList) {
-                System.out.println(f.getPostedBy());
+            postArrayList.clear();
 
-                if (Integer.parseInt(f.getPostedBy().toString()) == Integer.parseInt(userId)) {
-                    System.out.println("Inner FOR LOOOP RUNS!");
-                    container.add(f);
+            for (FirebaseForumPost post : backup) {
+
+                if (post.getPostedByUID().equals(loggedInAs.getUid())) {    //if posted by logged in user populate container
+
+                        //container.add(post);
+                        postArrayList.add(post);
                 }
             }
-            System.out.println("CONTAINER SIZE==============================" + container.size());
-            forumRecyclerViewAdapter.setFilterList(container);
+
+            forumRecyclerViewAdapter.notifyDataSetChanged();
+
+
         }
         else if(doFilter == false){
 
             activity.getSupportActionBar().setSubtitle("All Posts");
             //restore
-            forumRecyclerViewAdapter.setFilterList(backupList);
+            populateView(projectId);
+
         }
 
     }
+
+
+
+    //region FIREBASE STUFF!!
+
+    private ValueEventListener listenerMain;        //needed to remove the listener when performing filtering on the arraylist, to keep data consistent.
+
+    private void populateView(String projectId){
+        databaseReference = database.getReference().getRoot()
+                .child("ForumPosts")            /*Make modular!*/
+                .child("Project-P" + projectId );
+
+        databaseReference.keepSynced(true);     //offline capabilities
+
+                 listenerMain =  new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                        if(dataSnapshot.exists()){
+                            postArrayList.clear();
+                            backupSearchList.clear();           //refer onQueryTextChange() method... relevant for searchfunc.
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                //Log.d(TAG, "Datasnapshot for loop " + ds.toString());
+
+                                FirebaseForumPost post = ds.getValue(FirebaseForumPost.class);
+
+                                Log.d(TAG, "posted by = " + post.getPostedByUID());
+                                Log.d(TAG, "posted title = " + post.getTitle());
+
+                                postArrayList.add(post);
+                            }
+                            forumRecyclerViewAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                };
+
+        databaseReference.addValueEventListener(listenerMain);
+
+    }
+
+    //endregion
+
+
 
 
 

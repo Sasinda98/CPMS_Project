@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/mc_layout_margin"
                     android:textSize="@dimen/mc_name_textSize"
-
                     android:textColor="@color/black_text"
                     android:textAlignment="center" />
 
@@ -81,15 +80,15 @@
 
         <!--Time stamp-->
         <TextView
-            android:id="@+id/lm_timeStamp"
+            android:id="@+id/lms_timeStamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/mc_stats_textsize"
-
             android:textColor="@color/mc_grey"
             android:layout_gravity="right|top"
             android:layout_marginRight="@dimen/margins_eight"
             android:layout_marginTop="@dimen/margins_eight"
+
             />
 
         <!--deliver status stamp-->

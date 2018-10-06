@@ -148,9 +148,10 @@ public class inventory_inspect_request extends AppCompatActivity {
 
                     requestQueue.add(request);
 
-                    CharSequence msg = "Approved ";
+                    CharSequence msg = "Approved";
                     Toast.makeText(inventory_inspect_request.this, msg, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(inventory_inspect_request.this, inventory_incoming_requests.class);
+                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                     startActivity(intent);
 
 
@@ -212,6 +213,7 @@ public class inventory_inspect_request extends AppCompatActivity {
                 CharSequence msg = "Denied";
                 Toast.makeText(inventory_inspect_request.this, msg, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(inventory_inspect_request.this, inventory_incoming_requests.class);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
 
 

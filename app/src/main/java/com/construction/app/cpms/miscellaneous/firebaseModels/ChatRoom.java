@@ -17,9 +17,10 @@ public class ChatRoom {
         this.user2 = user2;
     }
 
-    public ChatRoom(FirebaseUserRoom user1, FirebaseUserRoom user2) {
+    public ChatRoom(FirebaseUserRoom user1, FirebaseUserRoom user2, FirebaseLastRead lastRead) {
         this.user1 = user1;
         this.user2 = user2;
+        this.lastRead = lastRead;
     }
 
     public ChatRoom() {
@@ -28,6 +29,16 @@ public class ChatRoom {
 
     private FirebaseUserRoom user1;
     private FirebaseUserRoom user2;
+
+    public FirebaseLastRead getLastRead() {
+        return lastRead;
+    }
+
+    public void setLastRead(FirebaseLastRead lastRead) {
+        this.lastRead = lastRead;
+    }
+
+    private FirebaseLastRead lastRead;
 
 
 
