@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Plan.DisplayProject"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+    <!--Top Bar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/projectBackButton"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/primaryColor"
+            android:src="@drawable/ic_back"/>
+
+        <!--  <android.support.v7.widget.Toolbar
+              android:id="@+id/toolbar"
+              android:layout_width="match_parent"
+              android:layout_height="?attr/actionBarSize"
+              android:elevation="8dp"
+              app:layout_scrollFlags="scroll|enterAlways|snap"
+              app:title="TRY TO ADD A BACK BUTTON"
+              app:titleTextColor="@color/primaryTextColor">
+          </android.support.v7.widget.Toolbar> -->
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+    <TextView
+        android:textColor="@color/cardText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+    <EditText
+        android:background="@color/backgroundDark"
+        android:cursorVisible="false"
+        android:id="@+id/project_d_name"
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/cardText"
+        android:layout_weight="5"/>
+
+    <TextView
+        android:textColor="@color/cardText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+    <EditText
+        android:background="@color/backgroundDark"
+        android:cursorVisible="false"
+        android:id="@+id/project_d_description"
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/cardText"
+        android:layout_weight="20"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/project_vUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:text="Update" />
+
+        <Button
+            android:id="@+id/project_vDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_gravity="right"
+            android:text="Delete" />
+    </LinearLayout>
+
+
+</LinearLayout>
