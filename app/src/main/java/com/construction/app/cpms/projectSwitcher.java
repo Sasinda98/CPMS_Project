@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class projectSwitcher extends Activity {
 
     Button proj1, proj2;
+    TextView pstext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class projectSwitcher extends Activity {
 
         proj1 = (Button) findViewById(R.id.projSwitch1);
         proj2 = (Button) findViewById(R.id.projSwitch2);
+        pstext = (TextView) findViewById(R.id.projectSwitcherText);
         SharedPreferences preferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
         System.out.println("===========Project ID=========="+ preferences.getString("projSwitchID", ""));
 

@@ -27,6 +27,7 @@ import com.construction.app.cpms.Plan.MainPlan;
 import com.construction.app.cpms.Plan.ProjectDashboard;
 import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.projectSwitcher;
 import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
 
@@ -56,6 +57,7 @@ public class DashboardFragment extends Fragment {
     private CardView forumsTile;
     private CardView milestonesTile;
     private CardView projectTile;
+    private CardView projectSwitcherTile;
 
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -84,6 +86,7 @@ public class DashboardFragment extends Fragment {
         forumsTile = (CardView) view.findViewById(R.id.forumsTile);
         milestonesTile = (CardView) view.findViewById(R.id.milestonesTile);
         projectTile =  (CardView) view.findViewById(R.id.projectTile);
+        projectSwitcherTile = (CardView) view.findViewById(R.id.projectSwitcherTile);
 
         getLoginCredentials();
 
@@ -142,6 +145,14 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProjectDashboard.class);
+                startActivity(intent);
+            }
+        });
+
+        projectSwitcherTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), projectSwitcher.class);
                 startActivity(intent);
             }
         });
