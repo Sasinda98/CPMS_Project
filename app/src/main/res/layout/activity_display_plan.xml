@@ -14,7 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <ImageButton
+            android:id="@+id/backButton"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/primaryColor"
+            android:src="@drawable/ic_back"/>
+
+      <!--  <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -22,40 +32,64 @@
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:title="TRY TO ADD A BACK BUTTON"
             app:titleTextColor="@color/primaryTextColor">
-        </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar> -->
     </android.support.design.widget.AppBarLayout>
 
 
         <ImageView
+            android:layout_marginTop="20dp"
+            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="65"
             android:id="@+id/d_image"
             android:scaleType="centerCrop" />
 
-        <EditText
+    <TextView
+        android:textColor="@color/cardText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+      <EditText
             android:background="@color/backgroundDark"
+            android:cursorVisible="false"
             android:id="@+id/d_name"
-            android:layout_width="wrap_content"
+            android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textColor="@color/cardText"
             android:layout_weight="5"/>
 
+    <TextView
+        android:textColor="@color/cardText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
         <EditText
             android:background="@color/backgroundDark"
+            android:cursorVisible="false"
             android:id="@+id/d_description"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textColor="@color/cardText"
             android:layout_weight="20"
-            />
 
+            />
 
     <LinearLayout
         android:layout_marginTop="150dp"
