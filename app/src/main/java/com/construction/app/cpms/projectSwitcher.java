@@ -23,7 +23,7 @@ public class projectSwitcher extends Activity {
         pstext = (TextView) findViewById(R.id.projectSwitcherText);
         SharedPreferences preferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
         System.out.println("===========Project ID=========="+ preferences.getString("projSwitchID", ""));
-
+        pstext.setText("Current Project: "+ preferences.getString("projSwitchID", ""));
         //Use this line if you want to get a demo project ID. ~Chandula
         String projectID = preferences.getString("projSwitchID", "");
 
@@ -36,7 +36,7 @@ public class projectSwitcher extends Activity {
                 editor.clear();
                 editor.putString("projSwitchID","1");
                 editor.commit();
-
+                pstext.setText("Current Project: "+ preferences.getString("projSwitchID", ""));
                 System.out.println("===========Project ID=========="+ preferences.getString("projSwitchID", ""));
 
             }
@@ -52,7 +52,7 @@ public class projectSwitcher extends Activity {
                 editor.clear();
                 editor.putString("projSwitchID","2");
                 editor.commit();
-
+                pstext.setText("Current Project: "+ preferences.getString("projSwitchID", ""));
                 System.out.println("===========Project ID=========="+ preferences.getString("projSwitchID", ""));
 
             }

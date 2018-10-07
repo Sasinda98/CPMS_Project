@@ -19,7 +19,8 @@
         to get the scrolling to work with gridlayout. Out take-: hardcode gridlayout height
     -->
 
-<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -123,7 +124,7 @@
                     android:id="@+id/inventoryTile"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:cardBackgroundColor="@color/cardBackground"
+                    app:cardBackgroundColor="@color/tweakedRed"
                     app:cardCornerRadius="4dp"
                     app:cardElevation="4dp"
                     app:layout_columnWeight="1"
@@ -149,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:src="@drawable/hammer" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
