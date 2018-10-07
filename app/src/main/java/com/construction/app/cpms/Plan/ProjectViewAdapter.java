@@ -1,5 +1,7 @@
 package com.construction.app.cpms.Plan;
 
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -39,6 +41,22 @@ public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.
         holder.description.setText(myData.get(position).getDECRIPT());
         holder.PID.setText(Integer.toString(myData.get(position).getPID()));
 
+        //opens the project when clicked
+        holder.description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int PID = myData.get(position).getPID();
+                    Intent intent = new Intent(context, DisplayProject.class);
+                    intent.putExtra("PID", PID);
+                    intent.putExtra("name",myData.get(position).getNAME());
+                    intent.putExtra("description",myData.get(position).getDECRIPT());
+                    context.startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override
@@ -51,6 +69,7 @@ public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.
         public TextView description;
         public TextView PID;
         RelativeLayout parentLayout;
+        CardView cardView;
 
         public ViewHolder(View itemView){
             super(itemView);

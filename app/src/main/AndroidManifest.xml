@@ -74,7 +74,8 @@
         <activity android:name=".expenses.expenseReport" />
         <activity android:name=".Plan.ProjectDashboard" />
         <activity android:name=".Plan.ViewProject" />
-        <activity android:name=".Plan.AddProject"></activity>
+        <activity android:name=".Plan.AddProject" />
+        <activity android:name=".Plan.DisplayProject"></activity>
     </application>
 
 </manifest>
