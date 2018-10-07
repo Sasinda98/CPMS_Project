@@ -1,15 +1,22 @@
 package com.construction.app.cpms.expenses;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +36,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,11 +53,11 @@ public class actiExpenses extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php"; //script to retrieve data
     private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
+    private static ArrayList<Expense> recentExpenses;
     private static Expense sample;
     private ExpenseListAdapter adapter;
-    private double sum;
     private String val = "1";
-    TextView textView = null;
+
 
 
 
@@ -54,9 +66,11 @@ public class actiExpenses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_expenses);
 
+
         requestQueue = Volley.newRequestQueue(actiExpenses.this);
         expenseArrayList = new ArrayList<>();
-        textView = findViewById(R.id.totalExp);
+        recentExpenses = new ArrayList<>();
+
 
         fetchdata();
 
@@ -65,7 +79,7 @@ public class actiExpenses extends AppCompatActivity {
 
 
 
-        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
+        adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, recentExpenses);
         mListView.setAdapter(adapter);
 
 
@@ -98,8 +112,23 @@ public class actiExpenses extends AppCompatActivity {
         });
 
 
+        Button button = findViewById(R.id.report);
+        button.setOnClickListener(new View.OnClickListener(){
 
-        System.out.println("*******************************************************************************************" +sum);
+            @Override
+            public void onClick(View view){
+
+                Intent intent = new Intent(actiExpenses.this, expenseReport.class);
+
+                startActivity(intent);
+
+
+
+            }
+
+        });
+        //System.out.println("*******************************************************************************************" +sum);
+
 
 
 
@@ -110,6 +139,14 @@ public class actiExpenses extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+
 
     private void buttonPress(ImageButton img, final String catg){
 
@@ -136,7 +173,6 @@ public class actiExpenses extends AppCompatActivity {
 
                         try {
                             JSONArray jsonArray = new JSONArray(response);
-                            sum = 0;
                             for (int i = 0; i<jsonArray.length(); i++){ //loop through jsonarray(stores objects in each index) and put data to arraylist.
                                 JSONObject object = jsonArray.getJSONObject(i);//get the JSON object at index i
 
@@ -156,9 +192,9 @@ public class actiExpenses extends AppCompatActivity {
                                 expenseArrayList.add(expense);
 
                             }
-                            sum = totalExp(expenseArrayList);
-                            textView.setText("LKR  " + Double.toString(sum));
+                            addRecents(expenseArrayList);
                             adapter.notifyDataSetChanged();
+
 
 
 
@@ -201,14 +237,24 @@ public class actiExpenses extends AppCompatActivity {
         asyncTask.execute();
     }
 
-    private double totalExp(ArrayList<Expense> newList) {
-        double sum = 0;
-        for (int i = 0; i < newList.size(); i++) {
-            Expense expense = newList.get(i);
-            sum += expense.getAmount();
+    private void addRecents(ArrayList<Expense> arrIn){
+        if (arrIn.size() >= 10) // Make sure you really have 10 elements
+        {
+            recentExpenses.add(arrIn.get(arrIn.size()-1));
+            recentExpenses.add(arrIn.get(arrIn.size()-2));
+            recentExpenses.add(arrIn.get(arrIn.size()-3));
+            recentExpenses.add(arrIn.get(arrIn.size()-4));
+            recentExpenses.add(arrIn.get(arrIn.size()-5));
+            recentExpenses.add(arrIn.get(arrIn.size()-6));
+            recentExpenses.add(arrIn.get(arrIn.size()-7));
+            recentExpenses.add(arrIn.get(arrIn.size()-8));
+            recentExpenses.add(arrIn.get(arrIn.size()-9));
+            recentExpenses.add(arrIn.get(arrIn.size()-10)); // The last
+
+
         }
-        return sum;
     }
+
 
 
 }

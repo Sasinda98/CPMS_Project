@@ -7,22 +7,43 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.bean.ForumPost;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseForumPost;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 public class addForumPost extends AppCompatActivity {
+
+    private static final String TAG = "addForumPost";
+
+    private String projectId = "1";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+
+    /*FIREBASE vars*/
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseUser loggedInAs = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference reference;
 
     private Toolbar toolbar;
     private AppCompatActivity appCompatActivity;
 
-    private TextInputEditText title;
-    private TextInputEditText description; //body
+    private EditText titleEditText;
+    private EditText descriptionEditText; //body
 
 
     @Override
@@ -30,8 +51,8 @@ public class addForumPost extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_forum_post);
 
-        this.title = findViewById(R.id.ap_forumTitle_editText);
-        this.description = findViewById(R.id.ap_forumDescription_editText);
+        this.titleEditText = findViewById(R.id.ap_forumTitle_editText);
+        this.descriptionEditText = findViewById(R.id.ap_forumDescription_editText);
 
         setUpToolbar(); //Toolbar init
 
@@ -71,20 +92,10 @@ public class addForumPost extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.cp_createPost:
-         /*       Toast toast = Toast.makeText(this, "submit selected" + title.getText() +" " + description.getText(), Toast.LENGTH_SHORT);
-                toast.show();*/
-                ForumPost insertThis = new ForumPost("",this.title.getText().toString(), "12", this.description.getText().toString());  /*Login change requiedr*/
-                ForumPost.insertPost(this, insertThis,getLoggedInUserId());    /*Login change required*/
 
-                Toast.makeText(this,"Loading...", Toast.LENGTH_SHORT).show();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                createForumPostFirebase(projectId);         //method that adds post to firebase using user input;
 
                 appCompatActivity.onBackPressed();  //return to main page
-
                 break;
             }
 
@@ -104,4 +115,73 @@ public class addForumPost extends AppCompatActivity {
         return userId;
 
     }
+
+    public void createForumPostFirebase(String projectId){
+        reference = database.getReference().getRoot()
+                .child("ForumPosts")            /*Make modular!*/
+                .child("Project-P" + projectId );
+
+                String postId = reference.push().getKey();      //gets unique identifier from firebase.
+                Log.d(TAG, "POST ID FIREBASE GEN = " + postId);
+
+                FirebaseForumPost post = preparePost(postId);     //prepare post is a helper method for post object creation and user input handling.
+
+                 if(post != null){       //if post object is non null, add it to firebase database
+                    reference.child(postId).setValue(post);
+                }else{
+                    Toast.makeText(this, "Fill the relevant fields", Toast.LENGTH_SHORT);
+                }
+
+    }
+
+    //returns post that need to be posted. if unsuccessful it will return null.
+    //also Toast message will be shown to alert the user.
+    public FirebaseForumPost preparePost(String postIdFirebase){
+        Log.d(TAG, "processMessageForSending(String senderUID)  CALLED");
+
+        //take the user input from EditTEXTS
+        String postTitle = this.titleEditText.getText().toString().trim();  //remove white spaces either end.       /
+        String postBody = this.descriptionEditText.getText().toString().trim();  //remove white spaces either end.       /
+
+        if( ( postTitle.equals("") ) || ( postTitle == null )){
+            this.titleEditText.setError("You need to type the title in.");
+            return null;        //terminate
+        }
+
+
+        if( ( postBody.equals("") ) || ( postBody == null )){
+            this.titleEditText.setError("You need to type the description in.");
+            return null;        //terminate...
+        }
+
+
+        FirebaseForumPost forumPost = new FirebaseForumPost(postIdFirebase, postTitle, postBody, loggedInAs.getUid(), getCurrentDateTime());
+
+        return forumPost;
+    }
+
+
+
+    //this method returns current date and time.
+    public String getCurrentDateTime(){
+        Date date = new Date();
+        String timeFormat = "dd:MM:yyyy hh:mm a";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(timeFormat);
+        String timeStamp = simpleDateFormat.format(date);
+
+        return timeStamp;
+    }
+
+    //returns time only when given string with time in format mentioned inside the method.
+    public String getTimeOnly(String dateTime) {
+        //Time format Suppiorted = "dd:MM:yyyy hh:mm a"
+        return dateTime.substring(11, dateTime.length() );
+    }
+
+    //returns date only when given string with time in format mentioned inside the method.
+    public String getDateOnly(String dateTime) {
+        //Time format Suppiorted = "dd:MM:yyyy hh:mm a"
+        return dateTime.substring(0, 11);
+    }
+
 }

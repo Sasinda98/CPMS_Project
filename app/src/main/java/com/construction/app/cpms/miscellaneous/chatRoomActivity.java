@@ -18,6 +18,7 @@ import com.construction.app.cpms.R;
 import com.construction.app.cpms.miscellaneous.adapters.ChatBubbleRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.adapters.MessageRecyclerViewAdapter;
 import com.construction.app.cpms.miscellaneous.bean.ChatRoomIDGenerator;
+import com.construction.app.cpms.miscellaneous.firebaseModels.ChatRoom;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseMessage;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class chatRoomActivity extends AppCompatActivity {
     private static String TAG = "chatRoomActivity";
@@ -102,6 +104,9 @@ public class chatRoomActivity extends AppCompatActivity {
 
         listenToChatRoomNode(PROJECT_ID, loggedInAs.getUid(), RECEIVER_UID);
 
+       //sets last read time of the logged in user for the relevant chatroom.
+        setLastRead(PROJECT_ID, loggedInAs.getUid(),RECEIVER_UID);
+
         //endregion
 
 
@@ -158,7 +163,7 @@ public class chatRoomActivity extends AppCompatActivity {
         }
     }
 
-    //this message returns current time, and also gets used inside processMessageForSending() method, line # 176
+    //this method returns current time, and also gets used inside processMessageForSending() method, line # 176
     public String getCurrentTime(){
         Date date = new Date();
         String timeFormat = "hh:mm a";
@@ -204,6 +209,7 @@ public class chatRoomActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()) {     //means user is actually there in the database
                     for (DataSnapshot usernode : dataSnapshot.getChildren()) {//get to the user node that has user details as the value
 
+                        Log.d(TAG,"Key = " + usernode.getKey());
                         FirebaseUserDetails user = usernode.getValue(FirebaseUserDetails.class);
 
                         Log.d(TAG, "Name = " + user.getName());
@@ -289,5 +295,25 @@ public class chatRoomActivity extends AppCompatActivity {
     }
 
     //endregion
+
+
+    public void setLastRead(String projectID, String loggedInUID, String receiverUID){
+        final String TAG = "setLastRead";
+
+        DatabaseReference reference;
+
+        reference = FirebaseDatabase.getInstance().getReference().getRoot().child("Rooms").child("Project-P" + projectID)
+                .child(ChatRoomIDGenerator.getChatRoomID(loggedInUID, receiverUID)).child("lastRead")
+                .child(loggedInUID);
+
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("lastRead", getCurrentTime());        //      /Rooms/Project-P#/UID-UID/lastRead/UID/lastRead
+
+        reference.updateChildren(hashMap);
+
+
+
+    }
+
 
 }

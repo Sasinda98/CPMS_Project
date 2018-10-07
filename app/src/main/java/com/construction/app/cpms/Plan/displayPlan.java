@@ -5,14 +5,19 @@ import com.bumptech.glide.Glide;
 import com.construction.app.cpms.R;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +91,62 @@ public class displayPlan extends AppCompatActivity {
                 update();
             }
         });
+
+        //navigate back to ViewPlans
+        ImageButton imageButton = (ImageButton)findViewById(R.id.backButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(displayPlan.this, MainPlan.class);
+                startActivity(intent);
+                }
+        });
+
+        //editText cursor visibility handling
+        final EditText editText = (EditText)findViewById(R.id.d_name);
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(view.getId() == editText.getId()){
+                    editText.setCursorVisible(true);
+                }
+                return false;
+            }
+        });
+        final EditText editText2 =(EditText)findViewById(R.id.d_description);
+        editText2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(view.getId() == editText2.getId()){
+                    editText2.setCursorVisible(true);
+                }
+                return false;
+            }
+        });
+      /*  //onCreate
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                editText.setCursorVisible(false);
+                if(keyEvent != null && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(editText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+        //onCreate
+       editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                editText2.setCursorVisible(false);
+                if(keyEvent != null && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(editText2.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        }); */
 
     }
     private void getIncomingIntent() {

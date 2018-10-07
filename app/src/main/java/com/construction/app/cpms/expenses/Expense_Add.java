@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,19 +19,34 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Expense_Add extends AppCompatActivity {
+public class Expense_Add extends AppCompatActivity implements Validator.ValidationListener {
 
     //variable initialization
+    @NotEmpty
+    @Length(min = 3, max = 20)
     private TextInputEditText description = null;
+
+    @NotEmpty
     private TextInputEditText category = null;
+
+    @NotEmpty
     private TextInputEditText amount = null;
+
+
     private Button submit = null;
     private String expCategory = null;
+    private Validator validator;
+    private boolean allokay = false;
 
     //Database
     private RequestQueue requestQueue;
@@ -47,7 +63,8 @@ public class Expense_Add extends AppCompatActivity {
         category = findViewById(R.id.expense_category);
         amount = findViewById(R.id.expense_amount);
         submit = findViewById(R.id.expense_submit_button);
-
+        validator = new Validator(this);
+        validator.setValidationListener(this);
 
 
         requestQueue = Volley.newRequestQueue(this.getApplicationContext());
@@ -55,15 +72,33 @@ public class Expense_Add extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                validator.validate();
+                String category_V = category.getText().toString();
 
-                addData();
-                Intent intent = new Intent(Expense_Add.this, Expense_Category_List.class);
-                intent.putExtra("expCategory", expCategory);
+                 switch(category_V){
+                    case "Direct":
+                        allokay = true;
+                        break;
+                    case "Consult":
+                        allokay = true;
+                        break;
+                    case "Miscell":
+                        allokay = true;
+                        break;
+                    case "Overheads":
+                        allokay = true;
+                        break;
+                    default:
+                        category.setError("Category Does Not Exist!");
+                        break;
+                }
 
-                startActivity(intent);
+
 
             }
         });
+
+
 
 
 
@@ -98,5 +133,28 @@ public class Expense_Add extends AppCompatActivity {
 
         //CharSequence msg = "Successfully Added Expense";
         //Toast.makeText(Expense_Add.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        Toast.makeText(this,"Validation Successful",Toast.LENGTH_LONG).show();
+        addData();
+        Intent intent = new Intent(Expense_Add.this, Expense_Category_List.class);
+        intent.putExtra("expCategory", expCategory);
+            startActivity(intent);
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for(ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            if(view instanceof EditText){
+                ((EditText) view).setError(message);
+            }else{
+                Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

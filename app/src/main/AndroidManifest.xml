@@ -3,6 +3,7 @@
     package="com.construction.app.cpms">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -55,7 +56,9 @@
         <activity
             android:name=".inventoryManagement.inventory_inspect_request"
             android:parentActivityName=".inventoryManagement.inventory_incoming_requests" />
-        <activity android:name=".miscellaneous.chatRoomActivity" /> <!-- Top bar kept hiding, this fixed it. -->
+        <activity
+            android:name=".miscellaneous.chatRoomActivity"
+            android:windowSoftInputMode="adjustResize" /> <!-- Top bar kept hiding, this fixed it. -->
         <activity android:name=".miscellaneous.ProfileActivity" />
         <activity android:name=".Plan.displayPlan" />
         <activity android:name=".miscellaneous.ComposeChatRoomActivity" />
@@ -68,9 +71,11 @@
             android:name=".inventoryManagement.inventory_edit_item"
             android:parentActivityName=".inventoryManagement.inventory_edit_list" />
         <activity android:name=".inventoryManagement.inventory_stock_low" />
-        <activity
-            android:name=".projectSwitcher"
-            android:label="@string/title_activity_project_switcher"></activity>
+        <activity android:name=".expenses.expenseReport" />
+        <activity android:name=".Plan.ProjectDashboard" />
+        <activity android:name=".Plan.ViewProject" />
+        <activity android:name=".Plan.AddProject" />
+        <activity android:name=".Plan.DisplayProject"></activity>
     </application>
 
 </manifest>
