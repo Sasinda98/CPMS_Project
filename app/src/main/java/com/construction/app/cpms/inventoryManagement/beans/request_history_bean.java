@@ -12,11 +12,10 @@ public class request_history_bean {
     private String itemName;
     private String subConFName;
     private String subConLname;
-    private String itemCategory;
     private String itemUnit;
     private String reqStatus;
 
-    public request_history_bean(int reqID, int subConID, int itemID, double reqQty, String reqDate, String valDate, String message, String itemName, String subConFName, String subConLname, String itemCategory, String itemUnit, String reqStatus) {
+    public request_history_bean(int reqID, int subConID, int itemID, double reqQty, String reqDate, String valDate, String message, String itemName, String subConFName, String subConLname, String itemUnit, String reqStatus) {
         this.reqID = reqID;
         this.subConID = subConID;
         this.itemID = itemID;
@@ -28,7 +27,6 @@ public class request_history_bean {
         this.subConFName = subConFName;
         this.subConLname = subConLname;
         this.reqStatus = reqStatus;
-        this.itemCategory = itemCategory;
         this.itemUnit = itemUnit;
     }
 
@@ -114,13 +112,6 @@ public class request_history_bean {
         this.subConLname = subConLname;
     }
 
-    public String getItemCategory() {
-        return itemCategory;
-    }
-
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
-    }
 
     public String getItemUnit() {
         return itemUnit;

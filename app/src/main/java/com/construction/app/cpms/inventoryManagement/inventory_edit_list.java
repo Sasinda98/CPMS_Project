@@ -2,7 +2,9 @@ package com.construction.app.cpms.inventoryManagement;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -45,7 +47,7 @@ public class inventory_edit_list extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchAllInventoryItems.php";
     private String URL_DELETE_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/deleteItem.php";
-
+    private String projectID;
 
     private int imgID;
     private static ArrayList<inventory_item_Bean> editItemArrayList;  // Forum class is a bean.
@@ -64,7 +66,9 @@ public class inventory_edit_list extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(inventory_edit_list.this);
         editItemArrayList = new ArrayList<inventory_item_Bean>();
 
-
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
         fetchdata();
 
@@ -180,13 +184,13 @@ public class inventory_edit_list extends AppCompatActivity {
 
                     }
                 }){
-//                    //send email and password to post...
-//                    @Override
-//                    protected Map<String, String> getParams() throws AuthFailureError {
-//                        HashMap<String, String> params = new HashMap<>();
-//                        params.put("iCat", catName);
-//                        return params;
-//                    }
+                    //send email and password to post...
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("pID", projectID);
+                        return params;
+                    }
 
                 };
                 requestQueue.add(stringRequest);
@@ -259,6 +263,7 @@ public class inventory_edit_list extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
                         params.put("iID", iID);
+                        params.put("pID", projectID);
                         return params;
                     }
 

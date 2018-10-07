@@ -67,7 +67,10 @@
         <activity
             android:name=".inventoryManagement.inventory_edit_item"
             android:parentActivityName=".inventoryManagement.inventory_edit_list" />
-        <activity android:name=".inventoryManagement.inventory_stock_low"></activity>
+        <activity android:name=".inventoryManagement.inventory_stock_low" />
+        <activity
+            android:name=".projectSwitcher"
+            android:label="@string/title_activity_project_switcher"></activity>
     </application>
 
 </manifest>

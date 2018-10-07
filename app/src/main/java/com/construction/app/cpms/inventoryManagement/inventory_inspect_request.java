@@ -1,6 +1,8 @@
 package com.construction.app.cpms.inventoryManagement;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +36,7 @@ public class inventory_inspect_request extends AppCompatActivity {
 
     private Button approveBtn;
     private Button denyBtn;
+    private String projectID;
 
     private RequestQueue requestQueue;
     private String insertUrl = "https://projectcpms99.000webhostapp.com/scripts/chandula/updateInventoryRequest.php";
@@ -43,6 +46,10 @@ public class inventory_inspect_request extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_inspect_request);
+
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
         //Get all the values from previous screen
         Intent intent = getIntent();
@@ -136,6 +143,7 @@ public class inventory_inspect_request extends AppCompatActivity {
                             params.put("rStat", stat);
                             params.put("iID", String.valueOf(itemID));
                             params.put("rBal", String.valueOf(bal));
+                            params.put("pID", projectID);
 
                             System.out.println("=========================================================================");
                             System.out.println("=============================="+String.valueOf(rID)+"=====================================");

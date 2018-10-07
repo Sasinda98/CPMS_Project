@@ -1,6 +1,7 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import com.construction.app.cpms.R;
 
@@ -14,6 +15,7 @@ public class inventory_manager_panel extends AppCompatActivity {
     private CardView requestsCard;
     private CardView requestHistoryCard;
     private CardView stockLowCard;
+    private FloatingActionButton addItemFAB;
 
 
     @Override
@@ -31,6 +33,7 @@ public class inventory_manager_panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(inventory_manager_panel.this, inventory_edit_list.class);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
             }
         });
@@ -56,6 +59,16 @@ public class inventory_manager_panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(inventory_manager_panel.this, inventory_stock_low.class);
+                startActivity(intent);
+            }
+        });
+
+
+        addItemFAB = (FloatingActionButton) findViewById(R.id.add_item_fab);
+        addItemFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(inventory_manager_panel.this, inventory_add_item.class);
                 startActivity(intent);
             }
         });

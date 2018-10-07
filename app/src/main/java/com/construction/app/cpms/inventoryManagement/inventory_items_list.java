@@ -1,7 +1,9 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -45,6 +47,7 @@ public class inventory_items_list extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
     private String catName;
+    private String projectID;
     private int imgID;
     private static ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
     private android.support.v7.widget.Toolbar toolbar;
@@ -61,6 +64,10 @@ public class inventory_items_list extends AppCompatActivity {
 
         catName = intent.getStringExtra("catName");
         imgID = intent.getIntExtra("imgID", 0);
+
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
         requestQueue = Volley.newRequestQueue(inventory_items_list.this);
         itemArrayList = new ArrayList<inventory_item_Bean>();
@@ -151,6 +158,7 @@ public class inventory_items_list extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
                         params.put("iCat", catName);
+                        params.put("pID", projectID);
                         return params;
                     }
 

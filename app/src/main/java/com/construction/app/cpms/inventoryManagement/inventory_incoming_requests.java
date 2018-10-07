@@ -1,7 +1,9 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class inventory_incoming_requests extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryRequests.php";
     private Toolbar toolbar;
+    private String projectID;
 
     private static ArrayList<incoming_requests_bean> requestArrayList;  // Forum class is a bean.
 
@@ -55,6 +58,10 @@ public class inventory_incoming_requests extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Pending Requests");
+
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
 
         fetchdata();
@@ -160,6 +167,12 @@ public class inventory_incoming_requests extends AppCompatActivity {
 
                     }
                 }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("pID", projectID);
+                        return params;
+                    }
 
                 };
                 requestQueue.add(stringRequest);

@@ -28,6 +28,7 @@ import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.SecondaryActivity;
 import com.construction.app.cpms.expenses.actiExpenses;
+import com.construction.app.cpms.projectSwitcher;
 
 import com.construction.app.cpms.inventoryManagement.*;
 import com.google.firebase.auth.FirebaseAuth;
@@ -141,6 +142,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //have your stuff here..... intent...
+
+                Intent intent = new Intent(getActivity(), projectSwitcher.class);
+                startActivity(intent, null);
             }
         });
 

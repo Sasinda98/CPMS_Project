@@ -90,6 +90,7 @@
 
 
     </string-array>
+    <string name="title_activity_project_switcher">projectSwitcher</string>
 
 
 </resources>

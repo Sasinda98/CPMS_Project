@@ -1,7 +1,9 @@
 package com.construction.app.cpms.inventoryManagement;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -34,6 +36,7 @@ import java.util.Map;
 
 public class inventory_stock_low extends AppCompatActivity {
 
+    private String projectID;
 
     /*Database Variables*/
     private  StringRequest stringRequest;
@@ -59,6 +62,9 @@ public class inventory_stock_low extends AppCompatActivity {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Stock Low");
 
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
         fetchdata();
 
@@ -117,12 +123,12 @@ public class inventory_stock_low extends AppCompatActivity {
 
                     }
                 }){
-//                    @Override
-//                    protected Map<String, String> getParams() throws AuthFailureError {
-//                        HashMap<String, String> params = new HashMap<>();
-//                        params.put("iCat", catName);
-//                        return params;
-//                    }
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("pID", projectID);
+                        return params;
+                    }
 
                 };
                 requestQueue.add(stringRequest);

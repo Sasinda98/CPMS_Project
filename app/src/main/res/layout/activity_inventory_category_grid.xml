@@ -6,8 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inventoryManagement.inventory_category_grid"
-    android:background="@color/backgroundDark">
+    android:background="@color/backgroundDark"
+    tools:context=".inventoryManagement.inventory_category_grid">
 
 
     <!--top appbar-->
@@ -35,14 +35,13 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:background="@color/primaryColor"
+        android:elevation="8dp"
         app:itemIconTint="@color/bttm_navbar_tab_colors"
         app:itemTextColor="@color/bttm_navbar_tab_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation"
-        android:elevation="8dp"
-        />
+        app:menu="@menu/navigation" />
 
 
     <GridView
@@ -63,33 +62,52 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.183" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/categoryFloatingActionButton"
-        android:layout_width="65dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:background="@drawable/helmet"
-        android:clickable="true"
-        android:tint="@color/primaryLightColor"
-        app:backgroundTint="@color/primaryLightColor"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus" />
 
-    <Button
-        android:id="@+id/catPlaceHolderBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginStart="44dp"
-        android:background="@color/primaryLightColor"
-        android:text="Panel"
+    <android.support.v7.widget.CardView
+        android:id="@+id/managerPanelCardView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="116dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        app:cardBackgroundColor="@color/primaryLightColor"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/managerImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/engineer" />
+
+            <TextView
+                android:id="@+id/managerCardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Panel"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif"
+                app:layout_constraintBottom_toBottomOf="@+id/managerImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.526"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
 

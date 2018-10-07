@@ -1,5 +1,6 @@
 package com.construction.app.cpms.inventoryManagement;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
@@ -32,6 +33,7 @@ public class inventory_request_item extends AppCompatActivity {
     private String itemName;
     private String itemUnit;
     private String catName;
+    private String projectID;
     private double iQty;
     private int itemID;
     private String userID;
@@ -56,6 +58,10 @@ public class inventory_request_item extends AppCompatActivity {
         //Getting UserID from sharedPreference
         SharedPreferences preferences = getSharedPreferences("userInfo", MODE_PRIVATE);
         userID = preferences.getString("userId","");
+
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
         System.out.println("UserID =========================================================================================== "+ userID);
 
@@ -82,7 +88,6 @@ public class inventory_request_item extends AppCompatActivity {
         denyBtn = (Button) findViewById(R.id.request_item_cancel_btn);
         reqMessage = findViewById(R.id.inventory_request_message);
         reqQty = findViewById(R.id.inventory_request_qty);
-
 
         addListenerOnConfirm();
         addListenerOnDeny();
@@ -146,9 +151,12 @@ public class inventory_request_item extends AppCompatActivity {
                             HashMap<String,String> params = new HashMap<>();
                             params.put("iID", Integer.toString(itemID));
                             params.put("rQty", reqQty.getText().toString());
+                            params.put("iName", itemName.toString());
+                            params.put("iUnit", itemUnit.toString());
                             params.put("rMsg", reqMessage.getText().toString());
                             params.put("rDate", currentTime);
                             params.put("uID", userID.toString());
+                            params.put("pID", projectID);
                             return params;
                         }
                     };

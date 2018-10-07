@@ -3,7 +3,9 @@ package com.construction.app.cpms.inventoryManagement;
 // Icons made by Freepik from www.flaticon.com (tick and cross)
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,9 +30,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class inventory_request_history extends AppCompatActivity {
+
+    private String projectID;
 
     /*Database Variables*/
     private StringRequest stringRequest;
@@ -52,6 +59,10 @@ public class inventory_request_history extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Requests History");
+
+        //Temporary projectID
+        SharedPreferences pref = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = pref.getString("projSwitchID", "");
 
 
 
@@ -97,7 +108,6 @@ public class inventory_request_history extends AppCompatActivity {
                                 String fName = object.getString("fName");
                                 String lName = object.getString("lName");
                                 String reqStat = object.getString("reqStatus");
-                                String itemCategory = object.getString("itemCategory");
                                 String itemUnit = object.getString("itemUnit");
 
 
@@ -105,7 +115,7 @@ public class inventory_request_history extends AppCompatActivity {
 
 
 
-                                request_history_bean request_history = new request_history_bean(reqID,subConID,itemID,reqQty,reqDate, valDate, reqMessage,itemName,fName,lName,itemCategory,itemUnit, reqStat);
+                                request_history_bean request_history = new request_history_bean(reqID,subConID,itemID,reqQty,reqDate, valDate, reqMessage,itemName,fName,lName,itemUnit, reqStat);
 
 
 
@@ -126,6 +136,13 @@ public class inventory_request_history extends AppCompatActivity {
                     }
                 }){
 
+                    //send email and password to post...
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("pID", projectID);
+                        return params;
+                    }
                 };
                 requestQueue.add(stringRequest);
                 return null;
