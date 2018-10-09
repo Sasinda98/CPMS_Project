@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".projectSwitcher"/>
+        <activity android:name=".projectSwitcher" />
         <activity
             android:name=".SecondaryActivity"
             android:label="@string/title_activity_secondary"
@@ -76,7 +76,9 @@
         <activity android:name=".Plan.ProjectDashboard" />
         <activity android:name=".Plan.ViewProject" />
         <activity android:name=".Plan.AddProject" />
-        <activity android:name=".Plan.DisplayProject"></activity>
+        <activity android:name=".Plan.DisplayProject" />
+        <activity android:name=".miscellaneous.viewMoreForumPostActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

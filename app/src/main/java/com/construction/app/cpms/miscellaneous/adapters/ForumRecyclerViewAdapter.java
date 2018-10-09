@@ -24,6 +24,7 @@ import com.construction.app.cpms.miscellaneous.editForumPost;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseForumPost;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseLastRead;
 import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
+import com.construction.app.cpms.miscellaneous.viewMoreForumPostActivity;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -187,6 +188,25 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
         });
 
         //endregion
+
+
+
+        /*View more button*/
+        /*Gets called only when view is populated, only logical flow*/
+        viewHolder.viewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, viewMoreForumPostActivity.class);
+                intent.putExtra("avmfp_postTitle", viewHolder.forumTitle.getText());
+                intent.putExtra("avmfp_postBody", viewHolder.body.getText() );
+                intent.putExtra("avmfp_postPostedBy", viewHolder.postedBy.getText() );
+                intent.putExtra("avmfp_postTimeStamp", forumPostArrayList.get(i).getDateTime() );
+
+                context.startActivity(intent);
+            }
+        });
+
+
 
     }
 
