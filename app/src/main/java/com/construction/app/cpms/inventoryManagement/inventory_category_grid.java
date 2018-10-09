@@ -41,12 +41,16 @@ public class inventory_category_grid extends AppCompatActivity {
         gridView.setAdapter(adapter);
         managerCard = (CardView) findViewById(R.id.managerPanelCardView);
 
-        //Temporary till user type implemented for user
-        userType = "projectManager";
+//        //Temporary till user type implemented for user
+//        userType = "projectManager";
 
         //Temporary projectID
         SharedPreferences preferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
         projectID = preferences.getString("projSwitchID", "");
+
+        //Temporary User Type
+        SharedPreferences pref = getSharedPreferences("jobSwitch", Context.MODE_PRIVATE);
+        userType = String.valueOf(pref.getString("jobRole", "")) ;
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,19 +68,23 @@ public class inventory_category_grid extends AppCompatActivity {
             }
         });
 
+        managerCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(inventory_category_grid.this, inventory_manager_panel.class);
+                startActivity(intent);
+            }
+        });
+
+
         //Button Leading to inventory management panel
         //Hide button if user is not the project manager
-        if(!userType.equals("projectManager")){
+        if(!userType.equals("ProjectManager")){
             managerCard.setVisibility(View.GONE);
         }
         else {
-            managerCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(inventory_category_grid.this, inventory_manager_panel.class);
-                    startActivity(intent);
-                }
-            });
+
+            managerCard.setVisibility(View.VISIBLE);
         }
 
 
@@ -110,8 +118,8 @@ public class inventory_category_grid extends AppCompatActivity {
         categoryBean = new inventory_category_Bean("ELECTRICAL", R.drawable.light_bulb);
         categoryList.add(categoryBean);
 
-        categoryBean = new inventory_category_Bean("STEEL", R.drawable.crane);
-        categoryList.add(categoryBean);
+//        categoryBean = new inventory_category_Bean("STEEL", R.drawable.crane);
+//        categoryList.add(categoryBean);
 
         categoryBean = new inventory_category_Bean("ROOFING", R.drawable.roof);
         categoryList.add(categoryBean);

@@ -69,6 +69,7 @@ public class inventory_manager_panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(inventory_manager_panel.this, inventory_add_item.class);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
                 startActivity(intent);
             }
         });

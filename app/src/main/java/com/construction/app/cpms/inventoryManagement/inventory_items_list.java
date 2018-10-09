@@ -48,6 +48,7 @@ public class inventory_items_list extends AppCompatActivity {
     private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/chandula/fetchInventoryItems.php";
     private String catName;
     private String projectID;
+    private String userType;
     private int imgID;
     private static ArrayList<inventory_item_Bean> itemArrayList;  // Forum class is a bean.
     private android.support.v7.widget.Toolbar toolbar;
@@ -59,6 +60,10 @@ public class inventory_items_list extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_items_list);
+
+        //Temporary User Type
+        SharedPreferences userPref = getSharedPreferences("jobSwitch", Context.MODE_PRIVATE);
+        userType = String.valueOf(userPref.getString("jobRole", "")) ;
 
         Intent intent = getIntent();
 
@@ -100,7 +105,16 @@ public class inventory_items_list extends AppCompatActivity {
                 intent.putExtra("itemID", itemID);
                 intent.putExtras(b);
                 intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
-                startActivity(intent);
+
+                boolean res;
+                res = validateUserType();
+                if(res == true) {
+                    startActivity(intent);
+                }
+                else{
+                    Toast toast = Toast.makeText(inventory_items_list.this, "Sorry. You are not authorized to request this Item", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
 
@@ -181,6 +195,35 @@ public class inventory_items_list extends AppCompatActivity {
         };
 
         asyncTask.execute();
+    }
+
+    //Method determines if user is validated to request chosen item
+    private boolean validateUserType(){
+
+        if(catName.equalsIgnoreCase("MASONRY") && userType.equalsIgnoreCase("Mason")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("CARPENTRY") && userType.equalsIgnoreCase("Carpenter")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("PLUMBING") && userType.equalsIgnoreCase("Plumber")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("FLOORING") && userType.equalsIgnoreCase("Floorer")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("ELECTRICAL") && userType.equalsIgnoreCase("Electrician")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("ROOFING") && userType.equalsIgnoreCase("Roofer")){
+            return  true;
+        }
+        else if(catName.equalsIgnoreCase("COMMON")){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
