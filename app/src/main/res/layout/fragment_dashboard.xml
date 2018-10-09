@@ -81,22 +81,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Plans"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/blueprint_img" />
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_sketch" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Plans"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -113,26 +115,29 @@
                     app:layout_rowWeight="1">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="Inventory"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/inventory_img" />
+
+                        <TextView
+                            android:id="@+id/invent_textView"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/hammer" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Inventory"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -152,22 +157,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Finances"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/finance_img" />
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Finance"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -187,22 +193,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Forums"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/forums_img" />
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Forums"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -222,22 +230,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Milestones"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/milestones_img" />
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Milestones"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -257,22 +266,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Projects"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/project_img" />
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Project"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -291,22 +301,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Switch Projects"
-                            android:textAlignment="center"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="@dimen/db_card_title" />
-
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/switcher_img" />
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/db_inventory" />
+                            android:layout_weight="2"
+                            android:gravity="center_horizontal"
+                            android:text="Switcher"
+                            android:textAllCaps="true"
+                            android:textColor="@color/backgroundW"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
