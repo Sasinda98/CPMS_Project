@@ -15,4 +15,8 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
     //comment from theeban.
+
+    public void abc(){
+        System.out.print(1);
+    }
 }
