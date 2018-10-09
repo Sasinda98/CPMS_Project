@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/CommentbubbleParentLayout"
+    android:paddingTop="@dimen/margins_four"
+    android:paddingBottom="@dimen/margins_four"
+    android:paddingRight="@dimen/margins_eight"
+    android:paddingLeft="@dimen/margins_eight"
+
+    android:orientation="vertical">
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/backgroundLight"
+        app:cardElevation="@dimen/um_shadow_elevation"
+        app:cardCornerRadius="@dimen/cornerRadius"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margins_eight"
+            >
+
+            <!--Poster's name -->
+            <TextView
+                android:id="@+id/comment_postedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/forum_post_postedby_text_size"
+                android:textColor="@color/forum_postedby_color"
+                android:textAlignment="center"
+
+                android:layout_marginLeft="@dimen/forum_postedby_spacer_left"
+                android:text="POSTER NAME"
+                />
+
+            <!--Body-->
+            <TextView
+                android:id="@+id/comment_body"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/forum_post_body_text_size"
+                android:textColor="@color/mc_rolecolor_lightblack"
+                android:layout_below="@id/comment_postedBy"
+                android:text="That's not gonna work out if that is the way its done. "
+                android:layout_marginLeft="@dimen/forum_postedby_spacer_left"
+                />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/comment_body"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentRight="true"
+                >
+
+                <!--Time stamp-->
+                <TextView
+                    android:id="@+id/comment_timeStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginEnd="@dimen/margins_eight"
+                    android:layout_marginRight="@dimen/margins_eight"
+                    android:layout_marginTop="@dimen/margins_eight"
+                    android:gravity="right"
+
+                    android:text="12:00pm"
+
+                    android:textColor="@color/mc_grey"
+                    android:textSize="@dimen/forum_timestamp_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/comment_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/forum_post_postedby_text_size"
+                android:textColor="@color/primaryColor"
+                android:textAlignment="center"
+                android:layout_marginRight="@dimen/margins_eight"
+
+                android:textStyle="bold"
+
+                android:layout_marginLeft="@dimen/forum_postedby_spacer_left"
+                android:text="DELETE"
+
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+
+                />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>

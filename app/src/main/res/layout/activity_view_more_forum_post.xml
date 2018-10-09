@@ -155,14 +155,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/cr_cr_messageTextInputEditText"
+                        android:id="@+id/cr_cr_CommentForumTextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:ignore="RtlHardcoded" />
                 </android.support.design.widget.TextInputLayout>
 
                 <ImageButton
-                    android:id="@+id/cr_sendbtn"
+                    android:id="@+id/comment_sendbtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margins_eight"

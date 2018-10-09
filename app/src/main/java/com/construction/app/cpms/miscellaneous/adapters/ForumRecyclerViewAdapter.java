@@ -202,6 +202,8 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
                 intent.putExtra("avmfp_postPostedBy", viewHolder.postedBy.getText() );
                 intent.putExtra("avmfp_postTimeStamp", forumPostArrayList.get(i).getDateTime() );
 
+                intent.putExtra("avmfp_projectID", projectId);
+                intent.putExtra("avmfp_postID", forumPostArrayList.get(i).getPostId());
                 context.startActivity(intent);
             }
         });
