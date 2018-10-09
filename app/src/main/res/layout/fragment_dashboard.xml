@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<!--    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@color/primaryTextColor"
-            app:title="@string/dashboard"
-            >
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>-->
-
-
-    <!--Refered to https://stackoverflow.com/questions/10610943/gridlayout-scrollview
-        to get the scrolling to work with gridlayout. Out take-: hardcode gridlayout height
-    -->
-
 <android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -71,14 +53,14 @@
 
             <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="580dp"
                 android:padding="8dp"
                 android:scrollbars="vertical"
 
                 app:alignmentMode="alignMargins"
                 app:columnCount="2"
                 app:columnOrderPreserved="false"
-                app:rowCount="3"
+                app:rowCount="4"
                 app:useDefaultMargins="true"
 
                 >
@@ -124,7 +106,7 @@
                     android:id="@+id/inventoryTile"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:cardBackgroundColor="@color/tweakedRed"
+                    app:cardBackgroundColor="@color/cardBackground"
                     app:cardCornerRadius="4dp"
                     app:cardElevation="4dp"
                     app:layout_columnWeight="1"
@@ -281,7 +263,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Proj_temp"
+                            android:text="Projects"
                             android:textAlignment="center"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="@dimen/db_card_title" />
