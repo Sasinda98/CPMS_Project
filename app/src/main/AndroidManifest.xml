@@ -26,7 +26,7 @@
             android:name=".SecondaryActivity"
             android:label="@string/title_activity_secondary"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".expenses.actiExpenses" />
+        <activity android:name=".expenses.expenseHome" />
         <activity
             android:name=".inventoryManagement.inventory_items_list"
             android:parentActivityName=".inventoryManagement.inventory_category_grid" />
@@ -44,7 +44,7 @@
         <activity android:name=".Plan.newMainPlan" />
         android:windowSoftInputMode="adjustPan" />
         <activity android:name=".inventoryManagement.inventory_project_manager" />
-        <activity android:name=".expenses.Expense_Category_List" />
+        <activity android:name=".expenses.expenseCategoryList" />
         <activity android:name=".expenses.Expense_Add" />
         <activity android:name=".miscellaneous.addForumPost" />
         <activity android:name=".inventoryManagement.testParcel" />

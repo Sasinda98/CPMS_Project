@@ -1,16 +1,13 @@
 package com.construction.app.cpms.expenses;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,27 +32,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class actiExpenses extends AppCompatActivity {
+public class expenseHome extends AppCompatActivity {
 
     private static final String TAG = "ExpensesActivity";
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php"; //script to retrieve data
+    private String fetchAllURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php"; //script to retrieve data
     private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
-    private static ArrayList<Expense> recentExpenses;
-    private static Expense sample;
+    private static ArrayList<Expense> recentExpenses;//duplicate array to store only 10 newest expenses
     private ExpenseListAdapter adapter;
-    private String val = "1";
+    private String projectID; //project ID from shared preferences
+    private String userType;
 
 
 
@@ -66,8 +58,15 @@ public class actiExpenses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_expenses);
 
+        //getting project ID from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = sharedPreferences.getString("projSwitchID", "");
 
-        requestQueue = Volley.newRequestQueue(actiExpenses.this);
+        //getting userType from shared preferences
+        SharedPreferences preferences = getSharedPreferences("jobSwitch", Context.MODE_PRIVATE);
+        userType = String.valueOf(preferences.getString("jobRole", "")) ;
+
+        requestQueue = Volley.newRequestQueue(expenseHome.this);
         expenseArrayList = new ArrayList<>();
         recentExpenses = new ArrayList<>();
 
@@ -86,7 +85,7 @@ public class actiExpenses extends AppCompatActivity {
         mListView.setBackgroundColor(Color.WHITE);
 
 
-
+        //assigning buttons to category list page
         ImageButton directButt = findViewById(R.id.directButt);
         buttonPress(directButt, "Direct");
 
@@ -99,26 +98,33 @@ public class actiExpenses extends AppCompatActivity {
         ImageButton overButt = findViewById(R.id.overButt);
         buttonPress(overButt, "Overheads");
 
-
+        //add expense button
         FloatingActionButton add = findViewById(R.id.addExpenses);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(actiExpenses.this, Expense_Add.class);
+                if(userType.equals("ProjectManager")) {
+                    Intent intent = new Intent(expenseHome.this, Expense_Add.class);
 
-                startActivity(intent);
+                    startActivity(intent);
+
+                }else{
+
+                    Toast.makeText(expenseHome.this, "Contact Project Manager", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
-
+        //report button
         Button button = findViewById(R.id.report);
         button.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view){
 
-                Intent intent = new Intent(actiExpenses.this, expenseReport.class);
+                Intent intent = new Intent(expenseHome.this, expenseReport.class);
 
                 startActivity(intent);
 
@@ -127,15 +133,6 @@ public class actiExpenses extends AppCompatActivity {
             }
 
         });
-        //System.out.println("*******************************************************************************************" +sum);
-
-
-
-
-
-
-
-
 
 
     }
@@ -154,7 +151,7 @@ public class actiExpenses extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(actiExpenses.this, Expense_Category_List.class);
+                Intent intent = new Intent(expenseHome.this, expenseCategoryList.class);
                 intent.putExtra("expCategory", catg);
 
                 startActivity(intent);
@@ -167,7 +164,7 @@ public class actiExpenses extends AppCompatActivity {
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                stringRequest = new StringRequest(Request.Method.POST, fetchAllURL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
@@ -184,9 +181,7 @@ public class actiExpenses extends AppCompatActivity {
 
 
                                 Expense expense = new Expense(expenseID, description, category, amount);
-                                //sum = sum + expense.getAmount();
-                                //System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+sum);
-                                //System.out.println("Description= " + expense.getDescription()+"Category of Expense= " + category +"Amount= " + amount);
+
 
                                 //populate arraylist
                                 expenseArrayList.add(expense);
@@ -212,7 +207,7 @@ public class actiExpenses extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put("val", val);
+                        params.put("pID", projectID);
                         return params;
                     }
 
@@ -230,7 +225,7 @@ public class actiExpenses extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 CharSequence msg = "Loading...";
-                Toast.makeText(actiExpenses.this, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(expenseHome.this, msg, Toast.LENGTH_LONG).show();
             }
         };
 

@@ -2,7 +2,9 @@ package com.construction.app.cpms.expenses;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,41 +33,80 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Expense_Category_List extends AppCompatActivity {
+public class expenseCategoryList extends AppCompatActivity {
 
-    private static final String TAG = "ExpensesActivity";
+
     /*Database Variables*/
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php"; //script to retrieve data
+    private String catFetchURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchingExpenses.php"; //script to retrieve data
     private String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/deleteExpense.php";//script to delete data
+   //Global Strings
     private String expCategory;//variable to retrieve selected category from intent
-    private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
-    private static Expense sample;
+    private String projectID;
+    private String userType;
 
+    private static ArrayList<Expense> expenseArrayList;//arrayList to store retrieved data
     private ExpenseListAdapter adapter;
-    private ListView listView;
-    private double sum;
-    TextView textView = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense__category__list);
 
+        //getting project ID from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = sharedPreferences.getString("projSwitchID", "");
+
+        SharedPreferences pref = getSharedPreferences("jobSwitch", Context.MODE_PRIVATE);
+        userType = String.valueOf(pref.getString("jobRole", "")) ;
+
+        //getting category from intent
         Intent intent = getIntent();
         expCategory = intent.getStringExtra("expCategory");
 
-        requestQueue = Volley.newRequestQueue(Expense_Category_List.this);
+        //setting apptitle based on category from intent
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        String category = null;
+        switch(expCategory) {
+            case "Direct":
+                category = "Direct Costs";
+                break;
+            case "Miscell":
+                category = "Miscellaneous Costs";
+                break;
+            case "Consult":
+                category = "Consultation Costs";
+                break;
+            case "Overheads":
+                category = "Overhead Costs";
+                break;
+            default:
+                break;
+        }
+        toolbar.setTitle(category);
+
+        requestQueue = Volley.newRequestQueue(expenseCategoryList.this);
         expenseArrayList = new ArrayList<Expense>();
 
+        //database access
         fetchdata();
 
-        listView = (ListView) findViewById(R.id.exp_listView);
+        ListView listView = findViewById(R.id.exp_listView);
         adapter = new ExpenseListAdapter(this, R.layout.expenses_adapter_view_layout, expenseArrayList);
         listView.setAdapter(adapter);
 
+        //making contextmenu available for listview
         registerForContextMenu(listView);
+
+        //if user is not project manager cannot edit or delete any expenses
+        if(!userType.equals("ProjectManager")){
+            listView.setLongClickable(false);
+        }else{
+            listView.setLongClickable(true);
+        }
 
     }
 
@@ -94,7 +134,7 @@ public class Expense_Category_List extends AppCompatActivity {
                 index = info.position;
                 expID = expenseArrayList.get(index).getExpenseID();
 
-                Intent intent = new Intent(Expense_Category_List.this, editExpense.class);
+                Intent intent = new Intent(expenseCategoryList.this, editExpense.class);
                 intent.putExtra("expId", expID);
 
                 startActivity(intent);
@@ -164,7 +204,7 @@ public class Expense_Category_List extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 CharSequence msg = "Successfully Deleted Expense" + expId;
-                Toast.makeText(Expense_Category_List.this, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(expenseCategoryList.this, msg, Toast.LENGTH_LONG).show();
 
             }
 
@@ -184,7 +224,7 @@ public class Expense_Category_List extends AppCompatActivity {
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                stringRequest = new StringRequest(Request.Method.POST, catFetchURL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
@@ -225,6 +265,7 @@ public class Expense_Category_List extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
+                        params.put("pID", projectID);
                         params.put("category", expCategory);
                         return params;
                     }
@@ -243,7 +284,7 @@ public class Expense_Category_List extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 CharSequence msg = "Loading...";
-                Toast.makeText(Expense_Category_List.this, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(expenseCategoryList.this, msg, Toast.LENGTH_LONG).show();
             }
         };
 

@@ -68,7 +68,7 @@ public class editExpense extends AppCompatActivity {
             public void onClick(View view) {
 
                 updateData(expId);
-                Intent intent = new Intent(editExpense.this, Expense_Category_List.class);
+                Intent intent = new Intent(editExpense.this, expenseCategoryList.class);
                 intent.putExtra("expCategory", expCategory);
 
                 startActivity(intent);

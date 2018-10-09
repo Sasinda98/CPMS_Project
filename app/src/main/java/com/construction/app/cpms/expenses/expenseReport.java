@@ -1,7 +1,9 @@
 package com.construction.app.cpms.expenses;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,12 +33,10 @@ public class expenseReport extends AppCompatActivity {
 
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
-    private String URL_PHP_SCRIPT = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php";
+    private String fetchAllURL = "https://projectcpms99.000webhostapp.com/scripts/ayyoob/fetchAll.php";
     private static ArrayList<Expense> expenseArrayList;
     private ExpenseListAdapter adapter;
-    private ListView listView;
-    private String val = "1";
-    private String totalExp;
+    private String projectID;
     private TextView textView;
     private double sum;
     @Override
@@ -44,7 +44,11 @@ public class expenseReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_report);
 
+        //getting project ID from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = sharedPreferences.getString("projSwitchID", "");
 
+        //textview for total expense value
         textView = findViewById(R.id.reportTotalValue);
 
 
@@ -59,16 +63,13 @@ public class expenseReport extends AppCompatActivity {
         mListView.setAdapter(adapter);
 
 
-
-
-
     }
 
     private void fetchdata(){
         @SuppressLint("StaticFieldLeak") AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                stringRequest = new StringRequest(Request.Method.POST, URL_PHP_SCRIPT, new Response.Listener<String>() {
+                stringRequest = new StringRequest(Request.Method.POST, fetchAllURL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
@@ -112,7 +113,7 @@ public class expenseReport extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put("val", val);
+                        params.put("pID", projectID);
                         return params;
                     }
 

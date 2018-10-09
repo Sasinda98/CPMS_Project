@@ -4,11 +4,8 @@ package com.construction.app.cpms.miscellaneous;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,23 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.Navigation;
-import com.construction.app.cpms.Plan.MainPlan;
 import com.construction.app.cpms.Plan.ProjectDashboard;
 import com.construction.app.cpms.Plan.newMainPlan;
 import com.construction.app.cpms.R;
 import com.construction.app.cpms.projectSwitcher;
-import com.construction.app.cpms.SecondaryActivity;
-import com.construction.app.cpms.expenses.actiExpenses;
+import com.construction.app.cpms.expenses.expenseHome;
 
 import com.construction.app.cpms.inventoryManagement.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -118,7 +110,7 @@ public class DashboardFragment extends Fragment {
                 /*Toast toast = Toast.makeText(getContext(), "Finances Tile Clicked", Toast.LENGTH_SHORT);
                 toast.show();*/
 
-                Intent intent = new Intent(getActivity(), actiExpenses.class);
+                Intent intent = new Intent(getActivity(), expenseHome.class);
                 startActivity(intent, null);
 
             }
