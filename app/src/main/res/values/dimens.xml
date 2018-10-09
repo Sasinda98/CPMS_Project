@@ -92,6 +92,7 @@
     <dimen name="captionPadding4">16dp</dimen>
     <dimen name="captionPadding5">44dp</dimen>
     <dimen name="fabpadding">40dp</dimen>
+    <dimen name="viewmoreForumSpacing">12dp</dimen>
     <string name="desc_listadapter">Description</string>
     <string name="category_listadapter">Category</string>
 

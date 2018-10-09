@@ -78,10 +78,10 @@ public class AddProject extends AppCompatActivity {
                 };
                 requestQueue.add(request);
 
-                CharSequence message = "Project Uploaded Successfully ";
+                CharSequence message = "Project Uploaded Successfully";
                 Toast.makeText(AddProject.this, message, Toast.LENGTH_LONG).show();
 
-                Intent newIntent = new Intent(AddProject.this, newMainPlan.class);
+                Intent newIntent = new Intent(AddProject.this, ProjectDashboard.class);
                 startActivity(newIntent);
             }
         });

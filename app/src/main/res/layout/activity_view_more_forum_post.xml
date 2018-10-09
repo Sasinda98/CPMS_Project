@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".miscellaneous.viewMoreForumPostActivity"
+    android:background="@color/backgroundDark"
+    >
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="@dimen/um_shadow_elevation"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="@color/primaryTextColor"
+            tools:ignore="UnusedAttribute"></android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@+id/topBar"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+
+
+            <LinearLayout
+                android:id="@+id/viewmorebody_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/viewMore_postTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+                    android:layout_marginRight="@dimen/viewmoreForumSpacing"
+                    android:text="The Title"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/forum_post_title_text_size" />
+
+                <TextView
+                    android:id="@+id/viewMore_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+                    android:layout_marginRight="@dimen/viewmoreForumSpacing"
+                    android:layout_marginTop="@dimen/forum_body_top_margin"
+                    android:text="This is the body, hello"
+                    android:textColor="@color/mc_rolecolor_lightblack"
+                    android:textSize="17dp"
+                    />
+
+                <TextView
+                    android:id="@+id/viewMore_postedBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+                    android:layout_marginRight="@dimen/viewmoreForumSpacing"
+                    android:layout_marginTop="10dp"
+                    android:text="Posted By-: Gayal Sasinda"
+                    android:textColor="@color/forum_postedby_color"
+                    android:textSize="@dimen/forum_post_postedby_text_size" />
+
+                <TextView
+                    android:id="@+id/viewMore_timeStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/viewMore_postedBy"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginTop="@dimen/margins_eight"
+                    android:gravity="right"
+                    android:text="12:05am"
+                    android:textColor="@color/mc_grey"
+                    android:textSize="@dimen/forum_timestamp_text_size"
+
+                    android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+                    android:layout_marginRight="@dimen/viewmoreForumSpacing"
+                    />
+
+          <!--              <ImageButton
+                            android:id="@+id/popMenu"
+                            android:layout_width="@dimen/forum_popupmenu_width"
+                            android:layout_height="@dimen/forum_popupmenu_height"
+                            android:src="@drawable/ic_more_popup"
+                            android:layout_marginTop="@dimen/margins_four"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="@null"/>-->
+            </LinearLayout>
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/forumLogRecycView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="@dimen/chatlog_reycl_spacing_btm">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/parent_msgHolderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundDark"
+                android:layout_alignParentBottom="true"
+                android:elevation="@dimen/um_shadow_elevation"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/cr_messageTextInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="@dimen/message_writepad_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginEnd="@dimen/margins_eight"
+                    android:layout_marginLeft="@dimen/margins_eight"
+                    android:layout_marginRight="@dimen/margins_eight"
+                    android:layout_marginStart="@dimen/margins_eight"
+                    android:layout_marginTop="@dimen/margins_eight"
+                    android:hint="@string/message_writepad_placeholder_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cr_sendbtn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/cr_cr_CommentForumTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded" />
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/comment_sendbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margins_eight"
+                    android:layout_marginEnd="@dimen/margins_eight"
+                    android:layout_marginRight="@dimen/margins_eight"
+                    android:layout_marginTop="@dimen/margins_eight"
+                    android:background="@null"
+                    android:src="@drawable/ic_cr_send_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <!-- <RelativeLayout
+         android:id="@+id/viewmorebody_parent"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:paddingTop="12dp"
+         android:layout_below="@+id/topBar"
+
+         >
+
+         &lt;!&ndash;Title&ndash;&gt;
+         <TextView
+             android:id="@+id/viewMore_postTitle"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textSize="@dimen/forum_post_title_text_size"
+             android:textColor="@color/black_text"
+             android:text="The Title"
+             android:textAlignment="center"
+
+             android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+             android:layout_marginRight="@dimen/viewmoreForumSpacing"
+             />
+
+
+         &lt;!&ndash;Body&ndash;&gt;
+         <TextView
+             android:id="@+id/viewMore_body"
+             android:layout_marginTop="@dimen/forum_body_top_margin"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textSize="17dp"
+             android:textColor="@color/mc_rolecolor_lightblack"
+             android:layout_below="@id/viewMore_postTitle"
+             android:text="This is the body, hello"
+             android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+             android:layout_marginRight="@dimen/viewmoreForumSpacing"
+
+
+             />
+
+
+         &lt;!&ndash;Post tag&ndash;&gt;
+         <TextView
+             android:id="@+id/viewMore_postedBy"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:textSize="@dimen/forum_post_postedby_text_size"
+             android:textColor="@color/forum_postedby_color"
+             android:layout_below="@id/viewMore_body"
+             android:text="Posted By-: Gayal Sasinda"
+
+             android:layout_marginLeft="@dimen/viewmoreForumSpacing"
+             android:layout_marginRight="@dimen/viewmoreForumSpacing"
+             />
+
+
+         <TextView
+             android:id="@+id/viewMore_timeStamp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/margins_eight"
+             android:layout_marginEnd="@dimen/margins_eight"
+             android:layout_marginRight="@dimen/margins_eight"
+             android:layout_marginTop="@dimen/margins_eight"
+             android:gravity="right"
+
+             android:layout_alignParentEnd="true"
+             android:text="12:05am"
+
+             android:textColor="@color/mc_grey"
+             android:textSize="@dimen/forum_timestamp_text_size"
+             android:layout_alignParentRight="true"
+
+             android:layout_alignBaseline="@+id/viewMore_postedBy"
+             />
+
+
+ &lt;!&ndash;
+         <ImageButton
+             android:id="@+id/popMenu"
+             android:layout_width="@dimen/forum_popupmenu_width"
+             android:layout_height="@dimen/forum_popupmenu_height"
+             android:src="@drawable/ic_more_popup"
+             android:layout_marginTop="@dimen/margins_four"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true"
+             android:background="@null"/>&ndash;&gt;
+
+
+
+     </RelativeLayout>
+
+
+     <android.support.v7.widget.RecyclerView
+         android:id="@+id/forumLogRecycView"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/viewmorebody_parent"
+         android:layout_above="@id/parent_msgHolderLayout"
+         android:layout_marginBottom="@dimen/chatlog_reycl_spacing_btm"
+         >
+
+     </android.support.v7.widget.RecyclerView>
+
+
+     <android.support.constraint.ConstraintLayout
+         android:id="@+id/parent_msgHolderLayout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:background="@color/backgroundDark"
+         android:elevation="@dimen/um_shadow_elevation"
+         >
+
+         <android.support.design.widget.TextInputLayout
+             android:id="@+id/cr_messageTextInputLayout"
+             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+             android:layout_width="@dimen/message_writepad_width"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/margins_eight"
+             android:layout_marginEnd="@dimen/margins_eight"
+             android:layout_marginLeft="@dimen/margins_eight"
+             android:layout_marginRight="@dimen/margins_eight"
+             android:layout_marginStart="@dimen/margins_eight"
+             android:layout_marginTop="@dimen/margins_eight"
+             android:hint="@string/message_writepad_placeholder_text"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toStartOf="@+id/cr_sendbtn"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent">
+
+             <android.support.design.widget.TextInputEditText
+                 android:id="@+id/cr_cr_messageTextInputEditText"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 tools:ignore="RtlHardcoded" />
+         </android.support.design.widget.TextInputLayout>
+
+         <ImageButton
+             android:id="@+id/cr_sendbtn"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@null"
+             android:layout_marginBottom="@dimen/margins_eight"
+             android:layout_marginEnd="@dimen/margins_eight"
+             android:layout_marginRight="@dimen/margins_eight"
+             android:layout_marginTop="@dimen/margins_eight"
+             android:src="@drawable/ic_cr_send_btn"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+
+     </android.support.constraint.ConstraintLayout>-->
+
+
+</android.support.design.widget.CoordinatorLayout>
