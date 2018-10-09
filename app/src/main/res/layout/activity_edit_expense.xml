@@ -73,6 +73,7 @@
             android:id="@+id/expense_amount_e"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="@string/Rs_Expense" />
     </android.support.design.widget.TextInputLayout>
 

@@ -16,8 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.construction.app.cpms.R;
-import com.construction.app.cpms.expenses.Expense_Category_List;
-import com.construction.app.cpms.expenses.editExpense;
 import com.construction.app.cpms.inventoryManagement.adapters.edit_items_adapter;
 import com.construction.app.cpms.inventoryManagement.beans.inventory_item_Bean;
 
@@ -29,7 +27,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;

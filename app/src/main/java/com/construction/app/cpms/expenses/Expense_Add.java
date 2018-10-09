@@ -1,13 +1,14 @@
 package com.construction.app.cpms.expenses;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 
@@ -31,7 +32,7 @@ import java.util.Map;
 
 public class Expense_Add extends AppCompatActivity implements Validator.ValidationListener {
 
-    //variable initialization
+    //variable initialization and setting validation rules
     @NotEmpty
     @Length(min = 3, max = 20)
     private TextInputEditText description = null;
@@ -46,11 +47,11 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
     private Button submit = null;
     private String expCategory = null;
     private Validator validator;
-    private boolean allokay = false;
+    private String projectID;
 
     //Database
     private RequestQueue requestQueue;
-    private String insertUrl = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/addingExpense.php";
+    private String insertURL = "http://projectcpms99.000webhostapp.com/scripts/ayyoob/addingExpense.php";
 
 
     @Override
@@ -58,6 +59,9 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense__add);
 
+        //getting project ID from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+        projectID = sharedPreferences.getString("projSwitchID", "");
 
         description = findViewById(R.id.expense_description);
         category = findViewById(R.id.expense_category);
@@ -77,16 +81,12 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
 
                  switch(category_V){
                     case "Direct":
-                        allokay = true;
                         break;
                     case "Consult":
-                        allokay = true;
                         break;
                     case "Miscell":
-                        allokay = true;
                         break;
                     case "Overheads":
-                        allokay = true;
                         break;
                     default:
                         category.setError("Category Does Not Exist!");
@@ -107,7 +107,7 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
 
     private void addData(){
 
-        StringRequest request = new StringRequest(Request.Method.POST, insertUrl, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, insertURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -121,6 +121,7 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> params = new HashMap<>();
+                params.put("pID", projectID);
                 params.put("descr", description.getText().toString());
                 params.put("catg", category.getText().toString());
                 params.put("amt", amount.getText().toString());
@@ -137,9 +138,9 @@ public class Expense_Add extends AppCompatActivity implements Validator.Validati
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this,"Validation Successful",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Validation Successful",Toast.LENGTH_SHORT).show();
         addData();
-        Intent intent = new Intent(Expense_Add.this, Expense_Category_List.class);
+        Intent intent = new Intent(Expense_Add.this, expenseCategoryList.class);
         intent.putExtra("expCategory", expCategory);
             startActivity(intent);
 
