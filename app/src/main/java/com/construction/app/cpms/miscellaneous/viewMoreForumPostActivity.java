@@ -226,7 +226,7 @@ public class viewMoreForumPostActivity extends AppCompatActivity {
         String commentID = reference.push().getKey();      //gets unique identifier from firebase.
         Log.d(TAG, "COMMENT ID FIREBASE GEN = " + commentID);
 
-        FirebaseComment commentObj = prepareComment(commentID);     //prepare post is a helper method for post object creation and user input handling.
+        FirebaseComment commentObj = prepareComment(commentID, postID);     //prepare post is a helper method for post object creation and user input handling.
 
         if(commentID != null){       //if post object is non null, add it to firebase database
             reference.child(commentID).setValue(commentObj);
@@ -238,7 +238,7 @@ public class viewMoreForumPostActivity extends AppCompatActivity {
 
     //returns post that need to be posted. if unsuccessful it will return null.
     //also Toast message will be shown to alert the user.
-    public FirebaseComment prepareComment(String commentIDFirebase){
+    public FirebaseComment prepareComment(String commentIDFirebase, String postID){
         Log.d(TAG, "processMessageForSending(String senderUID)  CALLED");
 
         //take the user input from EditTEXTS
@@ -250,7 +250,7 @@ public class viewMoreForumPostActivity extends AppCompatActivity {
             return null;        //terminate
         }
 
-        FirebaseComment commentObj = new FirebaseComment( comment , loggedInAs.getUid(), getCurrentDateTime(), commentIDFirebase);
+        FirebaseComment commentObj = new FirebaseComment( comment , loggedInAs.getUid(), getCurrentDateTime(), commentIDFirebase, postID);
 
         return commentObj;
     }

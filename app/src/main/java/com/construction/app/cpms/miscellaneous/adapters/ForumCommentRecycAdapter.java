@@ -48,10 +48,25 @@ public class ForumCommentRecycAdapter extends RecyclerView.Adapter<ForumCommentR
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.postedByTV.setText("TESTING.");
         viewHolder.commentTV.setText(commentArrayList.get(i).getComment());
         viewHolder.timeStamp.setText(getTimeOnly(commentArrayList.get(i).getTimeStamp()));
+
+        viewHolder.deleteTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                DatabaseReference postRef = database.getReference().getRoot()     //references relevant post.
+                        .child("ForumsComments")            //Make modular!
+                        .child("Project-P" + projectID )  //project ID is given prefix Project-P, Naming convention in the database.
+                        .child(commentArrayList.get(i).getPostID())
+                        .child(commentArrayList.get(i).getCommentID());
+
+                postRef.removeValue();
+            }
+        });
 
 
         //region SET UserDetails like PIC, Name, Type using users node in firebase

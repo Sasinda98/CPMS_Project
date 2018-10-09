@@ -6,16 +6,26 @@ public class FirebaseComment {
     private String getPostedByUID;
     private String timeStamp;
     private String commentID;
+    private String postID;
 
     public FirebaseComment() {
         //firebase Requirement
     }
 
-    public FirebaseComment(String comment, String getPostedByUID, String timeStamp, String commentID) {
+    public FirebaseComment(String comment, String getPostedByUID, String timeStamp, String commentID, String postID) {
         this.comment = comment;
         this.getPostedByUID = getPostedByUID;
         this.timeStamp = timeStamp;
         this.commentID = commentID;
+        this.postID = postID;
+    }
+
+    public String getPostID() {
+        return postID;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
     }
 
     public String getComment() {
