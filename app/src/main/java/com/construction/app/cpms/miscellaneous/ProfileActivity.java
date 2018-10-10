@@ -302,13 +302,21 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserDetails(){
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference usersReference = firebaseDatabase.getReference("users");
-       usersReference = usersReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        String name = nameET.getText().toString();
+        String role = roleET.getText().toString();
 
-        usersReference.child("name").setValue(nameET.getText().toString());
-        usersReference.child("type").setValue(roleET.getText().toString());
+        if((name.length()>0) && (role.length()>0)) {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference usersReference = firebaseDatabase.getReference("users");
+            usersReference = usersReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+            usersReference.child("name").setValue(nameET.getText().toString());
+            usersReference.child("type").setValue(roleET.getText().toString());
+        }else {
+            Toast.makeText(this, "You can't have empty fields, fill them in", Toast.LENGTH_LONG).show();
+            nameET.setError("");
+            roleET.setError("");
+        }
 
     }
 
