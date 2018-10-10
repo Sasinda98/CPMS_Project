@@ -3,8 +3,10 @@ package com.construction.app.cpms.miscellaneous;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -109,6 +111,7 @@ public class MessagesFragment extends Fragment {
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_messages, null, false);
 
         //region Initialization
+        projectId = getProjectId();
         requestQueue = Volley.newRequestQueue(getContext());
 
         chatRoomRecycView = (RecyclerView) view.findViewById(R.id.recyclerView_messaging);  // apart from usage inside this method, refer to method -: setVisibilityOfTextView();
@@ -199,7 +202,7 @@ public class MessagesFragment extends Fragment {
 
         //listenToNode(projectId);
 
-        listenToProjectNode("Project-P1");
+        listenToProjectNode("Project-P" + projectId );
 
 
         //region Firebase
@@ -302,6 +305,23 @@ public class MessagesFragment extends Fragment {
         }
 
     }
+
+
+
+    //Grabs project Id from chandula's shared pref, temp function Switcher to demostrate change in project.
+    public String getProjectId(){
+
+        Log.d(TAG, "getProjectId() CALLED!");
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getActivity().getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+
+        String projectID =  preferences.getString("projSwitchID", "1");
+
+
+        projectID = projectID.trim();
+        return projectID;
+    }
+
 
 
 

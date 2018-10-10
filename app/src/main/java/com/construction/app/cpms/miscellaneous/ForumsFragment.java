@@ -59,7 +59,11 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
     final public String TAG = "ForumsFragment";
     private Toolbar toolbar;
 
+    /*private String projectId = "2";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+*/
+
     private String projectId = "1";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+
 
     /*FIREBASE vars*/
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -87,6 +91,7 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
         View view = inflater.inflate(R.layout.fragment_forums, container, false);
        // View view = inflater.inflate(R.layout.layout_forum_card, container, false);
 
+        projectId = getProjectId();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         postArrayList = new ArrayList<FirebaseForumPost>();
@@ -352,7 +357,19 @@ public class ForumsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     //endregion
 
+    //Grabs project Id from chandula's shared pref, temp function Switcher to demostrate change in project.
+    public String getProjectId(){
 
+        Log.d(TAG, "getProjectId() CALLED!");
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getActivity().getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+
+        String projectID =  preferences.getString("projSwitchID", "1");
+
+
+        projectID = projectID.trim();
+        return projectID;
+    }
 
 
 

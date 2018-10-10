@@ -2,6 +2,8 @@ package com.construction.app.cpms.miscellaneous;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -61,7 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ComposeChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ComposeChatRoomAct";
 
-    private static String projectId;         //harshan's func should set the value (project creation)
+    private static String projectId= "1";         //harshan's func should set the value (project creation)
 
     //Vars required to setup Top Toolbar
     private Toolbar toolbar;
@@ -96,31 +98,6 @@ public class ComposeChatRoomActivity extends AppCompatActivity {
         projectId = extras.getString(MessagesFragment.KEY_INTENT);  //get passed in project id from Messages Fragment;
 
 
-    //region TESTING BUTTONS
-/*        MaterialButton button1 = findViewById(R.id.ccm_addChatRoom1);
-        MaterialButton button2 = findViewById(R.id.ccm_addChatRoom2);
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addChatRoom("1", "loggedinUID", "RUID");
-            }
-        });
-
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addMessage("1", "1 IN", "Rece2iver");
-            }
-        });*/
-
-
-
-        /*GlideApp.with(this )
-                .load(gsReference)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(circleImageView);*/
-        //endregion
         setUpToolbar();
 
         memberRecycView = findViewById(R.id.ccr_memberRecycView);   //reference to recyclerview
