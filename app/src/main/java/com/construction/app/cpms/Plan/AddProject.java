@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,6 +43,19 @@ public class AddProject extends AppCompatActivity {
 
                 CharSequence message1 = "Project Upload Cancelled ";
                 Toast.makeText(AddProject.this, message1, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        //demo button to enter values to the editText fields
+        Button button = (Button)findViewById(R.id.demoBn) ;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = (EditText)findViewById(R.id.project_name); //ProjectName
+                editText.setText("Hello");
+                EditText editText1 = (EditText)findViewById(R.id.project_des); //ProjectDescription
+                editText1.setText("Hello");
             }
         });
 

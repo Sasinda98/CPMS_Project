@@ -1,6 +1,8 @@
 package com.construction.app.cpms.Plan;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +45,20 @@ public class addPlan extends AppCompatActivity {
 
                 CharSequence message1 = "Plan Upload Cancelled ";
                 Toast.makeText(addPlan.this, message1, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //demo button to enter values to the editText fields
+        Button button = (Button)findViewById(R.id.demoBn2) ;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = (EditText)findViewById(R.id.editText6); //PlanName
+                editText.setText("DemoHello");
+               EditText editText1 = (EditText)findViewById(R.id.editText3); //PlanImage
+                editText1.setText("http://horizon-design.co.uk/wp-content/uploads/2012/01/16-Downview-Road-300x218.jpg");
+                EditText editText2 = (EditText)findViewById(R.id.editText_1); //PlanDescription
+                editText2.setText("DemoHello");
             }
         });
 

@@ -103,13 +103,14 @@
         android:orientation="horizontal">
 
         <ImageButton
+
             android:id="@+id/pr_button"
             android:layout_width="110dp"
             android:layout_height="62dp"
             android:layout_marginBottom="200dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/purplebackground"
             android:clickable="true"
             android:focusable="true"
@@ -131,7 +132,7 @@
             android:layout_marginBottom="200dp"
             android:layout_marginEnd="52dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/purplebackground"
             android:clickable="true"
             android:elevation="0dp"
@@ -145,7 +146,24 @@
             app:layout_constraintTop_toBottomOf="@+id/totalExp"
             app:layout_constraintVertical_bias="0.73" />
 
+
     </LinearLayout>
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="31dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="50dp">
+
+            <Button
+                android:id="@+id/demoBn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="DEMO"
+                />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

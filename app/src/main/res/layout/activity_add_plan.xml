@@ -163,14 +163,16 @@
         app:layout_constraintStart_toEndOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
+
     <ImageButton
         android:id="@+id/button"
         android:layout_width="110dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginLeft="52dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="152dp"
         android:background="@drawable/purplebackground"
         android:clickable="true"
         android:focusable="true"
@@ -181,7 +183,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <!--android:drawableRight="@drawable/ic_cancel_red" -->
 
@@ -194,7 +196,7 @@
         android:layout_marginBottom="200dp"
         android:layout_marginEnd="52dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/purplebackground"
         android:clickable="true"
         android:elevation="0dp"
@@ -205,12 +207,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/totalExp"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_1"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <Button
+        android:id="@+id/demoBn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="DEMO"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_2"
+        app:layout_constraintVertical_bias="0.673" />
+
+
     <!--android:drawableRight="@drawable/ic_file_upload_green" -->
-
-
-
 
 </android.support.constraint.ConstraintLayout>
 
