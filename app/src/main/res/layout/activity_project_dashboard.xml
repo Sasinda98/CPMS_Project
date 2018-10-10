@@ -148,10 +148,25 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="315dp"
+            android:layout_marginTop="130dp">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabP"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:src="@drawable/drawable_report_icon"
+                app:backgroundTint="#2DE174"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </RelativeLayout>
 
     </LinearLayout>
-
-
-
 
 </android.support.constraint.ConstraintLayout>

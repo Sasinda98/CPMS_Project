@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_event_note_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -51,14 +51,25 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="C:\Users\Harshan\Desktop\GHub\button_add-512.png" />
-                                      <entry key="outputName" value="ic_prof_pic_dark" />
+                                      <entry key="imageAsset" value="C:\Users\Harshan\Desktop\GHub\download.png" />
+                                      <entry key="outputName" value="drawable_report_icon" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="333333" />
+                                      <entry key="themeColor" value="070709" />
                                     </map>
                                   </option>
                                 </PersistentState>
