@@ -54,6 +54,7 @@ public class signupFragment extends Fragment {
     private TextView signUpHeaderTV = null;
     private TextView signUpSubHeadingTV = null;
     private Button continueBtn = null;
+    private Button demoBtn = null;
 
 
     /*Text inputs*/
@@ -92,6 +93,7 @@ public class signupFragment extends Fragment {
         confirmPasswordEntry = view.findViewById(R.id.su_confPassword_editText);
 
         continueBtn = view.findViewById(R.id.su_ContinueBtn);
+        demoBtn = view.findViewById(R.id.su_DemoBtn);
 
         //Refered to the following links to see how to add custom fonts -:
         // #1 https://stackoverflow.com/questions/26140094/custom-fonts-in-android-api-below-16
@@ -103,6 +105,23 @@ public class signupFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
 
+        demoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fName = "Nipun";
+                String lName = "Edirisinghe";
+                String mobileNumber = "0771560490";
+                String email = "projectcpms@gmail.com"; //legit
+                String password = "1998password";
+
+                fNameEntry.setText(fName);
+                lNameEntry.setText(lName);
+                mobileNumberEntry.setText(mobileNumber);
+                emailEntry.setText(email);
+                passwordEntry.setText(password);
+                confirmPasswordEntry.setText(password);
+            }
+        });
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +169,9 @@ public class signupFragment extends Fragment {
                         confirmPasswordEntry.setError("Passwords don't match");
                     }
                 }
+
+
+
 
 
 

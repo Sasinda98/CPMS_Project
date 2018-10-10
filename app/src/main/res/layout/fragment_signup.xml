@@ -176,6 +176,18 @@
             app:rippleColor="@color/primaryColor" />
 
 
+        <android.support.design.button.MaterialButton
+            android:id="@+id/su_DemoBtn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/su_ContinueBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/um_btn_top_spacing"
+            android:text="DEMO BUTTON"
+            app:rippleColor="@color/primaryColor" />
+
+
     </RelativeLayout>
 
 </ScrollView>
