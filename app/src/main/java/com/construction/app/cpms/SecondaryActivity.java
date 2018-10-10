@@ -76,8 +76,8 @@ public class SecondaryActivity extends AppCompatActivity implements Navigation{
                     break;
                 case R.id.navigation_notifications:     //code to execute when notifications is clicked.
                    // fragment = new NotificationsFragment();
-                    deleteLoginData();
-                    fragment = new ForumsFragment();
+                   // deleteLoginData();
+                   // fragment = new ForumsFragment();
                     break;
             }
             Boolean result = goToFragment(fragment);

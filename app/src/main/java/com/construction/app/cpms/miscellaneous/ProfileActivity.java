@@ -1,6 +1,8 @@
 package com.construction.app.cpms.miscellaneous;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -10,10 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.construction.app.cpms.MainActivity;
 import com.construction.app.cpms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private ValueEventListener profilePictureListener;
 
@@ -47,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final int requestCode = 44;     //picked random number to be 44, which will be the code to identify the intent
 
     public CircleImageView imageView;
+    private ImageButton signOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         MaterialButton materialButton = findViewById(R.id.buttonBadluck);
         imageView = findViewById(R.id.actprofile_profile_pic);
+        signOutBtn = findViewById(R.id.signOutButton);
 
         //handles everything related to circular imageview used to show profpic.
         displayProfilePicInImageView(imageView, this.firebaseUser, this.firebaseDatabase);
@@ -71,6 +78,16 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(intent,requestCode);      // link -: https://developer.android.com/training/basics/intents/result
             }
         });
+
+        signOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteLoginData();  //log out the user.
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -198,5 +215,18 @@ public class ProfileActivity extends AppCompatActivity {
             DatabaseReference databaseReference = firebaseDatabase.getReference().getRoot();
             databaseReference.child("users").child(firebaseUser.getUid()).child("photoUrl").removeEventListener(profilePictureListener);
         }
+    }
+
+    //Sign Out method,.
+    public void deleteLoginData(){
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+
+        this.firebaseAuth.signOut();
+        //Toast.makeText(this,"SHARED PREF CLEARED,Restart APP", Toast.LENGTH_LONG).show();
+        System.out.println("===========DELETE SHARED PREF==========");
     }
 }
