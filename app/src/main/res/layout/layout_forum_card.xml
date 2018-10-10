@@ -64,7 +64,7 @@
                 android:layout_marginTop="@dimen/margins_eight">
 
                 <!--Track btn-->
-                <TextView
+    <!--            <TextView
                     android:id="@+id/track"
                     android:layout_width="wrap_content"
 
@@ -74,13 +74,13 @@
                     android:layout_marginStart="@dimen/margins_eight"
 
                     android:layout_marginTop="@dimen/margins_eight"
-                    android:text="Track"
+                    android:text=""
                     android:textColor="@color/secondaryColor"
                     android:textSize="@dimen/forum_post_btn_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <!--view more btn-->
                 <TextView
@@ -89,8 +89,8 @@
 
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margins_eight"
-                    android:layout_marginLeft="@dimen/margins_eight"
-                    android:layout_marginStart="@dimen/margins_eight"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
 
                     android:layout_marginTop="@dimen/margins_eight"
                     android:text="View More"
@@ -98,7 +98,8 @@
                     android:textSize="@dimen/forum_post_btn_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/track"
+
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <!--Time stamp-->
                 <TextView

@@ -32,7 +32,10 @@ public class addForumPost extends AppCompatActivity {
 
     private static final String TAG = "addForumPost";
 
-    private String projectId = "1";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+  /*  private String projectId = "2";     //depends on another member's function, the value should come from that function which is not yet implemented. hardcoded to 1.
+*/
+
+    private String projectId = "1";
 
     /*FIREBASE vars*/
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -50,6 +53,8 @@ public class addForumPost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_forum_post);
+
+        this.projectId = getProjectId();
 
         this.titleEditText = findViewById(R.id.ap_forumTitle_editText);
         this.descriptionEditText = findViewById(R.id.ap_forumDescription_editText);
@@ -182,6 +187,21 @@ public class addForumPost extends AppCompatActivity {
     public String getDateOnly(String dateTime) {
         //Time format Suppiorted = "dd:MM:yyyy hh:mm a"
         return dateTime.substring(0, 11);
+    }
+
+
+    //Grabs project Id from chandula's shared pref, temp function Switcher to demostrate change in project.
+    public String getProjectId(){
+
+        Log.d(TAG, "getProjectId() CALLED!");
+        /*Stackoverflow used as reference for use of sharepref in fragment*/
+        SharedPreferences preferences = getSharedPreferences("projSwitch", Context.MODE_PRIVATE);
+
+        String projectID =  preferences.getString("projSwitchID", "1");
+
+
+        projectID = projectID.trim();
+        return projectID;
     }
 
 }

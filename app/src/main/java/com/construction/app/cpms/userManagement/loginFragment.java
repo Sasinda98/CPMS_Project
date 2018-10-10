@@ -148,7 +148,8 @@ public class loginFragment extends Fragment {
                                      boolean isPasswordMatched = Boolean.valueOf(jsonObject.getString("isPasswordMatched"));
                                      String userId = jsonObject.getString("userId"); //null if there is no a matching accnt.
 
-                                     if (isEmailMatched && isPasswordMatched && userId != null) { //means user credentials match an actual accnt in db, script returns null itheres no matcvh
+                                     /*bug fix*/
+                                     if (isEmailMatched && userId != null) { //means user credentials match an actual accnt in db, script returns null itheres no matcvh
                                          saveLoginCredentials(userId);
 
                                          mAuth.signInWithEmailAndPassword(emailEntry.getText().toString(), passwordEntry.getText().toString())
@@ -167,7 +168,7 @@ public class loginFragment extends Fragment {
                                                          } else {
                                                              // If sign in fails, display a message to the user.
                                                              Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                                             Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(getContext(), "Authentication failed. Invalid credentials", Toast.LENGTH_SHORT).show();
                                                              //updateUI(null);
                                                          }
 
@@ -185,12 +186,13 @@ public class loginFragment extends Fragment {
 
                                      } else {
                                          //account doesnt exist. invalid credentials..
-                                         Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(getContext(), "Userid= " + value + "Access=Denied", Toast.LENGTH_LONG).show();
+                                         Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_LONG).show();
                                      }
 
 
                                  } else {
-                                     Toast.makeText(getContext(), "Error Occurred, DB OR INT", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
+                                     Toast.makeText(getContext(), "Error Occurred, DB OR INTERNET", Toast.LENGTH_LONG).show();    //When there are issues wit json response.
                                  }
 
                              } catch (JSONException e) {

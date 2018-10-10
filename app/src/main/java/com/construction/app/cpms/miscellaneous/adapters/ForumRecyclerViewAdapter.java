@@ -325,7 +325,7 @@ public class ForumRecyclerViewAdapter extends RecyclerView.Adapter<ForumRecycler
             timestamp = itemView.findViewById(R.id.lm_timeStamp);
 
             //bottom clickable, static.
-            track = itemView.findViewById(R.id.track);
+            //track = itemView.findViewById(R.id.track);
             viewMore = itemView.findViewById(R.id.viewMore);
             parentCardlayout = itemView.findViewById(R.id.forumCardParentLayout);
             popup = itemView.findViewById(R.id.popMenu);

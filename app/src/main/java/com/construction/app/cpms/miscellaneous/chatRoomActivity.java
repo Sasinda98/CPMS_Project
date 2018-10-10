@@ -76,7 +76,7 @@ public class chatRoomActivity extends AppCompatActivity {
         //endregion
 
         //regionFIREBASE INITIALIZATION
-        chatnodeRef = FirebaseDatabase.getInstance().getReference("ChatLogs").child("Project-P1").child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), RECEIVER_UID));
+        chatnodeRef = FirebaseDatabase.getInstance().getReference("ChatLogs").child("Project-P"+PROJECT_ID).child(ChatRoomIDGenerator.getChatRoomID(loggedInAs.getUid(), RECEIVER_UID));
         chatnodeRef.keepSynced(true);
         //endregion
 
@@ -255,7 +255,7 @@ public class chatRoomActivity extends AppCompatActivity {
         Log.d(TAG, "listenToProjectNode(String projectId)  CALLED!");                       // /Rooms/Project-P1
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference chatMessagesReference = firebaseDatabase.getReference("ChatLogs").child("Project-P1").child(ChatRoomIDGenerator.getChatRoomID(loggedInAs,receiver));
+        DatabaseReference chatMessagesReference = firebaseDatabase.getReference("ChatLogs").child("Project-P" + projectId).child(ChatRoomIDGenerator.getChatRoomID(loggedInAs,receiver));
         chatMessagesReference.keepSynced(true);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
