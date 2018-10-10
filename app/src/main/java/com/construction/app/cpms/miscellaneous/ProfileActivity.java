@@ -12,13 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.construction.app.cpms.MainActivity;
 import com.construction.app.cpms.R;
+import com.construction.app.cpms.miscellaneous.firebaseModels.FirebaseUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public CircleImageView imageView;
     private ImageButton signOutBtn;
+    private EditText roleET;
+    private EditText nameET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,8 @@ public class ProfileActivity extends AppCompatActivity {
         MaterialButton materialButton = findViewById(R.id.buttonBadluck);
         imageView = findViewById(R.id.actprofile_profile_pic);
         signOutBtn = findViewById(R.id.signOutButton);
+        roleET = findViewById(R.id.role_editText);
+        nameET = findViewById(R.id.fname_editText);
 
         //handles everything related to circular imageview used to show profpic.
         displayProfilePicInImageView(imageView, this.firebaseUser, this.firebaseDatabase);
@@ -88,6 +97,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
+
+        populateUserDetails();
+
+
     }
 
 
@@ -102,6 +116,10 @@ public class ProfileActivity extends AppCompatActivity {
             displayProfilePicInImageView(imageView, this.firebaseUser, this.firebaseDatabase);
         }
     }
+
+
+
+
 
     /*Do not use*/
     public void setProfPic(String url) {
@@ -229,4 +247,47 @@ public class ProfileActivity extends AppCompatActivity {
         //Toast.makeText(this,"SHARED PREF CLEARED,Restart APP", Toast.LENGTH_LONG).show();
         System.out.println("===========DELETE SHARED PREF==========");
     }
+
+    private void populateUserDetails(){
+        //region SET UserDetails like PIC, Name, Type using users node in firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference usersReference = firebaseDatabase.getReference("users");
+        usersReference.keepSynced(true);
+
+        Query query = usersReference.orderByChild("UID").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());        //to get relevant details, userID should match the one inside arraylist.
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot = " + dataSnapshot.toString());
+
+                if(dataSnapshot.exists()) {     //means user is actually there in the database
+                    for (DataSnapshot usernode : dataSnapshot.getChildren()) {//get to the user node that has user details as the value
+
+                        FirebaseUserDetails user = usernode.getValue(FirebaseUserDetails.class);
+
+                        Log.d(TAG, "Name = " + user.getName());
+                        Log.d(TAG, "UID = " + user.getUID());
+                        Log.d(TAG, "PhotoURl = " + user.getPhotoUrl());
+                        Log.d(TAG, "type = " + user.getType());
+
+                        nameET.setText(user.getName());
+                        roleET.setText(user.getType());
+
+                    }
+                }else{
+                    //if user given user doesnt exist
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //endregion
+    }
+
 }

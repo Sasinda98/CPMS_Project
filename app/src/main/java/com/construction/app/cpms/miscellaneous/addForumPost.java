@@ -100,7 +100,7 @@ public class addForumPost extends AppCompatActivity {
 
                 createForumPostFirebase(projectId);         //method that adds post to firebase using user input;
 
-                appCompatActivity.onBackPressed();  //return to main page
+       //         appCompatActivity.onBackPressed();  //return to main page
                 break;
             }
 
@@ -133,6 +133,7 @@ public class addForumPost extends AppCompatActivity {
 
                  if(post != null){       //if post object is non null, add it to firebase database
                     reference.child(postId).setValue(post);
+                     appCompatActivity.onBackPressed();  //return to main page
                 }else{
                     Toast.makeText(this, "Fill the relevant fields", Toast.LENGTH_SHORT);
                 }
@@ -155,7 +156,7 @@ public class addForumPost extends AppCompatActivity {
 
 
         if( ( postBody.equals("") ) || ( postBody == null )){
-            this.titleEditText.setError("You need to type the description in.");
+            this.descriptionEditText.setError("You need to type the description in.");
             return null;        //terminate...
         }
 

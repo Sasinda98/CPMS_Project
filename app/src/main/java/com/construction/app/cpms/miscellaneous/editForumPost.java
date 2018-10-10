@@ -203,7 +203,7 @@ public class editForumPost extends AppCompatActivity {
                 postRef.child("title").setValue(titleEdited); //firebase
                 onBackPressed();    /*CHECK HERE IF IRREGULARITIES ARE PRESENT WHEN EDITING BOTH TITLE AND BODY*/
             }else{
-                bodyET.setError("You Can't Leave The Title Empty!");
+                titleET.setError("You Can't Leave The Title Empty!");
             }
         }
 

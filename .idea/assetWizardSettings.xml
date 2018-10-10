@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_event_note_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_box_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -67,9 +67,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\Harshan\Desktop\GHub\download.png" />
-                                      <entry key="outputName" value="drawable_report_icon" />
+                                      <entry key="outputName" value="roleicon" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="070709" />
+                                      <entry key="themeColor" value="555555" />
                                     </map>
                                   </option>
                                 </PersistentState>
