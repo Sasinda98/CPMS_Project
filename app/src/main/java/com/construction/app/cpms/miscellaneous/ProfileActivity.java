@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Binder;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -60,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton signOutBtn;
     private EditText roleET;
     private EditText nameET;
+    private Button updateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         signOutBtn = findViewById(R.id.signOutButton);
         roleET = findViewById(R.id.role_editText);
         nameET = findViewById(R.id.fname_editText);
+        updateBtn = findViewById(R.id.updateBtn);
 
         //handles everything related to circular imageview used to show profpic.
         displayProfilePicInImageView(imageView, this.firebaseUser, this.firebaseDatabase);
@@ -94,6 +98,13 @@ public class ProfileActivity extends AppCompatActivity {
                 deleteLoginData();  //log out the user.
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUserDetails();    //firebase method
             }
         });
 
@@ -288,6 +299,17 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         //endregion
+    }
+
+    private void updateUserDetails(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference usersReference = firebaseDatabase.getReference("users");
+       usersReference = usersReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        usersReference.child("name").setValue(nameET.getText().toString());
+        usersReference.child("type").setValue(roleET.getText().toString());
+
+
     }
 
 }
