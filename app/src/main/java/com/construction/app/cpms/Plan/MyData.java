@@ -4,13 +4,15 @@ public class MyData {
     private int pid;
     private String name, image_link;
     private String decript;
+    private String status;
 
 
-    public MyData(int pid, String name, String image_link, String decript) {
+    public MyData(int pid, String name, String image_link, String decript, String status) {
         this.pid = pid;
         this.name = name;
         this.image_link = image_link;
         this.decript = decript;
+        this.status = status;
     }
 
     public int getPid() {
@@ -43,5 +45,13 @@ public class MyData {
 
     public void setDecript(String decript) {
         this.decript = decript;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

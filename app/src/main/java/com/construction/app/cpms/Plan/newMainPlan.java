@@ -1,6 +1,7 @@
 package com.construction.app.cpms.Plan;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -34,5 +35,16 @@ public class newMainPlan extends AppCompatActivity {
                 startActivity(myIntent2);
             }
         });
+
+        //Navigate rom fab tp project report
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fabP);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(newMainPlan.this,PlanReport.class);
+                startActivity(intent3);
+            }
+        });
+
     }
 }

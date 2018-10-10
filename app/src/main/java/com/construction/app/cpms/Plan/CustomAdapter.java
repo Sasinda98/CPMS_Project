@@ -40,6 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             holder.name.setText(my_data.get(position).getName());
             holder.description.setText(my_data.get(position).getDecript());
             holder.pID.setText(Integer.toString(my_data.get(position).getPid()));
+            holder.status.setText(my_data.get(position).getStatus());
 
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
 
@@ -53,6 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     intent.putExtra("name",my_data.get(position).getName());
                     intent.putExtra("image",my_data.get(position).getImage_link());
                     intent.putExtra("description",my_data.get(position).getDecript());
+                    intent.putExtra("status",my_data.get(position).getStatus());
                     context.startActivity(intent);
                 }
             });
@@ -68,6 +70,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public ImageView imageView;
         public TextView description;
         public TextView pID;
+        public TextView status;
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView){
@@ -76,6 +79,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             description = (TextView) itemView.findViewById(R.id.des_d);
             imageView = (ImageView) itemView.findViewById(R.id.image_i);
             pID = (TextView) itemView.findViewById(R.id.id_id);
+            status = (TextView)itemView.findViewById(R.id.p_status);
 
         }
 

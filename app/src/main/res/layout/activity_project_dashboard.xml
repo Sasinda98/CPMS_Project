@@ -155,7 +155,7 @@
             android:layout_marginLeft="315dp"
             android:layout_marginTop="130dp">
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fabP"
+                android:id="@+id/fabPr"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
