@@ -6,7 +6,8 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+        android:clickable="true"
+        android:id="@+id/card_view_plan_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -20,20 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/image_i"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:scaleType="centerCrop"/>
-
-
             <TextView
-                android:id="@+id/name_n"
+                android:id="@+id/pr_name_n_report"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/image_i"
+                android:layout_height="30dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
@@ -43,44 +34,39 @@
                 android:textStyle="normal"
                 android:typeface="sans" />
 
+            <ImageView
+                android:id="@+id/image_i_report"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:layout_below="@+id/pr_name_n_report"
+                android:scaleType="centerCrop"/>
+
             <TextView
-                android:id="@+id/des_d"
+                android:id="@+id/pr_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textColor="@color/cardview_dark_background"
-                android:text="descrption"
-                android:layout_below="@id/name_n"
+                android:paddingTop="10dp"
+                android:textColor="@color/cardText"
+                android:text="Status"
+                android:layout_below="@+id/image_i_report"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 android:typeface="sans"/>
 
             <TextView
-                android:id="@+id/id_id"
+                android:id="@+id/pr_id_id_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:textColor="#ffffff"
                 android:text="id"
-                android:layout_below="@id/des_d"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                android:typeface="sans"/>
-
-            <TextView
-                android:id="@+id/p_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textColor="#ffffff"
-                android:text="status"
-                android:layout_below="@+id/id_id"
+                android:layout_below="@+id/pr_status"
                 android:textSize="12sp"
                 android:textStyle="normal"
                 android:typeface="sans"/>
@@ -88,6 +74,5 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
 
 </LinearLayout>

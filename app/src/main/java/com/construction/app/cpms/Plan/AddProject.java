@@ -53,9 +53,9 @@ public class AddProject extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText editText = (EditText)findViewById(R.id.project_name); //ProjectName
-                editText.setText("Hello");
+                editText.setText("Euro Enterprises");
                 EditText editText1 = (EditText)findViewById(R.id.project_des); //ProjectDescription
-                editText1.setText("Hello");
+                editText1.setText("Euro Enterprises handed us a project, in which, we are to renovate their top floor.");
             }
         });
 

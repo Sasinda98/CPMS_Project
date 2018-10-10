@@ -90,11 +90,34 @@
             android:layout_weight="20"
 
             />
+    <TextView
+        android:textColor="@color/cardText"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+    <EditText
+        android:background="@color/backgroundDark"
+        android:cursorVisible="false"
+        android:id="@+id/d_status"
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/cardText"
+        android:layout_weight="20"
+
+        />
 
     <LinearLayout
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_weight="5"
         android:orientation="horizontal">
 

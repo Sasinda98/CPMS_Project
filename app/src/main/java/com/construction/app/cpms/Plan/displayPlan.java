@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class displayPlan extends AppCompatActivity {
 
-    String Name, Image, Description, name;
+    String Name, Image, Description, name, Status;
     Button updateBn, deleteBn;
     RequestQueue requestQueue;
     String showURL = "https://projectcpms99.000webhostapp.com/scripts/Harshan/fetchSinglePlan.php";
@@ -48,7 +48,7 @@ public class displayPlan extends AppCompatActivity {
     String deleteURL = "https://projectcpms99.000webhostapp.com/scripts/Harshan/deletePlans.php";
     int planId;
     TextView result;
-    EditText planName, planDescription;
+    EditText planName, planDescription,planStatus;
     ImageView planImage;
     int iD;
 
@@ -65,6 +65,7 @@ public class displayPlan extends AppCompatActivity {
         //text fields and buttons
         planName = (EditText) findViewById(R.id.d_name);
         planDescription = (EditText) findViewById(R.id.d_description);
+        planStatus = (EditText)findViewById(R.id.d_status);
         planImage = (ImageView) findViewById(R.id.d_image);
         updateBn = (Button) findViewById(R.id.vUpdate);
         deleteBn = (Button) findViewById(R.id.vDelete);
@@ -74,6 +75,7 @@ public class displayPlan extends AppCompatActivity {
         planName = (EditText) findViewById(R.id.d_name);
         planDescription = (EditText) findViewById(R.id.d_description);
         planImage = (ImageView) findViewById(R.id.d_image);
+
         updateBn = findViewById(R.id.vUpdate);
 
         planId = getIntent().getIntExtra("pID", 0);
@@ -123,6 +125,21 @@ public class displayPlan extends AppCompatActivity {
                 return false;
             }
         });
+        final EditText editText3 =(EditText)findViewById(R.id.d_status);
+        editText3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(view.getId() == editText3.getId()){
+                    editText3.setCursorVisible(true);
+                }
+                return false;
+            }
+        });
+
+
+
+
+
       /*  //onCreate
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -150,21 +167,25 @@ public class displayPlan extends AppCompatActivity {
 
     }
     private void getIncomingIntent() {
-        if (getIntent().hasExtra("name") && getIntent().hasExtra("image") && getIntent().hasExtra("description")) {
+        if (getIntent().hasExtra("name") && getIntent().hasExtra("image") && getIntent().hasExtra("description") && getIntent().hasExtra("status")) {
             Name = getIntent().getStringExtra("name");
             Image = getIntent().getStringExtra("image");
             Description = getIntent().getStringExtra("description");
             planId = getIntent().getIntExtra("pID", 0);
-            setImage(Name, Image, Description);
+            Status = getIntent().getStringExtra("status");
+            setImage(Name, Image, Description, Status);
         }
     }
 
-    private void setImage(String Name, String Image, String description) {
+    private void setImage(String Name, String Image, String description, String status) {
         EditText name = findViewById(R.id.d_name);
         name.setText(Name);
 
         EditText des = findViewById(R.id.d_description);
         des.setText(description);
+
+        EditText st = findViewById(R.id.d_status);
+        st.setText(status);
 
         ImageView image = findViewById(R.id.d_image);
         Glide.with(this)
@@ -211,6 +232,7 @@ public class displayPlan extends AppCompatActivity {
     public void update() {
         final String name = planName.getText().toString();
         final String description = planDescription.getText().toString();
+        final String status = planStatus.getText().toString();
 
         StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
                 updateURL,
@@ -250,8 +272,9 @@ public class displayPlan extends AppCompatActivity {
                 postParam.put("name", name);
                 postParam.put("description", description);
                 postParam.put("pID", String.valueOf(planId));
+                postParam.put("status", status);
 
-                System.out.print(name + description);
+                System.out.print(name + description + status);
 
                 return postParam;
             }

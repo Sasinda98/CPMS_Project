@@ -77,8 +77,10 @@
         <activity android:name=".Plan.ViewProject" />
         <activity android:name=".Plan.AddProject" />
         <activity android:name=".Plan.DisplayProject" />
-        <activity android:name=".miscellaneous.viewMoreForumPostActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".miscellaneous.viewMoreForumPostActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Plan.PlanReport"></activity>
     </application>
 
 </manifest>

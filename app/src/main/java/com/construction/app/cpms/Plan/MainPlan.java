@@ -113,7 +113,7 @@ public class MainPlan extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 System.out.println("FOR LOOP");
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"), object.getString("Description"));
+                                MyData data = new MyData(object.getInt("pID"), object.getString("Name"), object.getString("Image"), object.getString("Description"), object.getString("Status"));
                                 data_list.add(data); //all objects are added to the arrayList
                             }
                             //notifies the adapter about updates to arrayList.
