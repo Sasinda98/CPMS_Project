@@ -54,11 +54,12 @@ public class addPlan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText editText = (EditText)findViewById(R.id.editText6); //PlanName
-                editText.setText("DemoHello");
+                editText.setText("Concept/Drawing of a house for Mr. and Mrs. Stilinski");
                EditText editText1 = (EditText)findViewById(R.id.editText3); //PlanImage
                 editText1.setText("http://horizon-design.co.uk/wp-content/uploads/2012/01/16-Downview-Road-300x218.jpg");
                 EditText editText2 = (EditText)findViewById(R.id.editText_1); //PlanDescription
-                editText2.setText("DemoHello");
+                editText2.setText("From the outside this house looks impressive as its simple yet home for a beautiful couple willing to have children some day." +
+                        "4Bedrooms.3 Bathrooms equipped with modern backroom equipment. Garage. Garden. Swimming pool in the back.");
             }
         });
 
