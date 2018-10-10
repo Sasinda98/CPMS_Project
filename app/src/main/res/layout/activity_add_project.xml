@@ -110,7 +110,7 @@
             android:layout_marginBottom="200dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="83dp"
             android:background="@drawable/purplebackground"
             android:clickable="true"
             android:focusable="true"
@@ -132,7 +132,7 @@
             android:layout_marginBottom="200dp"
             android:layout_marginEnd="52dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="83dp"
             android:background="@drawable/purplebackground"
             android:clickable="true"
             android:elevation="0dp"
@@ -151,15 +151,17 @@
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="60dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_marginLeft="31dp"
             android:layout_marginTop="130dp"
-            android:layout_marginBottom="50dp">
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="28dp"
+            >
 
             <Button
                 android:id="@+id/demoBn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
                 android:text="DEMO"
                 />
 
